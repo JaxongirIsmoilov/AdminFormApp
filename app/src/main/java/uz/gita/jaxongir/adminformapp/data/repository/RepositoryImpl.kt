@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -10,13 +11,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.internal.NopCollector.emit
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
+import uz.gita.jaxongir.adminformapp.utils.getAll
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -103,17 +107,47 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
-        dao.getByUser(userID).onEach {
-            emit(Result.success(it.map { it.toData() }))
-        }.collect()
-    }.flowOn(Dispatchers.IO)
-        .catch { emit(Result.failure(Exception("Nimadir g'alati narsa sodir bo'ldi"))) }
+    override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = callbackFlow {
+        firestore.collection("Components")
+            .get()
+            .getAll {
+                val converter = Gson()
+                return@getAll
+                ComponentData(
+                    id = it.id,
+                    userId = it.data?.getOrDefault("userID", "null").toString(),
+                    locId = Integer.parseInt(it.data?.getOrDefault("locId", "0").toString()),
+                    idEnteredByUser = it.data?.getOrDefault("idEnteredByUser", "null").toString(),
+                    content = it.data?.getOrDefault("idEnteredByUser", "null").toString(),
+                    textFieldType = converter.fromJson(it.data?.getOrDefault("textFieldType", "null").toString(), TextFieldType::class.java),
+                    maxLines = Integer.parseInt(it.data?.getOrDefault("maxLines", "0").toString()),
+                    maxLength = Integer.parseInt(it.data?.getOrDefault("maxLength", "0").toString()),
+                    minLength = Integer.parseInt(it.data?.getOrDefault("minLength", "0").toString()),
+                    maxValue = Integer.parseInt(it.data?.getOrDefault("maxValue", "0").toString()),
+                    minValue = Integer.parseInt(it.data?.getOrDefault("minValue", "0").toString()),
+                    isMulti =
+
+
+
+                )
+            }
+
+
+
+    }
+
 
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
-        dao.getUsers().onEach {
+
+    }
+}
+
+/*
+* dao.getByUser(userID).onEach {
             emit(Result.success(it.map { it.toData() }))
         }.collect()
-    }.flowOn(Dispatchers.IO)
-        .catch { emit(Result.failure(Exception("Nimadir g'alati narsa sodir bo'ldi"))) }
-}
+        *
+        * dao.getUsers().onEach {
+            emit(Result.success(it.map { it.toData() }))
+        }.collect()
+* */
