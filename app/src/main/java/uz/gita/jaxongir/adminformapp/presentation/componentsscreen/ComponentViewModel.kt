@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ComponentViewModel @Inject constructor(
-    private val direction: Contracts.Direction,
+    private val direction: ComponentDirection,
     private val repository: Repository,
 ) : ViewModel(), Contracts.ViewModel {
     override val uiState = MutableStateFlow(Contracts.UIState())

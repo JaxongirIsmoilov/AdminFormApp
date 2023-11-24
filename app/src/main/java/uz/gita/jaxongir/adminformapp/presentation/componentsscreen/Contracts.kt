@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
@@ -9,10 +9,6 @@ interface Contracts {
         val uiState: StateFlow<UIState>
 
         fun eventDispatcher(intent: Intent)
-    }
-
-    interface Direction{
-        suspend fun backToMain()
     }
 
     interface Intent{
