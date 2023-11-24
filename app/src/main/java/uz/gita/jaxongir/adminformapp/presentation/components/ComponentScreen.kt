@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.presentation.components
 
+import android.view.View.OnLongClickListener
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,9 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
 
 
     @Composable
-    fun SpinnerContent() {
+    fun SpinnerContent(
+        clickListener: (Contracts.Intent) -> Unit
+    ) {
         var variants by remember {
             mutableStateOf(listOf<String>())
         }
@@ -88,5 +91,10 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
                 }
             }
         }
+    }
+
+    @Composable
+    fun SelectorContent(){
+
     }
 }
