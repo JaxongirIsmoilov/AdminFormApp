@@ -28,75 +28,11 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
     }
 
 
-    @Composable
-    fun SpinnerContent(
-        clickListener: (Contracts.Intent) -> Unit
-    ) {
-        var variants by remember {
-            mutableStateOf(listOf<String>())
-        }
 
-        var newVariants = ArrayList(variants)
 
-        var content by remember {
-            mutableStateOf("")
-        }
 
-        var userId by remember {
-            mutableStateOf("")
-        }
-        Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                item {
-                    TextField(
-                        value = content,
-                        onValueChange = {
-                            content = it
-                        },
-                        label = {
-                            Text(text = "Spinner nima haqida")
-                        },
-                        placeholder = {
-                            Text(text = "Spinner nima haqida")
-                        },
-                        modifier = Modifier.padding(vertical = 6.dp)
-                    )
-                }
 
-                item {
-                    TextField(
-                        value = content,
-                        onValueChange = {
-                            content = it
-                        },
-                        label = {
-                            Text(text = "Spinner nima haqida")
-                        },
-                        placeholder = {
-                            Text(text = "Spinner nima haqida")
-                        },
-                        modifier = Modifier.padding(vertical = 6.dp)
-                    )
-                }
 
-                variants.forEach { 
-                    item { 
-                        TextField(value = it, onValueChange = {
-
-                        })
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun SelectorContent(){
-
-    }
 
     @Composable
     fun TextContent(){
