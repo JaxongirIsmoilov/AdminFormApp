@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "864980151348",
+    "project_id": "admin-user-522a5",
+    "storage_bucket": "admin-user-522a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864980151348:android:5e7e4f71e83cee92b26e61",
+        "android_client_info": {
+          "package_name": "uz.gita.jaxongir.adminformapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANommtyn-82SGQx1eMgpzx_Yx8n-PoNLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
