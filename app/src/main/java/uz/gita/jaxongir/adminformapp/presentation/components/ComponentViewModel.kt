@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ComponentViewModel @Inject constructor(
-//    private val
+    private val direction: Contracts.Direction
 ) {
 }
