@@ -10,6 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uz.gita.jaxongir.adminformapp.presentation.adduser.AddScreen
+import uz.gita.jaxongir.adminformapp.presentation.main.MainScreen
 import uz.gita.jaxongir.adminformapp.ui.theme.AdminFormAppTheme
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigationHandler
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AdminFormAppTheme {
-                Navigator(screen = AddScreen()) { navigate ->
+                Navigator(screen = MainScreen()) { navigate ->
                     handler.uiNavigator
                         .onEach { it.invoke(navigate) }
                         .launchIn(lifecycleScope)
