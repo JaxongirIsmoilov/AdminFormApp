@@ -11,7 +11,7 @@ data class UserEntity(
     val password: String,
 ){
     fun toData(): UserData = UserData(
-        id = id,
+        userId = id,
         userName = userName,
         password = password
     )

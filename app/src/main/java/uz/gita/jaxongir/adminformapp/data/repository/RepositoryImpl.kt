@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
+import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
 import javax.inject.Inject
@@ -69,14 +70,14 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun addUser(userData: UserData): Flow<Result<String>> = callbackFlow {
+    override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
-            .add(userData)
+            .add(request)
             .addOnSuccessListener {
                 coroutineScope.launch {
-                    dao.insertUser(userData.toEntity().copy(id = it.id))
+                    dao.insertUser(request.fromRequestToEntity().copy(id = it.id))
                 }
-                trySend(Result.success("User muvvaffiqiyatli qo'shildi"))
+                trySend(Result.success(it.id))
             }
             .addOnFailureListener {
                 trySend(Result.failure(it))
