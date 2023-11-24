@@ -27,15 +27,4 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
 
     }
 
-
-
-
-
-
-
-
-    @Composable
-    fun TextContent(){
-
-    }
 }

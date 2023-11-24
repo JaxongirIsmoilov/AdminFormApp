@@ -14,6 +14,9 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertData(componentEntity: ComponentEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDatas(componentEntity: List<ComponentEntity>)
+
     @Delete
     suspend fun deleteData(componentEntity: ComponentEntity)
 
