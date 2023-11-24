@@ -9,8 +9,7 @@ data class UserData(
     val password: String,
 ) {
     fun toEntity(): UserEntity = UserEntity(
-        id = id,
-        userId = userId,
+        id = userId,
         userName = userName,
         password = password
     )
