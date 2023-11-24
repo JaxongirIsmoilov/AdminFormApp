@@ -4,12 +4,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.components.SingletonComponent
+import uz.gita.jaxongir.adminformapp.presentation.components.ComponentDirection
+import uz.gita.jaxongir.adminformapp.presentation.components.Contracts
 
-
-@InstallIn(ViewModelComponent::class)
 @Module
+@InstallIn(ViewModelComponent::class)
 interface DirectionModule {
-    @[Binds]
-    fun bindUserHomeDirection(  )
+
+    @Binds
+    fun compDirection(impl: ComponentDirection): Contracts.Direction
 }
