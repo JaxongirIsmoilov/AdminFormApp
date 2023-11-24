@@ -29,7 +29,6 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.components.DeleteDialog
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
 import uz.gita.jaxongir.adminformapp.ui.components.UserItem
-import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class MainScreen : AndroidScreen() {
     @Composable
@@ -54,7 +53,6 @@ fun MainScreenContent(
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) DeleteDialog(
         onClickDelete = {
-            myLog("Current: ${currentSelectedItem.value.userName}")
             onEventDispatcher.invoke(MainContract.Intent.DeleteUser(currentSelectedItem.value))
             showDialog.value = false
         },
@@ -71,7 +69,6 @@ fun MainScreenContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
-                myLog("${it.userName}")
                 currentSelectedItem.value = it
                 UserItem(
                     model = it,

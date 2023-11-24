@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.data.source.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
 
 class Converter {
@@ -16,6 +17,9 @@ class Converter {
     fun booleanConverter(data: List<Boolean>): String = converter.toJson(data)
 
     @TypeConverter
+    fun typeConverter(data: ComponentEnum): String = converter.toJson(data)
+
+    @TypeConverter
     fun stringConverter(data: String): List<String> =
         converter.fromJson(data, Array<String>::class.java).asList()
 
@@ -26,4 +30,7 @@ class Converter {
     @TypeConverter
     fun booleanConverter(data: String): List<Boolean> =
         converter.fromJson(data, Array<Boolean>::class.java).asList()
+
+    @TypeConverter
+    fun typeConverter(data: String): ComponentEnum = converter.fromJson(data, ComponentEnum::class.java)
 }

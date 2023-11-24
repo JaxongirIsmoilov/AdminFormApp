@@ -116,7 +116,9 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
             ){
                 when (type) {
                     ComponentEnum.Input -> {
-                        InputContent()
+                        InputContent(
+
+                        )
                     }
 
                     ComponentEnum.SampleText -> {

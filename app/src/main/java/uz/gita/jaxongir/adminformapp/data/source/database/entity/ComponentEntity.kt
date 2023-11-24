@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.data.source.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
@@ -23,7 +24,8 @@ data class ComponentEntity(
     val isMulti: Boolean,
     val variants: List<String>,
     val selected: List<Boolean>,
-    val conditions: List<Conditions>
+    val conditions: List<Conditions>,
+    val type: ComponentEnum,
 ) {
     fun toData(): ComponentData = ComponentData(
         id = id,
@@ -40,6 +42,7 @@ data class ComponentEntity(
         isMulti = isMulti,
         variants = variants,
         selected = selected,
-        conditions = conditions
+        conditions = conditions,
+        type = type
     )
 }

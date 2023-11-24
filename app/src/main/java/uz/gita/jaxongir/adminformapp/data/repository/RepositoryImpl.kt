@@ -20,8 +20,6 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
-import uz.gita.jaxongir.adminformapp.utils.getAll
-import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -29,9 +27,9 @@ class RepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : Repository {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    override fun addComponent(componentData: ComponentData): Flow<Result<String>> = callbackFlow {
+    override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> = callbackFlow {
         firestore.collection("Components")
-            .add(componentData)
+            .add(componentData.copy(locId = id))
             .addOnSuccessListener {
                 coroutineScope.launch {
                     dao.insertData(componentData.toEntity().copy(id = it.id))
@@ -224,13 +222,10 @@ class RepositoryImpl @Inject constructor(
 
 
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
-        myLog("override boshi")
         getUser().onEach {
             dao.getUsers().onEach {
-                myLog("override ${it.size}")
                 emit(Result.success(it.map { it.toData() }))
             }.collect()
         }.collect()
-        myLog("override oxiri")
     }.flowOn(Dispatchers.IO)
 }
