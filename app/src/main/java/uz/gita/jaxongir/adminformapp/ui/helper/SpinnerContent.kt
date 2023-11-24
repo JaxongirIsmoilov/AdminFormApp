@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import uz.gita.jaxongir.adminformapp.presentation.components.Contracts
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 
 @Composable
 fun SpinnerContent(

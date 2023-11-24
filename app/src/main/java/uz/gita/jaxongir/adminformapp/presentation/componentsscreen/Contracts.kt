@@ -11,10 +11,6 @@ interface Contracts {
         fun eventDispatcher(intent: Intent)
     }
 
-    interface Direction{
-        suspend fun backToMain()
-    }
-
     interface Intent{
         data class AddComponent(
             val componentData: ComponentData
