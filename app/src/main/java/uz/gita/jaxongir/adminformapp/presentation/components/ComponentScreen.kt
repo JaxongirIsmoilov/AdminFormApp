@@ -97,4 +97,9 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
     fun SelectorContent(){
 
     }
+
+    @Composable
+    fun TextContent(){
+
+    }
 }
