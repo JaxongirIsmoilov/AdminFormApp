@@ -173,57 +173,64 @@ class RepositoryImpl @Inject constructor(
                 trySend(Result.failure(it))
             }
 
+        awaitClose()
+
     }
 
     private fun getUser(): Flow<Unit> = callbackFlow {
-        var resultList = arrayListOf<UserData>()
+        val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
             .get()
             .addOnSuccessListener {
                 it.documents.forEach {
                     resultList.add(
                         UserData(
-                            it.id,
-                            it.data?.getOrDefault("")
+                            userId = it.id,
+                            userName = it.data?.getOrDefault("userName", "").toString(),
+                            password = it.data?.getOrDefault("password", "").toString()
                         )
                     )
                 }
+
+                coroutineScope.launch{ dao.insertUsers(resultList.map { it.toEntity() }) }
+                trySend(Unit)
+            }
+            .addOnFailureListener {
+                trySend(Unit)
             }
 
+        awaitClose()
     }
 
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
-        getComponents().collect()
-
-        dao.getByUser(userID)
+        getComponents()
             .onEach {
-                emit(Result.success(it.map {
-                    it.toData()
-                }))
+                it.onSuccess {
+                    dao.getByUser(userID)
+                        .onEach {
+                            emit(Result.success(it.map {
+                                it.toData()
+                            }))
+                        }
+                        .collect()
+                }
+                    .onFailure {  }
             }
             .collect()
+
+
     }.flowOn(Dispatchers.IO)
         .catch { emit(Result.failure(Exception("adsf"))) }
 
 
-    override fun getUsers(): Flow<Result<List<UserData>>> =
-        firestore.collection("Users").get().getAll {
-            return@getAll UserData(
-                userId = it.id,
-                userName = it.data?.getOrDefault("userName", "").toString(),
-                password = it.data?.getOrDefault("password", "").toString()
-            )
-        }
-
+    override fun getUsers(): Flow<Result<List<UserData>>> = flow {
+        myLog("override boshi")
+        getUser().onEach {
+            dao.getUsers().onEach {
+                myLog("override ${it.size}")
+                emit(Result.success(it.map { it.toData() }))
+            }.collect()
+        }.collect()
+        myLog("override oxiri")
+    }.flowOn(Dispatchers.IO)
 }
-
-
-/*
-* dao.getByUser(userID).onEach {
-            emit(Result.success(it.map { it.toData() }))
-        }.collect()
-        *
-        * dao.getUsers().onEach {
-            emit(Result.success(it.map { it.toData() }))
-        }.collect()
-* */
