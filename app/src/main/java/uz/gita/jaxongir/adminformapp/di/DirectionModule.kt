@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import uz.gita.jaxongir.adminformapp.presentation.components.ComponentDirection
-import uz.gita.jaxongir.adminformapp.presentation.components.Contracts
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentDirection
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 
 @Module
 @InstallIn(ViewModelComponent::class)

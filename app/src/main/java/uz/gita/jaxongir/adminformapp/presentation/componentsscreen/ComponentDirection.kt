@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import uz.gita.jaxongir.adminformapp.presentation.main.MainScreen
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigator

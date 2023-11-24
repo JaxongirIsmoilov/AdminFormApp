@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
