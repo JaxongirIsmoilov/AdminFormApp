@@ -59,7 +59,7 @@ class ComponentViewModel @Inject constructor(
             }
 
             is Contracts.Intent.Load -> {
-                userId = intent.userData.id
+                userId = intent.userData.userId
             }
 
             is Contracts.Intent.DeleteComponent -> {
