@@ -20,7 +20,7 @@ import uz.gita.jaxongir.adminformapp.R
 class SplashScreen:AndroidScreen() {
     @Composable
     override fun Content() {
-        val viewModel = getViewModel<SplashViewModel>()
+     getViewModel<SplashViewModel>()
         SplashContent()
     }
 }
