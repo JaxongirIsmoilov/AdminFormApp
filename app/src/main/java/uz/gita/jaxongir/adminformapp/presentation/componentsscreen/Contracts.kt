@@ -32,6 +32,7 @@ interface Contracts {
     data class UIState(
         val components: List<ComponentData> = listOf(),
         val isLoading: Boolean = false,
-        var index: Int = 0
+        var index: Int = 0,
+        val savedIds: List<String> = listOf()
     )
 }
