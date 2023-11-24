@@ -26,6 +26,6 @@ interface Dao {
     @Delete
     suspend fun deleteUser(userEntity: UserEntity)
 
-    @Query("select * from users")
+    @Query("select * from users order by id asc")
     fun getUsers(): Flow<List<UserEntity>>
 }
