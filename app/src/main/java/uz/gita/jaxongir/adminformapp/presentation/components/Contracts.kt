@@ -13,7 +13,4 @@ interface Contracts {
 
     }
 
-    data class UIState(
-        val
-    )
 }
