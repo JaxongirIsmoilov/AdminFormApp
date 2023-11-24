@@ -115,6 +115,10 @@ dependencies {
     implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
 
+
+    // MVI orbit
+    implementation ("org.orbit-mvi:orbit-viewmodel:4.6.1")
+    implementation ("org.orbit-mvi:orbit-compose:4.6.1")
 }
 
 kapt{

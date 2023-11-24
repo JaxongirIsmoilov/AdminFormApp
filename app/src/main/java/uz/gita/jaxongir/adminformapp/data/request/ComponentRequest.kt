@@ -13,7 +13,7 @@ data class ComponentRequest (
     val minLength: Int,
     val maxValue: Int,
     val minValue: Int,
-    val isMulti: Int,
+    val isMulti: Boolean,
     val variants: String,
     val selected: String,
     val conditions: String,

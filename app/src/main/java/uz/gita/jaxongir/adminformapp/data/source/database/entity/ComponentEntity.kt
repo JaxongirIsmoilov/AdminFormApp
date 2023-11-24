@@ -5,8 +5,9 @@ import androidx.room.PrimaryKey
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
+
 @Entity(tableName = "components")
-data class ComponentEntity (
+data class ComponentEntity(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val userId: String,
@@ -19,11 +20,11 @@ data class ComponentEntity (
     val minLength: Int,
     val maxValue: Int,
     val minValue: Int,
-    val isMulti: Int,
+    val isMulti: Boolean,
     val variants: List<String>,
     val selected: List<Boolean>,
     val conditions: List<Conditions>
-){
+) {
     fun toData(): ComponentData = ComponentData(
         id = id,
         userId = userId,

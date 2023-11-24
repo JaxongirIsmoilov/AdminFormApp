@@ -1,7 +1,8 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.UserData
 
 interface Contracts {
     interface ViewModel{
@@ -24,6 +25,12 @@ interface Contracts {
         data class EditComponent(
             val componentData: ComponentData
         ): Intent
+
+        data class Load(
+            val userData: UserData
+        ): Intent
+
+        object Save: Intent
     }
 
     data class UIState(
