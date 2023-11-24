@@ -1,12 +1,14 @@
 package uz.gita.jaxongir.adminformapp.presentation.components
 
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+
 interface Contracts {
     interface ViewModel{
 
     }
 
     interface Direction{
-
+        suspend fun back
     }
 
     interface Intent{
@@ -14,6 +16,7 @@ interface Contracts {
     }
 
     data class UIState(
-        val
+        val components: List<ComponentData> = listOf(),
+        val isLoading: Boolean = false
     )
 }
