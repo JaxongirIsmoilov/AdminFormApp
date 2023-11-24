@@ -3,9 +3,11 @@ package uz.gita.jaxongir.adminformapp.data.model
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
+import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
 
 data class ComponentData(
     val id: String,                         //firebase id
+    val userId: String,                     //qaysi user qoshgani
     val locId: Int,                         //Screendagi indexi
     val idEnteredByUser: String = "",       //operator qoshishlik uchun id
     val content: String,                    //ekranda ko'rinadigan matn
@@ -25,6 +27,7 @@ data class ComponentData(
     fun toRequest(): ComponentRequest = ComponentRequest(
         id = id,
         locId = locId,
+        userId = userId,
         idEnteredByUser = idEnteredByUser,
         content = content,
         textFieldType = converter.toJson(textFieldType),
@@ -37,5 +40,23 @@ data class ComponentData(
         variants = converter.toJson(variants),
         selected = converter.toJson(selected),
         conditions = converter.toJson(conditions)
+    )
+
+    fun toEntity(): ComponentEntity = ComponentEntity(
+        id = id,
+        userId = userId,
+        locId = locId,
+        idEnteredByUser = idEnteredByUser,
+        content = content,
+        textFieldType = textFieldType,
+        maxLines = maxLines,
+        maxLength = maxLength,
+        minLength = minLength,
+        maxValue = maxValue,
+        minValue = minValue,
+        isMulti = isMulti,
+        variants = variants,
+        selected = selected,
+        conditions = conditions
     )
 }

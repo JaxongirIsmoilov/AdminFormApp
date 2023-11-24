@@ -1,10 +1,9 @@
 package uz.gita.jaxongir.adminformapp.data.request
 
-import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
 
 data class ComponentRequest (
     val id: String,
+    val userId: String,
     val locId: Int,
     val idEnteredByUser: String = "",
     val content: String,
