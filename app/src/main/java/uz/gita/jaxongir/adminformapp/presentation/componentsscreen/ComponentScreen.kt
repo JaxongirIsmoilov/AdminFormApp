@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.androidx.AndroidScreen

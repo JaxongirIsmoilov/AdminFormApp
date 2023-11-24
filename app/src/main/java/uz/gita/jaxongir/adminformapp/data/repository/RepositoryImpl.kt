@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
@@ -16,6 +15,7 @@ import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
 import uz.gita.jaxongir.adminformapp.utils.getAll
+import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -86,10 +86,12 @@ class RepositoryImpl @Inject constructor(
     }
 
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
+        myLog("UserId : ${userData.userId}")
         firestore.collection("Users")
             .document(userData.userId)
             .delete()
             .addOnSuccessListener {
+                myLog("Delete USer REPO")
                 coroutineScope.launch {
                     dao.deleteUser(userData.toEntity())
                 }
@@ -140,14 +142,16 @@ class RepositoryImpl @Inject constructor(
                 )
             }
 
-    override fun getUsers(): Flow<Result<List<UserData>>> = flow{
-
-    }
+    override fun getUsers(): Flow<Result<List<UserData>>> =
+        firestore.collection("Users").get().getAll {
+            return@getAll UserData(
+                userId = it.id,
+                userName = it.data?.getOrDefault("userName", "").toString(),
+                password = it.data?.getOrDefault("password", "").toString()
+            )
+        }
 
 }
-
-
-
 
 
 /*
