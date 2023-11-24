@@ -1,16 +1,21 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("com.google.gms.google-services")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "uz.gita.jaxongir.adminformapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "uz.gita.jaxongir.adminformapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -30,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -69,4 +74,48 @@ dependencies {
 
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+
+//    hilt
+    implementation("com.google.dagger:hilt-android:2.44.2")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+//  Room
+    implementation ("androidx.room:room-runtime:2.6.0")
+    annotationProcessor ("androidx.room:room-compiler:2.6.0")
+    kapt ("androidx.room:room-compiler:2.6.0")
+    implementation ("androidx.room:room-ktx:2.6.0")
+
+    //  Voyager
+    implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+    implementation("cafe.adriel.voyager:voyager-androidx:1.0.0-rc05")
+    implementation("cafe.adriel.voyager:voyager-hilt:1.0.0-rc05")
+    implementation("cafe.adriel.voyager:voyager-transitions:1.0.0-rc05")
+
+//    lottie
+    implementation ("com.airbnb.android:lottie-compose:6.1.0")
+
+//    lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-alpha02")
+
+//    Icons
+    implementation ("androidx.compose.material3:material3")
+    implementation ("androidx.compose.material:material")
+    testImplementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4")
+    debugImplementation ("androidx.compose.ui:ui-tooling")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest")
+
+//  Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    //  Time
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
+
+}
+
+kapt{
+    correctErrorTypes = true
 }
