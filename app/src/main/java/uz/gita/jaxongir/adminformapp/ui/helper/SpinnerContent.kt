@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -41,7 +42,7 @@ fun SpinnerContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                TextField(
+                OutlinedTextField(
                     value = content,
                     onValueChange = {
                         content = it
@@ -57,7 +58,7 @@ fun SpinnerContent(
             }
 
             item {
-                TextField(
+                OutlinedTextField(
                     value = content,
                     onValueChange = {
                         content = it
@@ -74,7 +75,7 @@ fun SpinnerContent(
 
             variants.forEach {
                 item {
-                    TextField(value = it, onValueChange = {
+                    OutlinedTextField(value = it, onValueChange = {
 
                     })
                 }
