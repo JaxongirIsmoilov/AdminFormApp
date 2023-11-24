@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
+import uz.gita.jaxongir.adminformapp.data.source.database.entity.UserEntity
 
 @Dao
 interface Dao {
@@ -16,6 +17,15 @@ interface Dao {
     @Delete
     suspend fun deleteData(componentEntity: ComponentEntity)
 
-    @Query("select * from components where userId = :userId")
+    @Query("select * from components where userId = :userId order by locId asc ")
     fun getByUser(userId: String): Flow<List<ComponentEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertUser(userEntity: UserEntity)
+
+    @Delete
+    suspend fun deleteUser(userEntity: UserEntity)
+
+    @Query("select * from users")
+    fun getUsers(): Flow<List<UserEntity>>
 }
