@@ -88,7 +88,7 @@ class RepositoryImpl @Inject constructor(
 
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
-            .document(userData.id)
+            .document(userData.userId)
             .delete()
             .addOnSuccessListener {
                 coroutineScope.launch {

@@ -15,6 +15,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.components.DeleteDialog
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
@@ -31,7 +33,11 @@ import uz.gita.jaxongir.adminformapp.ui.components.UserItem
 class MainScreen : AndroidScreen() {
     @Composable
     override fun Content() {
-
+        val viewModel: MainViewModel = getViewModel()
+        MainScreenContent(
+            uiState = viewModel.uiState.collectAsState(),
+            onEventDispatcher = viewModel::onEventDispatcher
+        )
     }
 }
 
@@ -40,7 +46,7 @@ fun MainScreenContent(
     uiState: State<MainContract.UIState>,
     onEventDispatcher: (MainContract.Intent) -> Unit
 ) {
-    val item = UserData("","","")
+    val item = UserData("", "", "")
     val currentSelectedItem = remember { mutableStateOf(item) }
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) DeleteDialog(
@@ -50,7 +56,7 @@ fun MainScreenContent(
         },
         onClickCancel = { showDialog.value = false }
     )
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         ToolBarView(text = "Users List")
 
         LazyColumn(
@@ -60,9 +66,16 @@ fun MainScreenContent(
             contentPadding = PaddingValues(top = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(uiState.value.userList){
+            items(uiState.value.userList) {
                 currentSelectedItem.value = it
-                UserItem(model = it, onClick = {onEventDispatcher.invoke(MainContract.Intent.MoveToComponentsScreen(it))}, onClickDelete = {showDialog.value = true})
+                UserItem(
+                    model = it,
+                    onClick = {
+                        onEventDispatcher.invoke(
+                            MainContract.Intent.MoveToComponentsScreen(it)
+                        )
+                    },
+                    onClickDelete = { showDialog.value = true })
             }
         }
 
