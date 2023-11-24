@@ -26,5 +26,4 @@ class Converter {
     @TypeConverter
     fun booleanConverter(data: String): List<Boolean> =
         converter.fromJson(data, Array<Boolean>::class.java).asList()
-
 }
