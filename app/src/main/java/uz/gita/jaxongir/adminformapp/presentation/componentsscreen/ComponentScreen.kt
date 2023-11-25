@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
-import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
@@ -117,24 +116,26 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     .weight(1f)
             ) {
                 when (type) {
-//                    ComponentEnum.Input -> {
-//                        InputContent(
-//                            onSaveClickListener = {
-//                                onEventDispatcher.invoke(
-//                                    Contracts.Intent.AddComponent(
-//                                        ComponentData(
-//                                            id = "",
-//                                            userId = userId,
-//                                            locId = 0,
-//                                            idEnteredByUser = id,
-//                                            type = type,
-//                                            content =)
-//                                    )
-//                                )
-//                            },
-//                            id = id
-//                        )
-//                    }
+                    ComponentEnum.Input -> {
+                        InputContent(
+                            onSaveClickListener = {
+                                onEventDispatcher.invoke(
+                                    Contracts.Intent.AddComponent(
+                                        ComponentData(
+                                            id = "",
+                                            userId = userId,
+                                            locId = 0,
+                                            idEnteredByUser = id,
+                                            type = type,
+                                            content =
+
+                                        )
+                                    )
+                                )
+                            },
+                            id = id
+                        )
+                    }
 
                     ComponentEnum.SampleText -> {
                         TextContent()
@@ -151,8 +152,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     ComponentEnum.Spinner -> {
                         SpinnerContent(clickListener = {}, id = id)
                     }
-
-                    else -> {}
                 }
             }
 

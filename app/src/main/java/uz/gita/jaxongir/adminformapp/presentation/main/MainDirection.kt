@@ -9,19 +9,19 @@ import javax.inject.Inject
 
 interface MainDirection {
     suspend fun moveToAddScreen()
-    suspend fun moveToComponentScreen(userData: UserData)
+    suspend fun moveToComponentScreen(userId: String)
     suspend fun moveToPreviewScreen(userData: UserData)
 }
 
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
-) : MainDirection {
+): MainDirection{
     override suspend fun moveToAddScreen() {
         appNavigator.addScreen(AddScreen())
     }
 
-    override suspend fun moveToComponentScreen(userData: UserData) {
-        appNavigator.addScreen(ComponentScreen(userData.userId))
+    override suspend fun moveToComponentScreen(userId: String) {
+        appNavigator.addScreen(ComponentScreen(userId))
     }
 
     override suspend fun moveToPreviewScreen(userData: UserData) {
