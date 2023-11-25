@@ -36,6 +36,7 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
+import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
@@ -78,6 +79,10 @@ fun MainContent(
     var conditions by remember {
         mutableStateOf(arrayListOf<Conditions>())
     }
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) DialogSpinner(
+        uiState.value.savedIds, uiState.value.savedIds.first()
+    ) { onEventDispatcher.invoke(Contracts.Intent.Save) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -101,7 +106,7 @@ fun MainContent(
             Spacer(modifier = Modifier.weight(1f))
 
             TextButton(onClick = {
-
+                showDialog.value = true
             }) {
                 Text(text = "</>", fontSize = 18.sp, color = White)
             }

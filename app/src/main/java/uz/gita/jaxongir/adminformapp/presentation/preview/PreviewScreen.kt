@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
@@ -155,9 +156,7 @@ fun PreviewScreenContent(
                                                 modifier = Modifier.align(Alignment.CenterHorizontally)
                                             )
                                             Spacer(modifier = Modifier.size(10.dp))
-                                            SelectorItem(data.content, data.variants, {
-
-                                            })
+                                            SelectorItem(data.content, data.variants, ComponentData(), {})
                                             Spacer(modifier = Modifier.size(10.dp))
                                         }
                                     }
