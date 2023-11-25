@@ -23,7 +23,7 @@ interface Contracts {
         ): Intent
 
         data class Load(
-            val userData: UserData
+            val userId: String
         ): Intent
 
         object Save: Intent

@@ -31,12 +31,12 @@ import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 
-class ComponentScreen(private val userData: UserData) : AndroidScreen() {
+class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
 
-        viewModel.eventDispatcher(Contracts.Intent.Load(userData))
+        viewModel.eventDispatcher(Contracts.Intent.Load(userId))
 
         MainContent(uiState = viewModel.uiState.collectAsState(), onEventDispatcher = viewModel::eventDispatcher)
     }
@@ -116,7 +116,24 @@ class ComponentScreen(private val userData: UserData) : AndroidScreen() {
             ){
                 when (type) {
                     ComponentEnum.Input -> {
+                        InputContent(
+                            onSaveClickListener = {
+                                onEventDispatcher.invoke(
+                                    Contracts.Intent.AddComponent(
+                                        ComponentData(
+                                            id = "",
+                                            userId = userId,
+                                            locId = 0,
+                                            idEnteredByUser = id,
+                                            type = type,
+                                            content =
 
+                                        )
+                                    )
+                                )
+                            },
+                            id = id
+                        )
                     }
 
                     ComponentEnum.SampleText -> {
