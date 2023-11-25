@@ -2,15 +2,19 @@ package uz.gita.jaxongir.adminformapp.presentation.main
 
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.presentation.adduser.AddScreen
-import uz.gita.jaxongir.adminformapp.presentation.components.ComponentScreen
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentScreen
+import uz.gita.jaxongir.adminformapp.presentation.preview.PreviewScreen
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigator
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MainDirection {
     suspend fun moveToAddScreen()
-    suspend fun moveToComponentScreen(userData: UserData)
+    suspend fun moveToComponentScreen(userId: String)
+    suspend fun moveToPreviewScreen(userData: UserData)
 }
 
+@Singleton
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
 ): MainDirection{
@@ -18,8 +22,12 @@ class MainDirectionImpl @Inject constructor(
         appNavigator.addScreen(AddScreen())
     }
 
-    override suspend fun moveToComponentScreen(userData: UserData) {
-        appNavigator.addScreen(ComponentScreen(userData))
+    override suspend fun moveToComponentScreen(userId: String) {
+        appNavigator.addScreen(ComponentScreen(userId))
+    }
+
+    override suspend fun moveToPreviewScreen(userData: UserData) {
+        appNavigator.addScreen(PreviewScreen(userData))
     }
 
 }

@@ -38,6 +38,7 @@ class MainScreen : AndroidScreen() {
             uiState = viewModel.uiState.collectAsState(),
             onEventDispatcher = viewModel::onEventDispatcher
         )
+
     }
 }
 
@@ -46,6 +47,7 @@ fun MainScreenContent(
     uiState: State<MainContract.UIState>,
     onEventDispatcher: (MainContract.Intent) -> Unit
 ) {
+    onEventDispatcher.invoke(MainContract.Intent.UpdateUserList)
     val item = UserData("", "", "")
     val currentSelectedItem = remember { mutableStateOf(item) }
     val showDialog = remember { mutableStateOf(false) }

@@ -2,40 +2,39 @@ package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.UserData
+import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 
 interface Contracts {
-    interface ViewModel{
+    interface ViewModel {
         val uiState: StateFlow<UIState>
 
         fun eventDispatcher(intent: Intent)
     }
 
-    interface Direction{
-        suspend fun backToMain()
-    }
-
-    interface Intent{
+    interface Intent {
         data class AddComponent(
-            val componentData: ComponentData
-        ): Intent
+            val componentRequest: ComponentRequest
+        ) : Intent
+
         data class DeleteComponent(
             val componentData: ComponentData
-        ): Intent
+        ) : Intent
+
         data class EditComponent(
             val componentData: ComponentData
-        ): Intent
+        ) : Intent
 
         data class Load(
-            val userData: UserData
-        ): Intent
+            val userId: String
+        ) : Intent
 
-        object Save: Intent
+        object Save : Intent
     }
 
     data class UIState(
         val components: List<ComponentData> = listOf(),
         val isLoading: Boolean = false,
-        var index: Int = 0
+        var index: Int = 0,
+        val savedIds: List<String> = listOf()
     )
 }

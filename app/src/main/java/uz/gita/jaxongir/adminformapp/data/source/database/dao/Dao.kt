@@ -14,6 +14,9 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertData(componentEntity: ComponentEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDatas(componentEntity: List<ComponentEntity>)
+
     @Delete
     suspend fun deleteData(componentEntity: ComponentEntity)
 
@@ -23,9 +26,12 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(userEntity: UserEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertUsers(userEntity: List<UserEntity>)
+
     @Delete
     suspend fun deleteUser(userEntity: UserEntity)
 
-    @Query("select * from users order by id asc")
+    @Query("select * from users")
     fun getUsers(): Flow<List<UserEntity>>
 }

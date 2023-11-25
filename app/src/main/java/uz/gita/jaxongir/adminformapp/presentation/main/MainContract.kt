@@ -18,6 +18,8 @@ interface MainContract {
         data class DeleteUser(val userData: UserData) : Intent
 
         data class MoveToComponentsScreen(val userData: UserData) : Intent
+
+        data class MoveToPreviewScreen(val userData: UserData) : Intent
     }
 
     data class UIState(

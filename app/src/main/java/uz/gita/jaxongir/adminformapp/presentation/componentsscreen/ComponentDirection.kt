@@ -3,10 +3,16 @@ package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 import uz.gita.jaxongir.adminformapp.presentation.main.MainScreen
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigator
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class ComponentDirection @Inject constructor(
+interface ComponentDirection{
+    suspend fun backToMain()
+}
+
+@Singleton
+class ComponentDirectionImpl @Inject constructor(
     private val navigator: AppNavigator
-): Contracts.Direction{
+): ComponentDirection {
     override suspend fun backToMain() {
         navigator.replaceAll(MainScreen())
     }

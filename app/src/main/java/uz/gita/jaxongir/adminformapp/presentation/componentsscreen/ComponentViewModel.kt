@@ -12,21 +12,23 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import javax.inject.Inject
 
 @HiltViewModel
 class ComponentViewModel @Inject constructor(
-    private val direction: Contracts.Direction,
+    private val direction: ComponentDirection,
     private val repository: Repository,
 ) : ViewModel(), Contracts.ViewModel {
     override val uiState = MutableStateFlow(Contracts.UIState())
 
     private var userId: String = ""
+    private var locId: Int = 0
     override fun eventDispatcher(intent: Contracts.Intent) {
         when (intent) {
             is Contracts.Intent.AddComponent -> {
                 viewModelScope.launch {
-                    repository.addComponent(intent.componentData)
+                    repository.addComponent(intent.componentData, locId++)
                         .onStart {
                             uiState.update { it.copy(isLoading = true) }
                         }
@@ -47,6 +49,7 @@ class ComponentViewModel @Inject constructor(
                     repository.getComponentsByUserId(userId).onEach {
                         it
                             .onSuccess {
+                                locId = it.size
                                 uiState.update { uiState ->
                                     uiState.copy(components = it)
                                 }
@@ -59,7 +62,7 @@ class ComponentViewModel @Inject constructor(
             }
 
             is Contracts.Intent.Load -> {
-                userId = intent.userData.userId
+                userId = intent.userId
             }
 
             is Contracts.Intent.DeleteComponent -> {

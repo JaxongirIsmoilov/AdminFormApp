@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.data.model
 
 import com.google.gson.Gson
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
@@ -21,6 +22,7 @@ data class ComponentData(
     val variants: List<String>,             //spinner bilan selectordagi variantla
     val selected: List<Boolean>,            //selectorda tanlangala listi
     val conditions: List<Conditions>,       //visibility bergichla
+    val type: ComponentEnum,
 ){
     private val converter = Gson()
 
@@ -39,7 +41,8 @@ data class ComponentData(
         isMulti = isMulti,
         variants = converter.toJson(variants),
         selected = converter.toJson(selected),
-        conditions = converter.toJson(conditions)
+        conditions = converter.toJson(conditions),
+        type = converter.toJson(type)
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
@@ -57,6 +60,7 @@ data class ComponentData(
         isMulti = isMulti,
         variants = variants,
         selected = selected,
-        conditions = conditions
+        conditions = conditions,
+        type = type
     )
 }

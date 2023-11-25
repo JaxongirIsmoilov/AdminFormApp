@@ -35,12 +35,19 @@ class MainViewModel @Inject constructor(
             }
 
             is MainContract.Intent.DeleteUser -> {
-                repository.deleteUser(intent.userData)
+                repository.deleteUser(intent.userData).onEach { }.launchIn(viewModelScope)
+                loadData()
             }
 
             is MainContract.Intent.MoveToComponentsScreen -> {
                 viewModelScope.launch {
-                    direction.moveToComponentScreen(intent.userData)
+                    direction.moveToComponentScreen(intent.userData.userId)
+                }
+            }
+
+            is MainContract.Intent.MoveToPreviewScreen -> {
+                viewModelScope.launch {
+                    direction.moveToPreviewScreen(intent.userData)
                 }
             }
         }
