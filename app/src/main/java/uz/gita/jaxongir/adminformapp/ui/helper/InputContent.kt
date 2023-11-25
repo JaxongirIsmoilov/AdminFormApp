@@ -30,19 +30,19 @@ fun InputContent(
                 mutableStateOf(TextFieldType.Text)
         }
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally){
-                SampleSpinner(
-                        list = listOf(
-                                TextFieldType.Text.content,
-                                TextFieldType.Email.content,
-                                TextFieldType.Number.content,
-                                TextFieldType.Phone.content
-                        ),
-                        preselected = TextFieldType.Text.content,
-                        onSelectionChanged = {
-                                             when()
-                        },
-                        content =
-                )
+//                SampleSpinner(
+//                        list = listOf(
+//                                TextFieldType.Text.content,
+//                                TextFieldType.Email.content,
+//                                TextFieldType.Number.content,
+//                                TextFieldType.Phone.content
+//                        ),
+//                        preselected = TextFieldType.Text.content,
+//                        onSelectionChanged = {
+//                                             when()
+//                        },
+//                        content =
+//                )
 
         }
 
