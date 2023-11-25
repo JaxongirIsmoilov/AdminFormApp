@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
-import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,8 +35,6 @@ class MainViewModel @Inject constructor(
             }
 
             is MainContract.Intent.DeleteUser -> {
-                myLog(intent.userData.userId)
-                myLog(intent.userData.userName)
                 repository.deleteUser(intent.userData).onEach { }.launchIn(viewModelScope)
                 loadData()
             }

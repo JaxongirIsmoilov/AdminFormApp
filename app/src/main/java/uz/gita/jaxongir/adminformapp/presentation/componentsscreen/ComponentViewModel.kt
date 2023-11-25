@@ -23,10 +23,21 @@ class ComponentViewModel @Inject constructor(
     override val uiState = MutableStateFlow(Contracts.UIState())
 
     private var userId: String = ""
+    private var ids = arrayListOf<String>()
     private var locId: Int = 0
     override fun eventDispatcher(intent: Contracts.Intent) {
+        ids.addAll(uiState.value.savedIds)
         when (intent) {
             is Contracts.Intent.AddComponent -> {
+                if (intent.componentData.idEnteredByUser != ""){
+                    ids.add(intent.componentData.idEnteredByUser)
+
+                    uiState.update {
+                        it.copy(savedIds = ids)
+                    }
+
+                    myLog("${uiState.value.savedIds}")
+                }
                 viewModelScope.launch {
                     repository.addComponent(intent.componentData, locId++)
                         .onStart {
@@ -36,7 +47,6 @@ class ComponentViewModel @Inject constructor(
                             it.onSuccess {
                                 Log.d("TTT", "eventDispatcher: $it")
                                 uiState.update {
-                                    myLog("list size vm: ${it.components.size}")
                                     it.copy(components = it.components) }
                                 direction.backToComponent()
                             }

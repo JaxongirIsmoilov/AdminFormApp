@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
-import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,13 +26,9 @@ class PreviewViewModel @Inject constructor(
             }
 
             is PreviewContract.Intent.LoadData -> {
-                myLog("repo")
                 viewModelScope.launch {
-                    myLog("launch")
                     repository.getComponentsByUserId(intent.userId).onEach {
-                        myLog("onEach")
                         it.onSuccess {ls->
-                        myLog("succ")
                             uiState.update { it.copy(compList =  ls) }
                         }
                     }.collect()

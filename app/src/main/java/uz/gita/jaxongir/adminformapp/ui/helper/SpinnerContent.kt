@@ -19,7 +19,6 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
-import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 fun SpinnerContent(
@@ -63,7 +62,7 @@ fun SpinnerContent(
                 modifier = Modifier.wrapContentWidth()
             ) {
                 Text(text = "Variant qo'shish")
-                myLog("$variants")
+
             }
         }
 

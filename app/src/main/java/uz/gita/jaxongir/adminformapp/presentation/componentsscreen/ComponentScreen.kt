@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
@@ -54,6 +56,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
     }
 }
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun MainContent(
     userId: String,
@@ -70,6 +73,10 @@ fun MainContent(
 
     var content by remember {
         mutableStateOf("")
+    }
+
+    var conditions by remember {
+        mutableStateOf(arrayListOf<Conditions>())
     }
     Column(
         modifier = Modifier
@@ -90,6 +97,14 @@ fun MainContent(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
             )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            TextButton(onClick = {
+
+            }) {
+                Text(text = "</>", fontSize = 18.sp, color = White)
+            }
         }
 
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {

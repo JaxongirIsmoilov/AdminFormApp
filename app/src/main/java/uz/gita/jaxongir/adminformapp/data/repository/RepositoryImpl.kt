@@ -21,7 +21,6 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
-import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -34,7 +33,6 @@ class RepositoryImpl @Inject constructor(
             firestore.collection("Components")
                 .add(componentData.copy(locId = id).toRequest())
                 .addOnSuccessListener {
-                    myLog("success repos")
                     coroutineScope.launch {
                         dao.insertData(componentData.toEntity().copy(id = it.id))
                         trySend(Result.success("Component qoshildi"))
@@ -163,12 +161,10 @@ class RepositoryImpl @Inject constructor(
                             )
                         )
                     )
-                    myLog("state:$state")
 
                 }
                 coroutineScope.launch {
                     dao.insertDatas(resultList.map { it.toEntity() })
-                    myLog("lis size repos resu:${resultList.size}")
                 }
                 trySend(Result.success(Unit))
             }
@@ -208,7 +204,6 @@ class RepositoryImpl @Inject constructor(
                 it.onSuccess {
                     dao.getByUser(userID)
                         .onEach {
-                            myLog("size repos:${it.size}")
                             emit(Result.success(it.map {
                                 it.toData()
                             }))
