@@ -42,6 +42,7 @@ fun DialogSpinner(
     onClickSave:()-> Unit
 ) {
 
+    val options = listOf(" <=", "==", ">=", "!=")
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -59,19 +60,6 @@ fun DialogSpinner(
         var text by remember {
             mutableStateOf("Hello World!")
         }
-//        androidx.compose.material3.TextField(
-//            value = text, onValueChange = {
-//                text = it
-//            },
-//            modifier = Modifier
-//                .padding(top = 10.dp, start = 12.dp, end = 12.dp)
-//                .fillMaxWidth()
-//                .align(Alignment.CenterHorizontally),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = Color(0xFFFF3951),
-//                unfocusedBorderColor = Color(0xFFFF7686)
-//            )
-//        )
         Spacer(modifier = Modifier.height(8.dp))
         Column(
             modifier = Modifier
@@ -128,7 +116,7 @@ fun DialogSpinner(
                     readOnly = true,
                     value = selected,
                     onValueChange = { },
-                    label = { Text("Label") },
+                    label = { Text("Label 2") },
                     trailingIcon = {
                         androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = expanded
@@ -146,7 +134,7 @@ fun DialogSpinner(
                         expanded = false
                     }
                 ) {
-                    list.forEach { selectionOption ->
+                    options.forEach { selectionOption ->
                         DropdownMenuItem(
                             text = { Text(text = selectionOption) },
                             onClick = {
