@@ -19,7 +19,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,6 +74,7 @@ fun UserAddScreenContent(
     onEventDispatcher: (UserAddContract.Event) -> Unit,
     isVisibleProgress: Boolean
 ) {
+    val context = LocalContext.current
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
 
@@ -85,7 +85,7 @@ fun UserAddScreenContent(
             .background(Color.White)
     ) {
         Spacer(modifier = Modifier.height(22.dp))
-        Box(){
+        Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Image(
                 painter = painterResource(id = R.drawable.register),
                 contentDescription = "",
@@ -94,7 +94,11 @@ fun UserAddScreenContent(
                     .height(80.dp)
             )
 
-            Text(text = "Get Started",  fontSize = 36.sp)
+            Text(
+                text = "Get Started",
+                fontSize = 36.sp,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -152,7 +156,20 @@ fun UserAddScreenContent(
 
         Button(
             onClick = {
-                onEventDispatcher.invoke(UserAddContract.Event.AddUser(username.trim(), password.trim()))
+                if (username.length > 3 && password.length > 3) {
+                    onEventDispatcher.invoke(
+                        UserAddContract.Event.AddUser(
+                            username.trim(),
+                            password.trim()
+                        )
+                    )
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Username and password must be bigger than 3!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }, modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()

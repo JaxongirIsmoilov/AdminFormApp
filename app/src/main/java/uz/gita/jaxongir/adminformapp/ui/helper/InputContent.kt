@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
-import android.media.MediaDrm.OnEventListener
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -221,7 +220,6 @@ fun InputContent(
                     onSaveClickListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
-                                id = "",
                                 userId = userId,
                                 locId = 0,
                                 idEnteredByUser = id,
@@ -235,8 +233,8 @@ fun InputContent(
                                 isMulti = false,
                                 variants = listOf(),
                                 selected = listOf(),
-                                conditions = conditions,
-                                type = ComponentEnum.Input
+                                conditions = listOf(),
+                                type = ComponentEnum.Input, id = ""
                             )
                         )
                     )
