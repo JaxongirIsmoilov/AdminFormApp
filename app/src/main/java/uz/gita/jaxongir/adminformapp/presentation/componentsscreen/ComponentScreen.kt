@@ -34,6 +34,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import com.google.firebase.components.ComponentContainer
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
@@ -154,7 +155,6 @@ fun MainContent(
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        myLog("Input")
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
@@ -163,8 +163,31 @@ fun MainContent(
                     }
 
                     ComponentEnum.SampleText -> {
-//                        TextContent({}, id = id, )
-                    }
+                        TextContent(
+                            { idComponent, text ->
+                                onEventDispatcher.invoke(
+                                    Contracts.Intent.AddComponent(
+                                        ComponentData(
+                                            id = "",
+                                            userId,
+                                            locId = 0,
+                                            idComponent,
+                                            text,
+                                            TextFieldType.Text,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            false,
+                                            listOf(),
+                                            listOf(),
+                                            listOf(),
+                                            ComponentEnum.SampleText
+                                        )
+                                    )
+                                )
+                    }, id)}
 
                     ComponentEnum.Dater -> {
 

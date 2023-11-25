@@ -45,7 +45,8 @@ class PreviewViewModel @Inject constructor(
 
     /*private fun loadData(){
         repository.getComponentsByUserId(userId).onEach {
-            it.onSuccess {ls->
+            it.onSuccess { ls->
+                myLog("size viewModle lsu:${ls.size}")
                 uiState.update { it.copy(ls) }
             }
         }.launchIn(viewModelScope)

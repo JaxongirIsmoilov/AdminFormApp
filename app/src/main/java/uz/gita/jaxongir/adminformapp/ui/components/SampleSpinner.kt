@@ -35,7 +35,7 @@ fun SampleSpinner(
     preselected: String,
     onSelectionChanged: (selection: String) -> Unit,
     modifier: Modifier = Modifier,
-    content: String
+    content: String,
 ) {
 
     var selected by remember { mutableStateOf(preselected) }
@@ -74,6 +74,11 @@ fun SampleSpinner(
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .align(Alignment.Start)
+                                    .clickable {
+                                        selected = entry
+                                        expanded = !expanded
+                                        onSelectionChanged(entry)
+                                    }
                             )
                         }
                     )
@@ -94,6 +99,6 @@ fun SampleSpinner(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewSimple() {
-    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, Modifier, "Hello world")
+fun PreviewSimple(){
+    SampleSpinner(listOf("Malle","Isfan"),"Isfan",{},Modifier,"Hello world")
 }
