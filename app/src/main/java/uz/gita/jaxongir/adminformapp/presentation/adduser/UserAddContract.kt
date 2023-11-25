@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.presentation.adduser
 
 import org.orbitmvi.orbit.ContainerHost
 
+
 interface UserAddContract {
     interface ViewModel : ContainerHost<UiState, SideEffect> {
         fun onEventDispatcher(event: Event)

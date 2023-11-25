@@ -43,7 +43,6 @@ data class ComponentData(
         selected = converter.toJson(selected),
         conditions = converter.toJson(conditions),
         type = converter.toJson(type),
-        id = ""
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
