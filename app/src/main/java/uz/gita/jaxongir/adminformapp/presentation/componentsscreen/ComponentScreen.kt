@@ -21,10 +21,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
-import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
-import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 
@@ -37,7 +36,8 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
         MainContent(
             uiState = viewModel.uiState.collectAsState(),
-            onEventDispatcher = viewModel::eventDispatcher
+            onEventDispatcher = viewModel::eventDispatcher,
+            userId
         )
     }
 
@@ -45,6 +45,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
     fun MainContent(
         uiState: State<Contracts.UIState>,
         onEventDispatcher: (Contracts.Intent) -> Unit,
+        userId: String
     ) {
         var type by remember {
             mutableStateOf(ComponentEnum.SampleText)
@@ -95,7 +96,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
                     }
                 },
-                content = "Qoshmoqchi bo'lgan component tipini kirit"
+                content = "Qoshmoqchi bo'lgan component tipini kiriting"
             )
 
             Spacer(modifier = Modifier.size(12.dp))
@@ -117,28 +118,50 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        InputContent(
-                            onSaveClickListener = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            id = "",
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            type = type,
-                                            content =
-
-                                        )
-                                    )
-                                )
-                            },
-                            id = id
-                        )
+//                        InputContent(
+//                            onSaveClickListener = {
+//                                onEventDispatcher.invoke(
+//                                    Contracts.Intent.AddComponent(
+//                                        ComponentData(
+//                                            id = "",
+//                                            userId = userId,
+//                                            locId = 0,
+//                                            idEnteredByUser = id,
+//                                            type = type,
+//                                            content =
+//
+//                                        )
+//                                    )
+//                                )
+//                            },
+//
+//                        )
                     }
 
                     ComponentEnum.SampleText -> {
-                        TextContent()
+                        TextContent(onSaveListener = { idComponent, text ->
+                            onEventDispatcher.invoke(
+                                Contracts.Intent.AddComponent(
+                                    ComponentRequest(
+                                        userId,
+                                        0,
+                                        idComponent,
+                                        text,
+                                        "",
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        false,
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    )
+                                )
+                            )
+                        }, "")
                     }
 
                     ComponentEnum.Dater -> {
@@ -154,8 +177,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     }
                 }
             }
-
-
         }
     }
 }
