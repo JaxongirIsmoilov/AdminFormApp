@@ -26,6 +26,7 @@ import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
+import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 import uz.gita.jaxongir.adminformapp.utils.myLog
@@ -80,19 +81,19 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                         }
 
                         "Selector" -> {
-                            ComponentEnum.Selector
+                            type = ComponentEnum.Selector
                         }
 
                         "Dater" -> {
-                            ComponentEnum.Dater
+                            type = ComponentEnum.Dater
                         }
 
                         "SampleText" -> {
-                            ComponentEnum.SampleText
+                            type = ComponentEnum.SampleText
                         }
 
                         else -> {
-                            ComponentEnum.Input
+                            type = ComponentEnum.Input
                         }
 
                     }
@@ -118,7 +119,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        myLog("Input")
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
@@ -127,20 +127,18 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     }
 
                     ComponentEnum.SampleText -> {
-                        myLog("SampleText")
 //                        TextContent({}, id = id, )
                     }
 
                     ComponentEnum.Dater -> {
-                        myLog("Dater")
+
                     }
 
                     ComponentEnum.Selector -> {
-                        myLog("Selector")
+                        SelectorContent(onSaveClickListener = onEventDispatcher::invoke, id = id, userId = userId)
                     }
 
                     ComponentEnum.Spinner -> {
-                        myLog("Spinner")
                         SpinnerContent(clickListener = {}, id = id)
                     }
                 }

@@ -29,6 +29,7 @@ import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 fun SelectorContent(
     onSaveClickListener: (Contracts.Intent) -> Unit,
     id: String,
+    userId: String
 ) {
     val context = LocalContext.current
     var questionText: String by remember { mutableStateOf("") }
