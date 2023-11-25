@@ -7,7 +7,7 @@ import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.UserEntity
 
-@Database([ComponentEntity::class, UserEntity::class], version = 1)
+@Database([ComponentEntity::class, UserEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class Database: RoomDatabase() {
     abstract fun getDao(): Dao

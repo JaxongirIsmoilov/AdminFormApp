@@ -44,6 +44,12 @@ class MainViewModel @Inject constructor(
                     direction.moveToComponentScreen(intent.userData)
                 }
             }
+
+            is MainContract.Intent.MoveToPreviewScreen -> {
+                viewModelScope.launch {
+                    direction.moveToPreviewScreen(intent.userData)
+                }
+            }
         }
     }
 
