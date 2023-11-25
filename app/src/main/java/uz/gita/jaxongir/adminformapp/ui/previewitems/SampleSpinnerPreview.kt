@@ -37,7 +37,7 @@ import uz.gita.jaxongir.adminformapp.R
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 
 @Composable
-fun SampleSpinner(
+fun SampleSpinnerPreview(
     list: List<String>,
     preselected: String,
     onSelectionChanged: (selection: String) -> Unit,

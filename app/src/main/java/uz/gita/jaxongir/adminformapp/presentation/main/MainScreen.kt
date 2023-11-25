@@ -82,7 +82,7 @@ fun MainScreenContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
                 .background(Color(0xFFff7686))
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -112,7 +112,7 @@ fun MainScreenContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp, bottom = 16.dp),
+                .padding(top = 70.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
