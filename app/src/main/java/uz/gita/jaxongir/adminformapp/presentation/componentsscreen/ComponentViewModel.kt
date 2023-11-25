@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.presentation.components
+package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
