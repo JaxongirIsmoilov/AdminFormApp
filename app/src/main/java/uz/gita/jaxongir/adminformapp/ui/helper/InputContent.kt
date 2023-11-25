@@ -96,6 +96,20 @@ fun InputContent(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
+            OutlinedTextField(
+                value = id, onValueChange = {
+                    id = it
+                },
+                modifier = Modifier
+                    .padding(horizontal = 15.dp, vertical = 10.dp)
+                    .fillMaxWidth()
+                    .background(Color(0x33C4C4C4)),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color(0xFFFF3951),
+                    unfocusedBorderColor = Color(0xFFFF7686)
+                ), label = { Text(text = "Istasangiz id kiriting") }
+            )
+
             Column(modifier = Modifier.fillMaxWidth()) {
                 when (type) {
                     TextFieldType.Text -> {
@@ -104,19 +118,7 @@ fun InputContent(
                                 .padding(top = 15.dp)
                                 .fillMaxWidth()
                         ) {
-                            OutlinedTextField(
-                                value = id, onValueChange = {
-                                    id = it
-                                },
-                                modifier = Modifier
-                                    .padding(horizontal = 15.dp, vertical = 10.dp)
-                                    .fillMaxWidth()
-                                    .background(Color(0x33C4C4C4)),
-                                colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    focusedBorderColor = Color(0xFFFF3951),
-                                    unfocusedBorderColor = Color(0xFFFF7686)
-                                ), label = { Text(text = "Istasangiz id kiriting") }
-                            )
+
                             OutlinedTextField(
                                 value = label, onValueChange = {
                                     label = it
