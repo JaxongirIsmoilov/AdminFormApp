@@ -32,11 +32,10 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.UserData
-import uz.gita.jaxongir.adminformapp.ui.components.DatePicker
-import uz.gita.jaxongir.adminformapp.ui.components.InputField
+import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
+import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
-import uz.gita.jaxongir.adminformapp.ui.components.SelectorItem
-import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
+import uz.gita.jaxongir.adminformapp.ui.previewitems.SelectorItem
 
 class PreviewScreen(private val userData: UserData) : AndroidScreen() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -224,7 +223,7 @@ fun PreviewScreenContent(
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             Text(text = "Text field")
-                                            DatePicker(content = data.content)
+//                                            DatePicker(content = data.content)
                                             Spacer(modifier = Modifier.fillMaxWidth())
                                         }
                                     }

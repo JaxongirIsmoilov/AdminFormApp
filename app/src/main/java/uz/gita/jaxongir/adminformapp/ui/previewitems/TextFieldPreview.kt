@@ -1,4 +1,4 @@
-package uz.gita.jaxongir.adminformapp.ui.components
+package uz.gita.jaxongir.adminformapp.ui.previewitems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
