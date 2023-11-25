@@ -42,6 +42,7 @@ fun DialogSpinner(
     onClickSave:()-> Unit
 ) {
 
+    val options = listOf(" <=", "==", ">=", "!=")
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -115,7 +116,7 @@ fun DialogSpinner(
                     readOnly = true,
                     value = selected,
                     onValueChange = { },
-                    label = { Text("Label") },
+                    label = { Text("Label 2") },
                     trailingIcon = {
                         androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = expanded
@@ -133,7 +134,7 @@ fun DialogSpinner(
                         expanded = false
                     }
                 ) {
-                    list.forEach { selectionOption ->
+                    options.forEach { selectionOption ->
                         DropdownMenuItem(
                             text = { Text(text = selectionOption) },
                             onClick = {
