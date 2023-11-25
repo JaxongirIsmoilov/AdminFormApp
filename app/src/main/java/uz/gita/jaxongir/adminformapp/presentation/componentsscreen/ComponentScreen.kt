@@ -125,7 +125,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     }
 
                     ComponentEnum.SampleText -> {
-                        TextContent()
+//                        TextContent({}, id = id, )
                     }
 
                     ComponentEnum.Dater -> {
