@@ -24,6 +24,7 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.components.DatePicker
 import uz.gita.jaxongir.adminformapp.ui.components.InputField
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.ui.components.SelectorItem
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
 
 class PreviewScreen(private val userData: UserData) : AndroidScreen() {
@@ -68,7 +69,7 @@ fun PreviewScreenContent(
 
                     ComponentEnum.Selector -> {
                         item {
-//                            SelectorItem(data.content, data.variants)
+                            SelectorItem(data.content, data.variants)
                         }
                     }
 
@@ -81,12 +82,12 @@ fun PreviewScreenContent(
                     ComponentEnum.Input -> {
                         item {
                             InputField(
-//                                textFieldType = data.textFieldType,
-//                                maxLines = data.maxLines,
-//                                maxLength = data.maxLength,
-//                                minLength = data.minLength,
-//                                maxValue = data.maxValue,
-//                                minValue = data.minValue,
+                                textFieldType = data.textFieldType,
+                                maxLines = data.maxLines,
+                                maxLength = data.maxLength,
+                                minLength = data.minLength,
+                                maxValue = data.maxValue,
+                                minValue = data.minValue,
                                 question = data.content
                             )
                         }
