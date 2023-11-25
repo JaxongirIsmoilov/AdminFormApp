@@ -46,7 +46,7 @@ import java.time.format.DateTimeFormatter
 fun DatePickerPreview(
     componentData: ComponentData,
     content: String,
-    deleteComp: () -> Unit = {}
+    deleteComp: (ComponentData) -> Unit = {}
 ) {
     var pickedDate by remember {
         mutableStateOf(LocalDate.now())
@@ -88,7 +88,7 @@ fun DatePickerPreview(
             }
             Spacer(modifier = Modifier.width(16.dp))
             IconButton(onClick = {
-                deleteComp()
+                deleteComp(componentData)
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.cancel),

@@ -27,13 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.gita.jaxongir.adminformapp.R
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.helper.CheckBoxItem
 
 @Composable
 fun SelectorItem(
     question: String,
     list: List<String>,
-    deleteComp : () -> Unit
+    componentData: ComponentData,
+    deleteComp : (ComponentData) -> Unit
 ) {
     val selectedItem = remember { mutableStateOf<String?>(null) }
     Column(
@@ -49,7 +51,7 @@ fun SelectorItem(
             )
             Spacer(modifier = Modifier.weight(1f))
             IconButton(onClick = {
-                deleteComp()
+                deleteComp(componentData)
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.cancel),
@@ -66,8 +68,8 @@ fun SelectorItem(
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun getSelectorPreview() {
-    SelectorItem("How are You", listOf("1234","1234","1234"), {})
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun getSelectorPreview() {
+//    SelectorItem("How are You", listOf("1234","1234","1234"), {})
+//}
