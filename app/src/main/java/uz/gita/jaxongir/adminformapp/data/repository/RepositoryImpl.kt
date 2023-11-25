@@ -120,7 +120,7 @@ class RepositoryImpl @Inject constructor(
                     resultList.add(
                         ComponentData(
                             id = it.id,
-                            userId = it.data?.getOrDefault("userID", "null").toString(),
+                            userId = it.data?.getOrDefault("userId", "null").toString(),
                             locId = Integer.parseInt(
                                 it.data?.getOrDefault("locId", "0").toString()
                             ),

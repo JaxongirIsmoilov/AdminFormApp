@@ -99,19 +99,19 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                         }
 
                         "Selector" -> {
-                            ComponentEnum.Selector
+                            type = ComponentEnum.Selector
                         }
 
                         "Dater" -> {
-                            ComponentEnum.Dater
+                            type = ComponentEnum.Dater
                         }
 
                         "SampleText" -> {
-                            ComponentEnum.SampleText
+                            type = ComponentEnum.SampleText
                         }
 
                         else -> {
-                            ComponentEnum.Input
+                            type = ComponentEnum.Input
                         }
 
                     }
@@ -138,7 +138,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        myLog("Input")
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,

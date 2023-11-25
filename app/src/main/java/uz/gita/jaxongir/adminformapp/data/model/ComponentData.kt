@@ -18,7 +18,7 @@ data class ComponentData(
     val minLength: Int,                     //tipi text bogan input bosa minimal uzunligi
     val maxValue: Int,                      //tipi number bogan inputga qiymatni maximal chegarasi
     val minValue: Int,                      //tipi number bogan inputga qiymatni minimal chegarasi,
-    val isMulti: Boolean,                       //selelctor kop qiymat qabul qilish qimasligi
+    val isMulti: Boolean,                   //selelctor kop qiymat qabul qilish qimasligi
     val variants: List<String>,             //spinner bilan selectordagi variantla
     val selected: List<Boolean>,            //selectorda tanlangala listi
     val conditions: List<Conditions>,       //visibility bergichla
@@ -27,6 +27,7 @@ data class ComponentData(
     private val converter = Gson()
 
     fun toRequest(): ComponentRequest = ComponentRequest(
+        id = id,
         locId = locId,
         userId = userId,
         idEnteredByUser = idEnteredByUser,
