@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
@@ -25,6 +24,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SelectorItem(
+    question: String,
+    list: List<String>
+
 ) {
 
     val selectedItem = remember { mutableStateOf<String?>(null) }
@@ -37,47 +39,56 @@ fun SelectorItem(
     ) {
         Spacer(modifier = Modifier.size(10.dp))
         Text(
-            text = "data.question",
+            text = question,
             fontSize = 18.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.size(20.dp))
-        LazyColumn() {
-            if (1>0) {
-                items(10) { option ->
-                    Row(modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)) {
-                        Checkbox(
-                            checked = true,
-                            onCheckedChange = { state ->
-                                selectedItem.value = null
-                            },
-                           colors =  CheckboxDefaults.colors(
-                               checkedColor = Color(0xFFFF7686),
-                               uncheckedColor = Color(0x33c4c4c4),
-                           )
-                        )
-
-                    }
-                }
-            } else {
-                items(10) { index ->
-                    Checkbox(
-                        checked = checkboxState[index],
-                        onCheckedChange = {
-                            // Update the state of the checkbox at the clicked index
-                            checkboxState = checkboxState.toMutableList().also {
-                                it[index] = it[index].not()
-                            }
-                        })
-                }
+        Row(modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)) {
+            list.forEach {
+                Checkbox(
+                    checked = true,
+                    onCheckedChange = { state ->
+                        selectedItem.value = null
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color(0xFFFF7686),
+                        uncheckedColor = Color(0x33c4c4c4),
+                    )
+                )
             }
-
         }
+//        LazyColumn() {
+//                items(10) { option ->
+//                    Row(modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)) {
+//                        Checkbox(
+//                            checked = true,
+//                            onCheckedChange = { state ->
+//                                selectedItem.value = null
+//                            },
+//                           colors =  CheckboxDefaults.colors(
+//                               checkedColor = Color(0xFFFF7686),
+//                               uncheckedColor = Color(0x33c4c4c4),
+//                           )
+//                        )
+//
+//                    }
+//                    Checkbox(
+//                        checked = checkboxState[index],
+//                        onCheckedChange = {
+//                            // Update the state of the checkbox at the clicked index
+//                            checkboxState = checkboxState.toMutableList().also {
+//                                it[index] = it[index].not()
+//                            }
+//                        })
+//            }
+//
+//        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun getSelectorPreview(){
+fun getSelectorPreview() {
     SelectorItem()
 }
