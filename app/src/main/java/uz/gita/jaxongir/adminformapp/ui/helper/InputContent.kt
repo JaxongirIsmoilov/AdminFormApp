@@ -244,7 +244,6 @@ fun InputContent(
                 Text(text = "Componentni qoshish")
             }
         }
-
     }
 
 }
