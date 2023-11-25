@@ -1,10 +1,13 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -17,7 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
@@ -59,92 +65,104 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ToolBarView(text = "Componenta qoshish")
-
-            Spacer(modifier = Modifier.size(12.dp))
-
-            SampleSpinner(
-                list = listOf(
-                    ComponentEnum.Spinner.content,
-                    ComponentEnum.SampleText.content,
-                    ComponentEnum.Dater.content,
-                    ComponentEnum.Input.content,
-                    ComponentEnum.Selector.content
-                ),
-                preselected = ComponentEnum.SampleText.content,
-                onSelectionChanged = {
-                    when (it) {
-                        "Spinner" -> {
-                            type = ComponentEnum.Spinner
-                        }
-
-                        "Selector" -> {
-                            ComponentEnum.Selector
-                        }
-
-                        "Dater" -> {
-                            ComponentEnum.Dater
-                        }
-
-                        "SampleText" -> {
-                            ComponentEnum.SampleText
-                        }
-
-                        else -> {
-                            ComponentEnum.Input
-                        }
-
-                    }
-                },
-                content = "Qoshmoqchi bo'lgan component tipini kiriting"
-            )
-
-            Spacer(modifier = Modifier.size(12.dp))
-
-            OutlinedTextField(
-                value = id,
-                onValueChange = {
-                    id = it
-                },
-                label = {
-                    Text(text = "Ixtiyorga qarab id qoshing")
-                }
-            )
-
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .background(Color(0xFFff7686))
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                when (type) {
-                    ComponentEnum.Input -> {
-                        myLog("Input")
-                        InputContent(
-                            onEventListener = onEventDispatcher::invoke,
-                            id = id,
-                            userId = userId
-                        )
-                    }
+                androidx.compose.material3.Text(
+                    text = "Add Component",
+                    color = Color.White,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
 
-                    ComponentEnum.SampleText -> {
+            Spacer(modifier = Modifier.size(12.dp))
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                SampleSpinner(
+                    list = listOf(
+                        ComponentEnum.Spinner.content,
+                        ComponentEnum.SampleText.content,
+                        ComponentEnum.Dater.content,
+                        ComponentEnum.Input.content,
+                        ComponentEnum.Selector.content
+                    ),
+                    preselected = ComponentEnum.SampleText.content,
+                    onSelectionChanged = {
+                        when (it) {
+                            "Spinner" -> {
+                                type = ComponentEnum.Spinner
+                            }
+
+                            "Selector" -> {
+                                type = ComponentEnum.Selector
+                            }
+
+                            "Dater" -> {
+                                type = ComponentEnum.Dater
+                            }
+
+                            "SampleText" -> {
+                                type = ComponentEnum.SampleText
+                            }
+
+                            else -> {
+                                type = ComponentEnum.Input
+                            }
+
+                        }
+                    },
+                    content = "Qoshmoqchi bo'lgan component tipini kiriting"
+                )
+
+                Spacer(modifier = Modifier.size(12.dp))
+
+                OutlinedTextField(
+                    value = id,
+                    onValueChange = {
+                        id = it
+                    },
+                    label = {
+                        Text(text = "Ixtiyorga qarab id qoshing")
+                    }
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
+                    when (type) {
+                        ComponentEnum.Input -> {
+                            myLog("Input")
+                            InputContent(
+                                onEventListener = onEventDispatcher::invoke,
+                                id = id,
+                                userId = userId
+                            )
+                        }
+
+                        ComponentEnum.SampleText -> {
 //                        TextContent({}, id = id, )
-                    }
+                        }
 
-                    ComponentEnum.Dater -> {
+                        ComponentEnum.Dater -> {
 
-                    }
+                        }
 
-                    ComponentEnum.Selector -> {
+                        ComponentEnum.Selector -> {
 
-                    }
+                        }
 
-                    ComponentEnum.Spinner -> {
-                        SpinnerContent(clickListener = {}, id = id)
+                        ComponentEnum.Spinner -> {
+                            SpinnerContent(clickListener = {}, id = id)
+                        }
                     }
                 }
             }
-
-
         }
     }
 }
