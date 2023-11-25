@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -91,19 +94,26 @@ fun UserAddScreenContent(
                 .align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(32.dp))
-        OutlinedTextField(value = username, onValueChange = {
-            username = it
-        }, modifier = Modifier
-            .padding(vertical = 12.dp, horizontal = 16.dp)
-            .height(58.dp)
-            .fillMaxWidth(),
+        OutlinedTextField(
+            value = username, onValueChange = {
+                username = it
+            }, modifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 16.dp)
+                .height(58.dp)
+                .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            label = { Text(text = "Username") })
+            label = { Text(text = "Username") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFFFF3951),
+                unfocusedBorderColor = Color(0xFFFF7686),
+            )
+        )
 
         var isPasswordVisible by remember { mutableStateOf(false) }
 
         Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(value = password,
+        OutlinedTextField(
+            value = password,
             onValueChange = {
                 password = it
             },
@@ -126,7 +136,13 @@ fun UserAddScreenContent(
                 }
             },
             singleLine = true,
-            label = { Text(text = "Password") }
+            label = {
+                Text(text = "Password")
+            },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFFFF3951),
+                unfocusedBorderColor = Color(0xFFFF7686),
+            )
         )
         Spacer(modifier = Modifier.height(72.dp))
 
@@ -136,7 +152,13 @@ fun UserAddScreenContent(
             }, modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()
-                .height(60.dp)
+                .height(60.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =
+                (if (password.length > 3 && username.length > 3) Color(0xFFFF3951) else Color(
+                    0xFFFF7686
+                ))
+            )
         ) {
 
             if (isVisibleProgress) {
