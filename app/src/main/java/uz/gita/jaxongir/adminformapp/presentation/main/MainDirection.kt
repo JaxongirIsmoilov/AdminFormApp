@@ -6,6 +6,7 @@ import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentScre
 import uz.gita.jaxongir.adminformapp.presentation.preview.PreviewScreen
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigator
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MainDirection {
     suspend fun moveToAddScreen()
@@ -13,6 +14,7 @@ interface MainDirection {
     suspend fun moveToPreviewScreen(userData: UserData)
 }
 
+@Singleton
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
 ): MainDirection{

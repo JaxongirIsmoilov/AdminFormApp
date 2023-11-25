@@ -95,7 +95,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
                     }
                 },
-                content = "Qoshmoqchi bo'lgan component tipini kirit"
+                content = "Qoshmoqchi bo'lgan component tipini kiriting"
             )
 
             Spacer(modifier = Modifier.size(12.dp))
