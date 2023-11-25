@@ -15,13 +15,13 @@ interface MainDirection {
 
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
-): MainDirection{
+) : MainDirection {
     override suspend fun moveToAddScreen() {
         appNavigator.addScreen(AddScreen())
     }
 
     override suspend fun moveToComponentScreen(userData: UserData) {
-        appNavigator.addScreen(ComponentScreen(userData))
+        appNavigator.addScreen(ComponentScreen(userData.userId))
     }
 
     override suspend fun moveToPreviewScreen(userData: UserData) {
