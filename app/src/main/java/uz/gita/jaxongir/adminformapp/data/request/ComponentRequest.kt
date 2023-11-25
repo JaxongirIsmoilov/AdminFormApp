@@ -3,6 +3,7 @@ package uz.gita.jaxongir.adminformapp.data.request
 
 
 data class ComponentRequest (
+    val id: String,
     val userId: String,
     val locId: Int,
     val idEnteredByUser: String = "",

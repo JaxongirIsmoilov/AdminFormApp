@@ -48,7 +48,7 @@ fun UserItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(0xFFc4c4c4))
+                .background(color = Color(0x33C4C4C4))
                 .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete() })
         ) {
             Image(
