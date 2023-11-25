@@ -38,6 +38,7 @@ class PreviewScreen(private val userData: UserData) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: PreviewViewModel = getViewModel()
+        viewModel.onEventDispatcher(PreviewContract.Intent.LoadData)
         PreviewScreenContent(
             uiState = viewModel.uiState.collectAsState(),
             onEventDispatcher = viewModel::onEventDispatcher,

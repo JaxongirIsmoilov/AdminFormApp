@@ -117,10 +117,10 @@ class RepositoryImpl @Inject constructor(
             .get()
             .addOnSuccessListener {
                 it.documents.forEach {
-                    resultList.add(
+                    val state = resultList.add(
                         ComponentData(
                             id = it.id,
-                            userId = it.data?.getOrDefault("userID", "null").toString(),
+                            userId = it.data?.getOrDefault("userId", "null").toString(),
                             locId = Integer.parseInt(
                                 it.data?.getOrDefault("locId", "0").toString()
                             ),
@@ -168,16 +168,18 @@ class RepositoryImpl @Inject constructor(
                             )
                         )
                     )
+                    myLog("state:$state")
+
                 }
                 coroutineScope.launch {
                     dao.insertDatas(resultList.map { it.toEntity() })
+                    myLog("lis size repos resu:${resultList.size}")
                 }
                 trySend(Result.success(Unit))
             }
             .addOnFailureListener {
                 trySend(Result.failure(it))
             }
-
         awaitClose()
 
     }
@@ -213,6 +215,7 @@ class RepositoryImpl @Inject constructor(
                 it.onSuccess {
                     dao.getByUser(userID)
                         .onEach {
+                            myLog("size repos:${it.size}")
                             emit(Result.success(it.map {
                                 it.toData()
                             }))
