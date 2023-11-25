@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -105,9 +107,9 @@ fun MainContent(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            TextButton(onClick = {
+            Button(onClick = {
                 showDialog.value = true
-            }) {
+            }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF3951))) {
                 Text(text = "</>", fontSize = 18.sp, color = White)
             }
         }
@@ -187,7 +189,7 @@ fun MainContent(
             )
 
             Spacer(modifier = Modifier.size(36.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -199,7 +201,7 @@ fun MainContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
                             userId = userId,
-                            content= content
+                            content = content
                         )
                     }
 
@@ -273,11 +275,21 @@ fun MainContent(
                     }
 
                     ComponentEnum.Selector -> {
-                        SelectorContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SelectorContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
 
                     ComponentEnum.Spinner -> {
-                        SpinnerContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SpinnerContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
                 }
             }

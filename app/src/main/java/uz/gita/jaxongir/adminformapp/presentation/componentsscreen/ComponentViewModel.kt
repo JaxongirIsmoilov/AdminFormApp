@@ -28,9 +28,8 @@ class ComponentViewModel @Inject constructor(
         ids.addAll(uiState.value.savedIds)
         when (intent) {
             is Contracts.Intent.AddComponent -> {
-                if (intent.componentData.idEnteredByUser != ""){
+                if (intent.componentData.idEnteredByUser != "") {
                     ids.add(intent.componentData.idEnteredByUser)
-
                     uiState.update {
                         it.copy(savedIds = ids)
                     }
@@ -38,14 +37,18 @@ class ComponentViewModel @Inject constructor(
                 }
                 myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
-                    repository.addComponent(intent.componentData.copy(locId = Date().time), uiState.value.components.size)
+                    repository.addComponent(
+                        intent.componentData.copy(locId = Date().time),
+                        uiState.value.components.size
+                    )
                         .onStart {
                             uiState.update { it.copy(isLoading = true) }
                         }
                         .onEach {
                             it.onSuccess {
                                 uiState.update {
-                                    it.copy(components = it.components) }
+                                    it.copy(components = it.components)
+                                }
                                 direction.backToComponent()
                             }
                                 .onFailure {
@@ -82,7 +85,7 @@ class ComponentViewModel @Inject constructor(
                         .onEach {
                             it.onSuccess {
 
-                                }
+                            }
                                 .onFailure {
                                 }
                         }
@@ -91,16 +94,17 @@ class ComponentViewModel @Inject constructor(
                         }
                         .collect()
 
-                    repository.getComponentsByUserId(userId).onEach {
-                        it
-                            .onSuccess {
+                    repository.getComponentsByUserId(userId)
+                        .onCompletion { }
+                        .onEach {
+                            it.onSuccess {
                                 uiState.update { uiState ->
                                     uiState.copy(components = it)
                                 }
                             }
-                            .onFailure {
-                            }
-                    }.collect()
+                                .onFailure {
+                                }
+                        }.collect()
                 }
             }
 
@@ -112,7 +116,7 @@ class ComponentViewModel @Inject constructor(
                         }.onEach {
                             it.onSuccess {
 
-                                }
+                            }
                                 .onFailure {
                                 }
                         }
