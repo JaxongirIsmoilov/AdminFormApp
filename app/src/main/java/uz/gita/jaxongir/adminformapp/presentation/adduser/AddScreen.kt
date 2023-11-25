@@ -3,6 +3,7 @@ package uz.gita.jaxongir.adminformapp.presentation.adduser
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -84,15 +85,18 @@ fun UserAddScreenContent(
             .background(Color.White)
     ) {
         Spacer(modifier = Modifier.height(22.dp))
-        Image(
-            painter = painterResource(id = R.drawable.add_user),
-            contentDescription = "",
-            modifier = Modifier
-                .padding(top = 119.dp)
-                .width(188.dp)
-                .height(174.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+        Box(){
+            Image(
+                painter = painterResource(id = R.drawable.register),
+                contentDescription = "",
+                modifier = Modifier
+                    .width(188.dp)
+                    .height(80.dp)
+            )
+
+            Text(text = "Get Started",  fontSize = 36.sp)
+        }
+
         Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
             value = username, onValueChange = {
