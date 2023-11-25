@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
@@ -28,21 +27,22 @@ class RepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : Repository {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> = callbackFlow {
-        firestore.collection("Components")
-            .add(componentData.copy(locId = id))
-            .addOnSuccessListener {
-                coroutineScope.launch {
-                    dao.insertData(componentData.toEntity().copy(id = it.id))
-                    trySend(Result.success("Component qoshildi"))
+    override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> =
+        callbackFlow {
+            firestore.collection("Components")
+                .add(componentData.copy(locId = id))
+                .addOnSuccessListener {
+                    coroutineScope.launch {
+                        dao.insertData(componentData.toEntity().copy(id = it.id))
+                        trySend(Result.success("Component qoshildi"))
+                    }
                 }
-            }
-            .addOnFailureListener {
-                trySend(Result.failure(it))
-            }
+                .addOnFailureListener {
+                    trySend(Result.failure(it))
+                }
 
-        awaitClose()
-    }
+            awaitClose()
+        }
 
     override fun deleteComponent(componentData: ComponentData): Flow<Result<String>> =
         callbackFlow {
@@ -192,7 +192,7 @@ class RepositoryImpl @Inject constructor(
                     )
                 }
 
-                coroutineScope.launch{ dao.insertUsers(resultList.map { it.toEntity() }) }
+                coroutineScope.launch { dao.insertUsers(resultList.map { it.toEntity() }) }
                 trySend(Unit)
             }
             .addOnFailureListener {
@@ -214,7 +214,7 @@ class RepositoryImpl @Inject constructor(
                         }
                         .collect()
                 }
-                    .onFailure {  }
+                    .onFailure { }
             }
             .collect()
 

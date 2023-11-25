@@ -63,7 +63,7 @@ fun DatePicker(
             Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color(0x33C4C4C4))
+                .background(Color(0xFFF6F2F7))
                 .border(1.dp, Color(0xFFFF3951), RoundedCornerShape(12.dp))
                 .padding(horizontal = 12.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically

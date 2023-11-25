@@ -116,9 +116,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ){
                 when (type) {
                     ComponentEnum.Input -> {
-                        InputContent(
 
-                        )
                     }
 
                     ComponentEnum.SampleText -> {
@@ -130,9 +128,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     }
 
                     ComponentEnum.Selector -> {
-                        SelectorContent {
 
-                        }
                     }
 
                     ComponentEnum.Spinner -> {
