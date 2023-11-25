@@ -1,18 +1,12 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,126 +14,90 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
-import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 fun SelectorContent(
-    onSaveClickListener: (Contracts.Intent) -> Unit,
+    onEventListener: (Contracts.Intent) -> Unit,
     id: String,
-    userId: String
+    userId: String,
+    content: String,
 ) {
-    val context = LocalContext.current
-    var questionText: String by remember { mutableStateOf("") }
-    var componentId: String by remember { mutableStateOf("") }
-    var isMulti: Boolean by remember { mutableStateOf(false) }
-    var firstOption: String by remember { mutableStateOf("") }
-    var secondOption: String by remember { mutableStateOf("") }
-    var thirdOption: String by remember { mutableStateOf("") }
-    var fourthOption: String by remember { mutableStateOf("") }
-    var count: Int by remember { mutableStateOf(1) }
+    var variants by remember {
+        mutableStateOf(listOf<String>())
+    }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize()
-                .align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(value = questionText, onValueChange = { questionText = it },
-                label = { Text(text = "Selctor uchun savol kiriting") })
+    val newVariants = arrayListOf<String>()
+    newVariants.addAll(variants)
 
-            Spacer(modifier = Modifier.size(10.dp))
-
-            OutlinedTextField(value = componentId, onValueChange = { componentId = it },
-                label = { Text(text = "Selector uchun id") })
-
-            Spacer(modifier = Modifier.size(10.dp))
-
-            SampleSpinner(
-                list = listOf("Ha", "Yo'q"),
-                preselected = "Yo'q",
-                onSelectionChanged = { selection ->
-                    isMulti = selection == "Ha"
-                },
-                content = "Ko'p variant tanlaydigan qilmoqchimisiz?"
-            )
-
-            Spacer(modifier = Modifier.size(10.dp))
-
-            Button(onClick = {
-                count++
-                if (count > 4) {
-                    Toast.makeText(
-                        context,
-                        "Maximum 4 ta variant qo'sha olasiz!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }) {
-                Text(
-                    text = "Variant qo'shish",
-                    modifier = Modifier.padding(horizontal = 10.dp)
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+        variants.forEachIndexed { index, s ->
+            item {
+                OutlinedTextField(
+                    value = newVariants[index],
+                    onValueChange = {
+                        newVariants[index] = it
+                        variants = newVariants
+                    },
+                    label = { Text(text = "$index - variant") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
                 )
             }
+        }
 
-            LazyColumn() {
-                item {
-                    if (count > 0) {
-                        Spacer(modifier = Modifier.size(10.dp))
-                        OutlinedTextField(
-                            value = firstOption,
-                            onValueChange = { firstOption = it },
-                            label = { Text(text = "Birinchi variant") })
-                        Spacer(modifier = Modifier.size(10.dp))
-                    }
-                }
-                item {
-                    if (count > 1) {
-                        OutlinedTextField(
-                            value = secondOption,
-                            onValueChange = { secondOption = it },
-                            label = { Text(text = "Ikkinchi variant") })
-                        Spacer(modifier = Modifier.size(10.dp))
-                    }
-
-                }
-                item {
-                    if (count > 2) {
-                        OutlinedTextField(
-                            value = thirdOption,
-                            onValueChange = { thirdOption = it },
-                            label = { Text(text = "Uchinchi variant") })
-                        Spacer(modifier = Modifier.size(10.dp))
-                    }
-                }
-                item {
-                    if (count > 3) {
-                        OutlinedTextField(
-                            value = fourthOption,
-                            onValueChange = { fourthOption = it },
-                            label = { Text(text = "To'rtinchi variant") })
-                        Spacer(modifier = Modifier.size(10.dp))
-                    }
-                }
-
+        item {
+            TextButton(
+                onClick = {
+                    newVariants.add("")
+                    variants = newVariants
+                },
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                Text(text = "Variant qo'shish")
+                myLog("$variants")
             }
-
-
         }
 
-        Button(
-            onClick = {
-
-            }, modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 15.dp)
-        ) {
-            Text(text = "Selectorni qo'shish")
+        item {
+            TextButton(
+                onClick = {
+                    onEventListener.invoke(
+                        Contracts.Intent.AddComponent(
+                            ComponentData(
+                                userId = userId,
+                                locId = 0,
+                                idEnteredByUser = id,
+                                content = content,
+                                textFieldType = TextFieldType.Text,
+                                maxLines = 0,
+                                maxLength = 0,
+                                minLength = 0,
+                                maxValue = 0,
+                                minValue = 0,
+                                isMulti = false,
+                                variants = variants,
+                                selected = listOf(),
+                                conditions = listOf(),
+                                type = ComponentEnum.Selector,
+                                id = ""
+                            )
+                        )
+                    )
+                }, modifier = Modifier.wrapContentWidth()
+            ){
+                Text(text = "Componentni qoshish")
+            }
         }
-
-
     }
+
+
 }
