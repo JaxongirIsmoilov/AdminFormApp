@@ -40,6 +40,7 @@ import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SampleSpinnerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SelectorItem
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class PreviewScreen(private val userData: UserData) : AndroidScreen() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -115,6 +116,7 @@ fun PreviewScreenContent(
                             .wrapContentHeight()
                             .padding(top = 70.dp, start = 16.dp, end = 16.dp)
                     ) {
+                        myLog("${uiState.value.compList.size}")
                         uiState.value.compList.forEach { data ->
                             when (data.type) {
                                 ComponentEnum.Spinner -> {
@@ -180,8 +182,11 @@ fun PreviewScreenContent(
                                             minLength = data.minLength,
                                             maxValue = data.maxValue,
                                             minValue = data.minValue,
-                                            question = data.content
-                                        )
+                                            question = data.content,
+                                            data
+                                        ){
+                                            onEventDispatcher.invoke(PreviewContract.Intent.DeleteComponent(data))
+                                        }
                                     }
                                 }
 
