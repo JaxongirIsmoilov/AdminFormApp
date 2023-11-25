@@ -1,11 +1,10 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import uz.gita.jaxongir.adminformapp.R
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserItem(
@@ -40,48 +38,60 @@ fun UserItem(
     onClickDelete: () -> Unit,
     onClick: () -> Unit
 ) {
-    Row(
+    Card(
         modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 15.dp)
             .fillMaxWidth()
-            .height(98.dp)
-            .background(Color(0x33C4C4C4))
-            .border(BorderStroke(2.dp, Color(0xFFFE3951)),RoundedCornerShape(12.dp))
-            .padding(vertical = 5.dp, horizontal = 15.dp)
+            .height(84.dp)
+            .clip(RoundedCornerShape(15.dp))
     ) {
-        Row(modifier = Modifier
-            .fillMaxSize()
-            .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete() })
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color(0x33C4C4C4))
+                .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete() })
         ) {
             Image(
-                painter = painterResource(id = R.drawable.user),
+                painter = painterResource(id = R.drawable.user_icon),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(64.dp)
+                    .padding(start = 8.dp)
                     .align(Alignment.CenterVertically)
             )
 
             Spacer(modifier = Modifier.size(15.dp))
 
-            Column(
+
+            Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentWidth()
             ) {
-                Text(
-                    text = model.userName,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(top = 10.dp)
-                )
-                Text(
-                    text = model.password,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
-                )
+                Column(modifier = Modifier.align(Alignment.Center)) {
+                    Text(
+                        text = "Name: ${model.userName}",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = "Password: ${model.password}",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
             }
 
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UserItemPreview() {
+    UserItem(model =UserData("", "", ""), onClickDelete = { }) {
+
     }
 }
 
