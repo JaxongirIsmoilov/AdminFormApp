@@ -1,7 +1,9 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,14 +20,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
-import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
+import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 import uz.gita.jaxongir.adminformapp.utils.myLog
@@ -39,8 +44,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
         MainContent(
             uiState = viewModel.uiState.collectAsState(),
-            onEventDispatcher = viewModel::eventDispatcher,
-            userId
+            onEventDispatcher = viewModel::eventDispatcher
         )
     }
 
@@ -48,7 +52,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
     fun MainContent(
         uiState: State<Contracts.UIState>,
         onEventDispatcher: (Contracts.Intent) -> Unit,
-        userId: String
     ) {
         var type by remember {
             mutableStateOf(ComponentEnum.SampleText)
@@ -62,7 +65,21 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ToolBarView(text = "Componenta qoshish")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFff7686))
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                androidx.compose.material3.Text(
+                    text = "Add Component",
+                    color = Color.White,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
 
             Spacer(modifier = Modifier.size(12.dp))
 
@@ -127,49 +144,17 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     .weight(1f)
             ) {
                 when (type) {
-//                    ComponentEnum.Input -> {
-//                        InputContent(
-//                            onSaveClickListener = {
-//                                onEventDispatcher.invoke(
-//                                    Contracts.Intent.AddComponent(
-//                                        ComponentData(
-//                                            id = "",
-//                                            userId = userId,
-//                                            locId = 0,
-//                                            idEnteredByUser = id,
-//                                            type = type,
-//                                            content =
-//
-//                                        )
-//                                    )
-//                                )
-//                            },
-//                            id = id
-//                        )
-//                    }
-
+                    ComponentEnum.Input -> {
+                        myLog("Input")
+                        InputContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId
+                        )
+                    }
 
                     ComponentEnum.SampleText -> {
-                        myLog("text screen")
-                        TextContent(onSaveListener = { idComponent, text ->
-                            onEventDispatcher.invoke(
-                                Contracts.Intent.AddComponent(
-                                    ComponentData(
-                                        "",
-                                        userId,
-                                        0,
-                                        idComponent,
-                                        text,
-                                        TextFieldType.Text,
-                                        0, 0, 0, 0, 0, false,
-                                        listOf(),
-                                        listOf(),
-                                        listOf(),
-                                        ComponentEnum.SampleText
-                                    )
-                                )
-                            )
-                        }, "")
+//                        TextContent({}, id = id, )
                     }
 
                     ComponentEnum.Dater -> {
@@ -183,8 +168,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     ComponentEnum.Spinner -> {
                         SpinnerContent(clickListener = {}, id = id)
                     }
-
-                    else -> {}
                 }
             }
 

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -74,106 +74,87 @@ fun UserAddScreenContent(
     onEventDispatcher: (UserAddContract.Event) -> Unit,
     isVisibleProgress: Boolean
 ) {
-    val context = LocalContext.current
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(Color.White)
     ) {
-        Spacer(modifier = Modifier.height(22.dp))
-        Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Image(
-                painter = painterResource(id = R.drawable.register),
-                contentDescription = "",
-                modifier = Modifier
-                    .width(188.dp)
-                    .height(80.dp)
+
+        Image(
+            painter = painterResource(id = R.drawable.cats),
+            contentDescription = "cats",
+            alignment = Alignment.TopCenter,
+            modifier = Modifier.padding(top = 56.dp, start = 36.dp, end = 36.dp).fillMaxWidth().height(170.dp)
+        )
+
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            OutlinedTextField(
+                value = username, onValueChange = {
+                    username = it
+                }, modifier = Modifier
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .height(58.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Username") },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFFFF3951),
+                    unfocusedBorderColor = Color(0xFFFF7686),
+                )
             )
 
-            Text(
-                text = "Get Started",
-                fontSize = 36.sp,
-                modifier = Modifier.align(Alignment.TopCenter)
+            var isPasswordVisible by remember { mutableStateOf(false) }
+
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = password,
+                onValueChange = {
+                    password = it
+                },
+                modifier = Modifier
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .height(58.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(
+                        onClick = {
+                            isPasswordVisible = !isPasswordVisible
+                        }
+                    ) {
+                        Image(
+                            painter = painterResource(id = if (isPasswordVisible) R.drawable.key1 else R.drawable.key2),
+                            contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password"
+                        )
+                    }
+                },
+                singleLine = true,
+                label = {
+                    Text(text = "Password")
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFFFF3951),
+                    unfocusedBorderColor = Color(0xFFFF7686),
+                )
             )
         }
-
-        Spacer(modifier = Modifier.height(32.dp))
-        OutlinedTextField(
-            value = username, onValueChange = {
-                username = it
-            }, modifier = Modifier
-                .padding(vertical = 12.dp, horizontal = 16.dp)
-                .height(58.dp)
-                .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            label = { Text(text = "Username") },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFFF3951),
-                unfocusedBorderColor = Color(0xFFFF7686),
-            )
-        )
-
-        var isPasswordVisible by remember { mutableStateOf(false) }
-
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = {
-                password = it
-            },
-            modifier = Modifier
-                .padding(vertical = 12.dp, horizontal = 16.dp)
-                .height(58.dp)
-                .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(
-                    onClick = {
-                        isPasswordVisible = !isPasswordVisible
-                    }
-                ) {
-                    Image(
-                        painter = painterResource(id = if (isPasswordVisible) R.drawable.key1 else R.drawable.key2),
-                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password"
-                    )
-                }
-            },
-            singleLine = true,
-            label = {
-                Text(text = "Password")
-            },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFFF3951),
-                unfocusedBorderColor = Color(0xFFFF7686),
-            )
-        )
-        Spacer(modifier = Modifier.height(72.dp))
-
         Button(
             onClick = {
-                if (username.length > 3 && password.length > 3) {
-                    onEventDispatcher.invoke(
-                        UserAddContract.Event.AddUser(
-                            username.trim(),
-                            password.trim()
-                        )
+                onEventDispatcher.invoke(
+                    UserAddContract.Event.AddUser(
+                        username.trim(),
+                        password.trim()
                     )
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Username and password must be bigger than 3!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                )
             }, modifier = Modifier
-                .padding(10.dp)
+                .padding(bottom = 70.dp, start = 16.dp, end = 16.dp)
                 .fillMaxWidth()
-                .height(60.dp),
+                .height(60.dp).align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
                 (if (password.length > 3 && username.length > 3) Color(0xFFFF3951) else Color(

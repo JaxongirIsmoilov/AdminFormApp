@@ -33,8 +33,6 @@ fun InputContent(
     id: String,
     userId: String
 ) {
-
-    myLog("InputContent")
     var type by remember {
         mutableStateOf(TextFieldType.Text)
     }
