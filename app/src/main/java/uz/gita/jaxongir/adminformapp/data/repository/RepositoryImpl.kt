@@ -225,6 +225,7 @@ class RepositoryImpl @Inject constructor(
 
 
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
+        dao.deleteUsers()
         getUser().onEach {
             dao.getUsers().onEach {
                 emit(Result.success(it.map { it.toData() }))

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -113,8 +114,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
+                    .wrapContentSize()
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
@@ -127,18 +127,20 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     }
 
                     ComponentEnum.SampleText -> {
+                        myLog("SampleText")
 //                        TextContent({}, id = id, )
                     }
 
                     ComponentEnum.Dater -> {
-
+                        myLog("Dater")
                     }
 
                     ComponentEnum.Selector -> {
-
+                        myLog("Selector")
                     }
 
                     ComponentEnum.Spinner -> {
+                        myLog("Spinner")
                         SpinnerContent(clickListener = {}, id = id)
                     }
                 }

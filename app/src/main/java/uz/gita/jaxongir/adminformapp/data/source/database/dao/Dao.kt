@@ -34,4 +34,8 @@ interface Dao {
 
     @Query("select * from users")
     fun getUsers(): Flow<List<UserEntity>>
+
+    @Query("delete from users")
+    suspend fun deleteUsers()
+
 }
