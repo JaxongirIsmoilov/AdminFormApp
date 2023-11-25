@@ -35,7 +35,7 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 @Composable
 fun UserItem(
     model: UserData,
-    onClickDelete: () -> Unit,
+    onClickDelete: (UserData) -> Unit,
     onClick: () -> Unit
 ) {
     Card(
@@ -49,7 +49,7 @@ fun UserItem(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color(0x33D1D1D1))
-                .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete() })
+                .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete(model) })
         ) {
             Image(
                 painter = painterResource(id = R.drawable.user),

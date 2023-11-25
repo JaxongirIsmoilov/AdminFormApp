@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
@@ -245,5 +246,10 @@ fun InputContent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun InputContentPreview(){
 
 }

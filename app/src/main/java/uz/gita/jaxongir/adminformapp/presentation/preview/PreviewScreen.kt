@@ -2,8 +2,10 @@ package uz.gita.jaxongir.adminformapp.presentation.preview
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +41,9 @@ class PreviewScreen(private val userData: UserData) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: PreviewViewModel = getViewModel()
+
+        viewModel.onEventDispatcher(PreviewContract.Intent.LoadData(userData.userId))
+
         PreviewScreenContent(
             uiState = viewModel.uiState.collectAsState(),
             onEventDispatcher = viewModel::onEventDispatcher,
@@ -83,7 +89,20 @@ fun PreviewScreenContent(
         } else {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    ToolBarView(text = "Components")
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFff7686))
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Componentalar",
+                            color = Color.White,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()

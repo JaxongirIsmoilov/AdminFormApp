@@ -14,8 +14,12 @@ interface PreviewContract {
     interface Intent{
         data class MoveToComponentScreen(val userId : String) : Intent
 
-        object LoadData : Intent
+        data class LoadData(
+            val userId: String
+        ): Intent
     }
 
-    data class UiState(val compList : List<ComponentData> = emptyList())
+    data class UiState(
+        val compList : List<ComponentData> = emptyList()
+    )
 }

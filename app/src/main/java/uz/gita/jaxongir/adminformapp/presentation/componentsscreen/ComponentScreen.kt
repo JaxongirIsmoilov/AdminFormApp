@@ -46,9 +46,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
-
         viewModel.eventDispatcher(Contracts.Intent.Load(userId))
-
         MainContent(
             userId = userId,
             uiState = viewModel.uiState.collectAsState(),
@@ -112,19 +110,19 @@ fun MainContent(
                         }
 
                         "Selector" -> {
-                            ComponentEnum.Selector
+                            type = ComponentEnum.Selector
                         }
 
                         "Dater" -> {
-                            ComponentEnum.Dater
+                            type = ComponentEnum.Dater
                         }
 
                         "SampleText" -> {
-                            ComponentEnum.SampleText
+                            type = ComponentEnum.SampleText
                         }
 
                         else -> {
-                            ComponentEnum.Input
+                            type = ComponentEnum.Input
                         }
 
                     }

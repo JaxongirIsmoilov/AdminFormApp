@@ -4,9 +4,9 @@ import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.UserEntity
 
 data class UserData(
-    val userId: String,
-    val userName: String,
-    val password: String,
+    var userId: String,
+    var userName: String,
+    var password: String,
 ) {
     fun toEntity(): UserEntity = UserEntity(
         id = userId,

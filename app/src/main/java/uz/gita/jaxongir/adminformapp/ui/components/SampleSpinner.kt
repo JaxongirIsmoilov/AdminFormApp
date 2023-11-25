@@ -66,6 +66,7 @@ fun SampleSpinner(
                         onClick = {
                             selected = entry
                             expanded = false
+                            onSelectionChanged(entry)
                         },
                         text = {
                             Text(
@@ -73,11 +74,6 @@ fun SampleSpinner(
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .align(Alignment.Start)
-                                    .clickable {
-                                        selected = entry
-                                        expanded = !expanded
-                                        onSelectionChanged(entry)
-                                    }
                             )
                         }
                     )
@@ -98,6 +94,6 @@ fun SampleSpinner(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewSimple(){
-    SampleSpinner(listOf("Malle","Isfan"),"Isfan",{},Modifier,"Hello world")
+fun PreviewSimple() {
+    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, Modifier, "Hello world")
 }

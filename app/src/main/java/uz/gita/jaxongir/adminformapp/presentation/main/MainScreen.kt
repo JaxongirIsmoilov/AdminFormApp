@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.presentation.main
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -60,12 +61,13 @@ fun MainScreenContent(
     onEventDispatcher: (MainContract.Intent) -> Unit
 ) {
     onEventDispatcher.invoke(MainContract.Intent.UpdateUserList)
-    val item = UserData("", "", "")
-    val currentSelectedItem = remember { mutableStateOf(item) }
+    val userId = remember { mutableStateOf("") }
+    val userPass = remember { mutableStateOf("") }
+    val userName = remember { mutableStateOf("") }
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) DeleteDialog(
         onClickDelete = {
-            onEventDispatcher.invoke(MainContract.Intent.DeleteUser(currentSelectedItem.value))
+            onEventDispatcher.invoke(MainContract.Intent.DeleteUser(UserData(userId.value, userName.value, userPass.value)))
             showDialog.value = false
         },
         onClickCancel = { showDialog.value = false }
@@ -90,12 +92,13 @@ fun MainScreenContent(
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.weight(1f))
-            Button(onClick = {
-                onEventDispatcher(MainContract.Intent.MoveToAddScreen)
-            }, colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFff3951)
-            )
-                ) {
+            Button(
+                onClick = {
+                    onEventDispatcher(MainContract.Intent.MoveToAddScreen)
+                }, colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFff3951)
+                )
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier
                         .size(30.dp),
@@ -111,7 +114,6 @@ fun MainScreenContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
-                currentSelectedItem.value = it
                 UserItem(
                     model = it,
                     onClick = {
@@ -119,7 +121,12 @@ fun MainScreenContent(
                             MainContract.Intent.MoveToPreviewScreen(it)
                         )
                     },
-                    onClickDelete = { showDialog.value = true })
+                    onClickDelete = {data->
+                        userName.value = data.userName
+                        userId.value = data.userId
+                        userPass.value = data.password
+                        showDialog.value = true
+                    })
             }
         }
     }
