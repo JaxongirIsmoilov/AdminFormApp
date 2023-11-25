@@ -2,11 +2,14 @@ package uz.gita.jaxongir.adminformapp.presentation.preview
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -95,44 +98,118 @@ fun PreviewScreenContent(
                             when (data.type) {
                                 ComponentEnum.Spinner -> {
                                     item {
-                                        SampleSpinner(
-                                            list = data.variants,
-                                            preselected = data.variants.first(),
-                                            onSelectionChanged = {},
-                                            content = data.content
-                                        )
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(
+                                                    horizontal = 10.dp, vertical = 15.dp
+                                                )
+                                                .fillMaxWidth()
+                                                .background(color = Color.Gray)
+                                        ) {
+                                            Text(
+                                                text = "Spinner",
+                                                fontSize = 20.sp,
+                                                modifier = Modifier
+                                                    .padding(bottom = 10.dp)
+                                                    .align(Alignment.CenterHorizontally)
+                                            )
+                                            SampleSpinner(
+                                                list = data.variants,
+                                                preselected = data.variants.first(),
+                                                onSelectionChanged = {},
+                                                content = data.content,
+                                                modifier = Modifier.padding(bottom = 10.dp)
+                                            )
+                                        }
+
                                     }
                                 }
 
                                 ComponentEnum.Selector -> {
                                     item {
-                                        SelectorItem(data.content, data.variants)
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(
+                                                    horizontal = 10.dp, vertical = 15.dp
+                                                )
+                                                .fillMaxWidth()
+                                                .background(color = Color.Gray)
+                                        ) {
+                                            Spacer(modifier = Modifier.size(10.dp))
+                                            Text(
+                                                text = "Selector ",
+                                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                            )
+                                            Spacer(modifier = Modifier.size(10.dp))
+                                            SelectorItem(data.content, data.variants)
+                                            Spacer(modifier = Modifier.size(10.dp))
+                                        }
                                     }
                                 }
 
                                 ComponentEnum.SampleText -> {
                                     item {
-                                        Text(text = data.content)
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(horizontal = 10.dp, vertical = 15.dp)
+                                                .fillMaxWidth()
+                                                .background(color = Color.Gray)
+                                        ) {
+                                            Spacer(modifier = Modifier.size(10.dp))
+                                            Text(
+                                                text = "Text View",
+                                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                            )
+                                            Text(
+                                                text = data.content,
+                                                fontSize = 22.sp,
+                                                modifier = Modifier
+                                                    .padding(bottom = 10.dp)
+                                                    .align(Alignment.CenterHorizontally)
+                                            )
+                                        }
+
                                     }
                                 }
 
                                 ComponentEnum.Input -> {
                                     item {
-                                        InputField(
-                                            textFieldType = data.textFieldType,
-                                            maxLines = data.maxLines,
-                                            maxLength = data.maxLength,
-                                            minLength = data.minLength,
-                                            maxValue = data.maxValue,
-                                            minValue = data.minValue,
-                                            question = data.content
-                                        )
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(horizontal = 10.dp, vertical = 15.dp)
+                                                .fillMaxWidth()
+                                                .background(color = Color.Gray),
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(text = "Text field")
+                                            InputField(
+                                                textFieldType = data.textFieldType,
+                                                maxLines = data.maxLines,
+                                                maxLength = data.maxLength,
+                                                minLength = data.minLength,
+                                                maxValue = data.maxValue,
+                                                minValue = data.minValue,
+                                                question = data.content
+                                            )
+                                            Spacer(modifier = Modifier.fillMaxWidth())
+
+                                        }
                                     }
                                 }
 
                                 ComponentEnum.Dater -> {
                                     item {
-                                        DatePicker(content = data.content)
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(horizontal = 10.dp, vertical = 15.dp)
+                                                .fillMaxWidth()
+                                                .background(color = Color.Gray),
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(text = "Text field")
+                                            DatePicker(content = data.content)
+                                            Spacer(modifier = Modifier.fillMaxWidth())
+                                        }
                                     }
                                 }
                             }

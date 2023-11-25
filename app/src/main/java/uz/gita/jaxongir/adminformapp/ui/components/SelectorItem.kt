@@ -38,7 +38,7 @@ fun SelectorItem(
     ) {
         Spacer(modifier = Modifier.size(10.dp))
         Text(
-            text = "data.question",
+            text = question,
             fontSize = 18.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
