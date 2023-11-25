@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -102,6 +105,8 @@ fun UserAddScreenContent(
         }
 
         Spacer(modifier = Modifier.height(32.dp))
+
+
         OutlinedTextField(
             value = username, onValueChange = {
                 username = it
@@ -114,7 +119,15 @@ fun UserAddScreenContent(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFFF3951),
                 unfocusedBorderColor = Color(0xFFFF7686),
-            )
+            ),
+            trailingIcon = {
+                    Image(
+                        painter = painterResource(id =  R.drawable.name_icon),
+                        contentDescription = "Show",
+                        modifier = Modifier.size(32.dp)
+                    )
+
+            }
         )
 
         var isPasswordVisible by remember { mutableStateOf(false) }
@@ -138,8 +151,9 @@ fun UserAddScreenContent(
                     }
                 ) {
                     Image(
-                        painter = painterResource(id = if (isPasswordVisible) R.drawable.key1 else R.drawable.key2),
-                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password"
+                        painter = painterResource(id = if (isPasswordVisible) R.drawable.visibility_icon else R.drawable.visibility_icon),
+                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password",
+                        modifier = Modifier.size(32.dp)
                     )
                 }
             },
@@ -182,7 +196,9 @@ fun UserAddScreenContent(
             )
         ) {
 
+
             if (isVisibleProgress) {
+                Text(text = "Add User", fontSize = 22.sp)
                 CircularProgressIndicator(
                     modifier = Modifier.padding(2.dp),
                     color = Purple80,
@@ -190,6 +206,8 @@ fun UserAddScreenContent(
                 )
             } else {
                 Text(text = "Add User", fontSize = 22.sp)
+
+                Icon(painter = painterResource(id = R.drawable.ic_next), contentDescription = "add", modifier = Modifier.size(24.dp).padding(start = 8.dp))
             }
         }
 
