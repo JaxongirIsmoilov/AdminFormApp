@@ -15,24 +15,18 @@ import uz.gita.jaxongir.adminformapp.presentation.preview.PreviewDirectionImpl
 import uz.gita.jaxongir.adminformapp.presentation.splash.SplashDirection
 import uz.gita.jaxongir.adminformapp.presentation.splash.SplashDirectionImpl
 
+
 @Module
 @InstallIn(ViewModelComponent::class)
 interface DirectionModule {
-
     @Binds
     fun compDirection(impl: ComponentDirectionImpl): ComponentDirection
-
     @Binds
     fun bindsMainDirection(impl: MainDirectionImpl): MainDirection
-
     @Binds
     fun bindUserAddDirection(impl: UserAddDirectionImpl): UserAddDirection
-
     @Binds
     fun bindSplashDirection(impl: SplashDirectionImpl): SplashDirection
-
     @Binds
     fun bindsPreviewDirection(impl: PreviewDirectionImpl) : PreviewDirection
-
-
 }
