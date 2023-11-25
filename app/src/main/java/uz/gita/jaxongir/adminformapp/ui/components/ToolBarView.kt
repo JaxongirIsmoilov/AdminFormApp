@@ -23,7 +23,7 @@ fun ToolBarView(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(Color(0xFF0E4E6B))
+            .background(Color(0xFFFF7686))
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

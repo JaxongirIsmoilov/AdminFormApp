@@ -168,11 +168,10 @@ class RepositoryImpl @Inject constructor(
                             )
                         )
                     )
-
-                    coroutineScope.launch { dao.insertDatas(resultList.map { it.toEntity() }) }
-
                 }
-
+                coroutineScope.launch {
+                    dao.insertDatas(resultList.map { it.toEntity() })
+                }
                 trySend(Result.success(Unit))
             }
             .addOnFailureListener {

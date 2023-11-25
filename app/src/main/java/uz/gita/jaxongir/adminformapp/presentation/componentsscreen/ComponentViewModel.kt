@@ -36,6 +36,7 @@ class ComponentViewModel @Inject constructor(
                             it
                                 .onSuccess {
                                     Log.d("TTT", "eventDispatcher: $it")
+                                    direction.backToComponent()
                                 }
                                 .onFailure {
                                     Log.d("TTT", "eventDispatcher: ${it.message}")
@@ -47,8 +48,7 @@ class ComponentViewModel @Inject constructor(
                         .collect()
 
                     repository.getComponentsByUserId(userId).onEach {
-                        it
-                            .onSuccess {
+                        it.onSuccess {
                                 locId = it.size
                                 uiState.update { uiState ->
                                     uiState.copy(components = it)
@@ -135,7 +135,7 @@ class ComponentViewModel @Inject constructor(
 
             Contracts.Intent.Save -> {
                 viewModelScope.launch {
-                    direction.backToMain()
+                    direction.backToComponent()
                 }
             }
         }

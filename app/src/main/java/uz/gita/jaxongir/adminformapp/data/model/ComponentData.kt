@@ -23,7 +23,7 @@ data class ComponentData(
     val selected: List<Boolean>,            //selectorda tanlangala listi
     val conditions: List<Conditions>,       //visibility bergichla
     val type: ComponentEnum,
-){
+) {
     private val converter = Gson()
 
     fun toRequest(): ComponentRequest = ComponentRequest(
@@ -41,7 +41,8 @@ data class ComponentData(
         variants = converter.toJson(variants),
         selected = converter.toJson(selected),
         conditions = converter.toJson(conditions),
-        type = converter.toJson(type)
+        type = converter.toJson(type),
+        id = ""
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
