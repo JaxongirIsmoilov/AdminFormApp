@@ -6,7 +6,7 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 
 interface Repository {
-    fun addComponent(componentData: ComponentData): Flow<Result<String>>
+    fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>>
     fun deleteComponent(componentData: ComponentData): Flow<Result<String>>
     fun editComponent(componentData: ComponentData): Flow<Result<String>>
     fun addUser(request: UserRequest): Flow<Result<String>>

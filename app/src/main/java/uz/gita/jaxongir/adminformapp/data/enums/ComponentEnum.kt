@@ -1,9 +1,9 @@
 package uz.gita.jaxongir.adminformapp.data.enums
 
-enum class ComponentEnum {
-    Spinner,
-    Selector,
-    SampleText,
-    Input,
-    Dater
+enum class ComponentEnum(val content: String) {
+    Spinner("Spinner"),
+    Selector("Selector"),
+    SampleText("SampleText"),
+    Input("Input"),
+    Dater("Dater")
 }

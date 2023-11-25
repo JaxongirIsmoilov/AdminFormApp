@@ -11,10 +11,6 @@ interface Contracts {
         fun eventDispatcher(intent: Intent)
     }
 
-    interface Direction{
-        suspend fun backToMain()
-    }
-
     interface Intent{
         data class AddComponent(
             val componentData: ComponentData
@@ -36,6 +32,7 @@ interface Contracts {
     data class UIState(
         val components: List<ComponentData> = listOf(),
         val isLoading: Boolean = false,
-        var index: Int = 0
+        var index: Int = 0,
+        val savedIds: List<String> = listOf()
     )
 }

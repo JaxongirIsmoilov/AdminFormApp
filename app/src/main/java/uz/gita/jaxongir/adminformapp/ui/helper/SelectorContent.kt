@@ -22,10 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
+import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 
 @Composable
 fun SelectorContent(
-    onClickAdd: () -> Unit
+    onSaveClickListener: (Contracts.Intent) -> Unit,
+    id: String,
 ) {
     val context = LocalContext.current
     var questionText: String by remember { mutableStateOf("") }
@@ -61,9 +64,7 @@ fun SelectorContent(
                     isMulti = selection == "Ha"
                 },
                 content = "Ko'p variant tanlaydigan qilmoqchimisiz?"
-            ) {
-
-            }
+            )
 
             Spacer(modifier = Modifier.size(10.dp))
 
@@ -130,7 +131,7 @@ fun SelectorContent(
 
         Button(
             onClick = {
-                onClickAdd()
+
             }, modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 15.dp)
