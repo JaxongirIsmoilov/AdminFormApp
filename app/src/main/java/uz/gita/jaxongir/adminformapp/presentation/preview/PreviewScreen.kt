@@ -157,7 +157,9 @@ fun PreviewScreenContent(
                                                 modifier = Modifier.align(Alignment.CenterHorizontally)
                                             )
                                             Spacer(modifier = Modifier.size(10.dp))
-                                            SelectorItem(data.content, data.variants)
+                                            SelectorItem(data.content, data.variants, {
+
+                                            })
                                             Spacer(modifier = Modifier.size(10.dp))
                                         }
                                     }
