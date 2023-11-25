@@ -10,6 +10,8 @@ import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentDire
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentDirectionImpl
 import uz.gita.jaxongir.adminformapp.presentation.main.MainDirection
 import uz.gita.jaxongir.adminformapp.presentation.main.MainDirectionImpl
+import uz.gita.jaxongir.adminformapp.presentation.preview.PreviewDirection
+import uz.gita.jaxongir.adminformapp.presentation.preview.PreviewDirectionImpl
 import uz.gita.jaxongir.adminformapp.presentation.splash.SplashDirection
 import uz.gita.jaxongir.adminformapp.presentation.splash.SplashDirectionImpl
 
@@ -28,4 +30,7 @@ interface DirectionModule {
 
     @Binds
     fun bindSplashDirection(impl: SplashDirectionImpl): SplashDirection
+
+    @Binds
+    fun bindsPreviewDirection(impl: PreviewDirectionImpl) : PreviewDirection
 }

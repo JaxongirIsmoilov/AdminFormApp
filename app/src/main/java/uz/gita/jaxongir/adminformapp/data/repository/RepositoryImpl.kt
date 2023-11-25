@@ -159,9 +159,11 @@ class RepositoryImpl @Inject constructor(
                             conditions = converter.fromJson(
                                 it.data?.getOrDefault("conditions", "[]").toString(),
                                 Array<Conditions>::class.java
-                            ).asList(), ComponentEnum.Dater
+                            ).asList(),
+                            type = converter.fromJson(it.data?.getOrDefault("type", "").toString(), ComponentEnum::class.java)
                         )
                     )
+
                     coroutineScope.launch { dao.insertDatas(resultList.map { it.toEntity() }) }
 
                 }

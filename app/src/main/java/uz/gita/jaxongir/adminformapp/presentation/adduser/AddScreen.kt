@@ -148,7 +148,7 @@ fun UserAddScreenContent(
 
         Button(
             onClick = {
-                onEventDispatcher.invoke(UserAddContract.Event.AddUser(username, password))
+                onEventDispatcher.invoke(UserAddContract.Event.AddUser(username.trim(), password.trim()))
             }, modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()
