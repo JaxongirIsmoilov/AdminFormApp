@@ -9,7 +9,7 @@ import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
 data class ComponentData(
     val id: String,                         //firebase id
     val userId: String,                     //qaysi user qoshgani
-    val locId: Int,                         //Screendagi indexi
+    val locId: Long,                         //Screendagi indexi
     val idEnteredByUser: String = "",       //operator qoshishlik uchun id
     val content: String,                    //ekranda ko'rinadigan matn
     val textFieldType: TextFieldType,       //input bosa uning tipi

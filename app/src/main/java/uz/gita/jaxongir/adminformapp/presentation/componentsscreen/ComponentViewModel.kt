@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
 import uz.gita.jaxongir.adminformapp.utils.myLog
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +24,6 @@ class ComponentViewModel @Inject constructor(
 
     private var userId: String = ""
     private var ids = arrayListOf<String>()
-    private var locId: Int = 0
     override fun eventDispatcher(intent: Contracts.Intent) {
         ids.addAll(uiState.value.savedIds)
         when (intent) {
@@ -36,22 +35,20 @@ class ComponentViewModel @Inject constructor(
                         it.copy(savedIds = ids)
                     }
 
-                    myLog("${uiState.value.savedIds}")
                 }
+                myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
-                    repository.addComponent(intent.componentData, locId++)
+                    repository.addComponent(intent.componentData.copy(locId = Date().time), uiState.value.components.size)
                         .onStart {
                             uiState.update { it.copy(isLoading = true) }
                         }
                         .onEach {
                             it.onSuccess {
-                                Log.d("TTT", "eventDispatcher: $it")
                                 uiState.update {
                                     it.copy(components = it.components) }
                                 direction.backToComponent()
                             }
                                 .onFailure {
-                                    Log.d("TTT", "eventDispatcher: ${it.message}")
                                 }
                         }
                         .onCompletion {
@@ -61,16 +58,15 @@ class ComponentViewModel @Inject constructor(
 
                     repository.getComponentsByUserId(userId).onEach {
                         it.onSuccess {
-                            locId = it.size
                             uiState.update { uiState ->
                                 uiState.copy(components = it)
                             }
                         }
                             .onFailure {
-                                Log.d("TTT", "eventDispatcher: ${it.message}")
                             }
                     }.collect()
                 }
+
             }
 
             is Contracts.Intent.Load -> {
@@ -85,10 +81,9 @@ class ComponentViewModel @Inject constructor(
                         }
                         .onEach {
                             it.onSuccess {
-                                    Log.d("TTT", "eventDispatcher: $it")
+
                                 }
                                 .onFailure {
-                                    Log.d("TTT", "eventDispatcher: ${it.message}")
                                 }
                         }
                         .onCompletion {
@@ -104,7 +99,6 @@ class ComponentViewModel @Inject constructor(
                                 }
                             }
                             .onFailure {
-                                Log.d("TTT", "eventDispatcher: ${it.message}")
                             }
                     }.collect()
                 }
@@ -117,10 +111,9 @@ class ComponentViewModel @Inject constructor(
                             uiState.update { it.copy(isLoading = true) }
                         }.onEach {
                             it.onSuccess {
-                                    Log.d("TTT", "eventDispatcher: $it")
+
                                 }
                                 .onFailure {
-                                    Log.d("TTT", "eventDispatcher: ${it.message}")
                                 }
                         }
                         .onCompletion {
@@ -136,7 +129,6 @@ class ComponentViewModel @Inject constructor(
                                 }
                             }
                             .onFailure {
-                                Log.d("TTT", "eventDispatcher: ${it.message}")
                             }
                     }.collect()
                 }

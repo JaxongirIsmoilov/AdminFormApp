@@ -12,7 +12,7 @@ data class ComponentEntity(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val userId: String,
-    val locId: Int,
+    val locId: Long,
     val idEnteredByUser: String = "",
     val content: String,
     val textFieldType: TextFieldType,

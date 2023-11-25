@@ -31,7 +31,7 @@ class RepositoryImpl @Inject constructor(
     override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
-                .add(componentData.copy(locId = id).toRequest())
+                .add(componentData.toRequest())
                 .addOnSuccessListener {
                     coroutineScope.launch {
                         dao.insertData(componentData.toEntity().copy(id = it.id))
@@ -114,9 +114,9 @@ class RepositoryImpl @Inject constructor(
                         ComponentData(
                             id = it.id,
                             userId = it.data?.getOrDefault("userId", "null").toString(),
-                            locId = Integer.parseInt(
-                                it.data?.getOrDefault("locId", "0").toString()
-                            ),
+                            locId =
+                                it.data?.getOrDefault("locId", "0").toString().toLong()
+                            ,
                             idEnteredByUser = it.data?.getOrDefault("idEnteredByUser", "null")
                                 .toString(),
                             content = it.data?.getOrDefault("content", "null").toString(),
