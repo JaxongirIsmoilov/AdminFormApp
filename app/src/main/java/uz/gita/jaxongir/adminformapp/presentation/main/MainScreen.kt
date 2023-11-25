@@ -107,8 +107,7 @@ fun MainScreenContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp),
-            contentPadding = PaddingValues(top = 8.dp),
+                .padding(top = 84.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
@@ -117,7 +116,7 @@ fun MainScreenContent(
                     model = it,
                     onClick = {
                         onEventDispatcher.invoke(
-                            MainContract.Intent.MoveToComponentsScreen(it)
+                            MainContract.Intent.MoveToPreviewScreen(it)
                         )
                     },
                     onClickDelete = { showDialog.value = true })
