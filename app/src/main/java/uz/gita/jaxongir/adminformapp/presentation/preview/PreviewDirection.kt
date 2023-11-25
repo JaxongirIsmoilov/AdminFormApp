@@ -14,5 +14,4 @@ class PreviewDirectionImpl @Inject constructor(
     override suspend fun moveToComponentsScreen(userId: String) {
         appNavigator.addScreen(ComponentScreen(userId))
     }
-
 }

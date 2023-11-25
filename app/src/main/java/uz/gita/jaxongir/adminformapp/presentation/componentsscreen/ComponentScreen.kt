@@ -118,22 +118,9 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                 when (type) {
                     ComponentEnum.Input -> {
                         InputContent(
-                            onSaveClickListener = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            id = "",
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            type = type,
-                                            content =
-
-                                        )
-                                    )
-                                )
-                            },
-                            id = id
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId
                         )
                     }
 
