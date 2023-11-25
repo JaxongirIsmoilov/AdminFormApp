@@ -119,7 +119,7 @@ class RepositoryImpl @Inject constructor(
                             ),
                             idEnteredByUser = it.data?.getOrDefault("idEnteredByUser", "null")
                                 .toString(),
-                            content = it.data?.getOrDefault("idEnteredByUser", "null").toString(),
+                            content = it.data?.getOrDefault("content", "null").toString(),
                             textFieldType = converter.fromJson(
                                 it.data?.getOrDefault(
                                     "textFieldType",

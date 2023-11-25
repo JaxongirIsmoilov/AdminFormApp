@@ -21,12 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
@@ -36,6 +38,7 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.ui.previewitems.SampleSpinnerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SelectorItem
 
 class PreviewScreen(private val userData: UserData) : AndroidScreen() {
@@ -94,7 +97,7 @@ fun PreviewScreenContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp)
+                            .height(70.dp)
                             .background(Color(0xFFff7686))
                             .padding(horizontal = 16.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -110,57 +113,40 @@ fun PreviewScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(top = 56.dp)
+                            .padding(top = 70.dp, start = 16.dp, end = 16.dp)
                     ) {
                         uiState.value.compList.forEach { data ->
                             when (data.type) {
                                 ComponentEnum.Spinner -> {
                                     item {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(
-                                                    horizontal = 10.dp, vertical = 15.dp
-                                                )
-                                                .fillMaxWidth()
+                                        SampleSpinnerPreview(
+                                            list = data.variants,
+                                            preselected = data.variants[0],
+                                            onSelectionChanged = {},
+                                            content = data.content,
+                                            componentData = data
                                         ) {
-                                            Text(
-                                                text = "Spinner",
-                                                fontSize = 20.sp,
-                                                modifier = Modifier
-                                                    .padding(bottom = 10.dp)
-                                                    .align(Alignment.CenterHorizontally)
-                                            )
-                                            SampleSpinner(
-                                                list = data.variants,
-                                                preselected = data.variants.first(),
-                                                onSelectionChanged = {},
-                                                content = data.content,
-                                                modifier = Modifier.padding(bottom = 10.dp)
+                                            onEventDispatcher.invoke(
+                                                PreviewContract.Intent.DeleteComponent(
+                                                    data
+                                                )
                                             )
                                         }
-
                                     }
                                 }
 
                                 ComponentEnum.Selector -> {
                                     item {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(
-                                                    horizontal = 10.dp, vertical = 15.dp
-                                                )
-                                                .fillMaxWidth()
+                                        SelectorItem(
+                                            question = data.content,
+                                            list = data.variants,
+                                            componentData = data
                                         ) {
-                                            Spacer(modifier = Modifier.size(10.dp))
-                                            Text(
-                                                text = "Selector ",
-                                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                                            onEventDispatcher.invoke(
+                                                PreviewContract.Intent.DeleteComponent(
+                                                    data
+                                                )
                                             )
-                                            Spacer(modifier = Modifier.size(10.dp))
-                                            SelectorItem(data.content, data.variants, data){
-                                                onEventDispatcher.invoke(PreviewContract.Intent.DeleteComponent(data))
-                                            }
-                                            Spacer(modifier = Modifier.size(10.dp))
                                         }
                                     }
                                 }
@@ -173,10 +159,6 @@ fun PreviewScreenContent(
                                                 .fillMaxWidth()
                                         ) {
                                             Spacer(modifier = Modifier.size(10.dp))
-                                            Text(
-                                                text = "Text View",
-                                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                                            )
                                             Text(
                                                 text = data.content,
                                                 fontSize = 22.sp,
@@ -191,46 +173,36 @@ fun PreviewScreenContent(
 
                                 ComponentEnum.Input -> {
                                     item {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(horizontal = 10.dp, vertical = 15.dp)
-                                                .fillMaxWidth(),
-                                            horizontalAlignment = Alignment.CenterHorizontally
-                                        ) {
-                                            Text(text = "Text field")
-                                            InputField(
-                                                textFieldType = data.textFieldType,
-                                                maxLines = data.maxLines,
-                                                maxLength = data.maxLength,
-                                                minLength = data.minLength,
-                                                maxValue = data.maxValue,
-                                                minValue = data.minValue,
-                                                question = data.content
-                                            )
-                                            Spacer(modifier = Modifier.fillMaxWidth())
-
-                                        }
+                                        InputField(
+                                            textFieldType = data.textFieldType,
+                                            maxLines = data.maxLines,
+                                            maxLength = data.maxLength,
+                                            minLength = data.minLength,
+                                            maxValue = data.maxValue,
+                                            minValue = data.minValue,
+                                            question = data.content
+                                        )
                                     }
                                 }
 
                                 ComponentEnum.Dater -> {
                                     item {
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(horizontal = 10.dp, vertical = 15.dp)
-                                                .fillMaxWidth(),
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        DatePickerPreview(
+                                            componentData = data,
+                                            content = data.content
                                         ) {
-                                            Text(text = "Text field")
-//                                            DatePicker(content = data.content)
-                                            Spacer(modifier = Modifier.fillMaxWidth())
+                                            onEventDispatcher.invoke(
+                                                PreviewContract.Intent.DeleteComponent(
+                                                    data
+                                                )
+                                            )
                                         }
                                     }
                                 }
                             }
                         }
-                    
-                        item { 
+
+                        item {
                             Spacer(modifier = Modifier.size(56.dp))
                         }
                     }
@@ -254,4 +226,10 @@ fun PreviewScreenContent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewScreenPreview() {
+//    PreviewScreenContent(mutableStateOf())
 }

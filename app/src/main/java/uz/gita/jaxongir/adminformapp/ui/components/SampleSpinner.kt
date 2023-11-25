@@ -89,7 +89,7 @@ fun SampleSpinner(
             modifier = Modifier
                 .matchParentSize()
                 .background(Color.Transparent)
-                .padding(10.dp)
+                .padding(top = 10.dp)
                 .clickable(
                     onClick = { expanded = !expanded }
                 )

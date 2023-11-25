@@ -47,7 +47,7 @@ class PreviewViewModel @Inject constructor(
                                 }
                             }.collect()
                         }
-                    }
+                    }.collect()
                 }
             }
         }
