@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uz.gita.jaxongir.adminformapp.R
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 
 @Composable
 fun SampleSpinner(
@@ -41,7 +42,8 @@ fun SampleSpinner(
     preselected: String,
     onSelectionChanged: (selection: String) -> Unit,
     content: String,
-    deleteComp : ()-> Unit
+    componentData: ComponentData,
+    deleteComp : (ComponentData)-> Unit
 ) {
 
     var selected by remember { mutableStateOf(preselected) }
@@ -65,7 +67,7 @@ fun SampleSpinner(
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 IconButton(onClick = {
-                    deleteComp()
+                    deleteComp(componentData)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.cancel),
@@ -117,8 +119,8 @@ fun SampleSpinner(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewSimple() {
-    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewSimple() {
+//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
+//}

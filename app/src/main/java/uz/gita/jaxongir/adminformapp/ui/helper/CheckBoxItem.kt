@@ -30,10 +30,10 @@ fun CheckBoxItem(title: String) {
             .clip(RoundedCornerShape(12.dp))
             .border(1.dp, Color(0xFFFF7686), RoundedCornerShape(12.dp))
             .background(Color(0x33C4C4C4))
-            .padding(horizontal = 16.dp, vertical = 5.dp)
             .clickable {
                 checkedState.value = !checkedState.value
-            },
+            }
+            .padding(horizontal = 16.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
