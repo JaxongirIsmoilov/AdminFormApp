@@ -13,7 +13,9 @@ interface PreviewContract {
 
     interface Intent{
         data class MoveToComponentScreen(val userId : String) : Intent
-
+        data class DeleteComponent(
+            val componentData: ComponentData
+        ) : Intent
         data class LoadData(
             val userId: String
         ): Intent
