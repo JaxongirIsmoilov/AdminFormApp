@@ -28,7 +28,7 @@ import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 
-class ComponentScreen(private val userId: String) : AndroidScreen() {
+class ComponentScreen   (private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
@@ -117,24 +117,24 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        InputContent(
-                            onSaveClickListener = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            id = "",
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            type = type,
-                                            content =
-
-                                        )
-                                    )
-                                )
-                            },
-                            id = id
-                        )
+//                        InputContent(
+//                            onSaveClickListener = {
+//                                onEventDispatcher.invoke(
+//                                    Contracts.Intent.AddComponent(
+//                                        ComponentData(
+//                                            id = "",
+//                                            userId = userId,
+//                                            locId = 0,
+//                                            idEnteredByUser = id,
+//                                            type = type,
+//                                            content =
+//
+//                                        )
+//                                    )
+//                                )
+//                            },
+//                            id = id
+//                        )
                     }
 
                     ComponentEnum.SampleText -> {
