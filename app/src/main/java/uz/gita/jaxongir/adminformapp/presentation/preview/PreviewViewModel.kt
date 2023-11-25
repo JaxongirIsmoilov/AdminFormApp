@@ -1,11 +1,8 @@
 package uz.gita.jaxongir.adminformapp.presentation.preview
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -37,6 +34,7 @@ class PreviewViewModel @Inject constructor(
                     }.collect()
                 }
             }
+
             is PreviewContract.Intent.DeleteComponent -> {
                 viewModelScope.launch {
                     repository.deleteComponent(intent.componentData).onEach {
@@ -47,18 +45,9 @@ class PreviewViewModel @Inject constructor(
                                 }
                             }.collect()
                         }
-                    }
+                    }.collect()
                 }
             }
         }
     }
-
-    /*private fun loadData(){
-        repository.getComponentsByUserId(userId).onEach {
-            it.onSuccess { ls->
-                myLog("size viewModle lsu:${ls.size}")
-                uiState.update { it.copy(ls) }
-            }
-        }.launchIn(viewModelScope)
-    }*/
 }
