@@ -1,4 +1,4 @@
-package com.example.connect.presentation.main
+package uz.gita.jaxongir.adminformapp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

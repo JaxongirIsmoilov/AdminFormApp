@@ -24,8 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SelectorItem(
-) {
+fun SelectorItem() {
 
     val selectedItem = remember { mutableStateOf<String?>(null) }
     var checkboxState by remember { mutableStateOf(List(10) { false }) }

@@ -2,7 +2,7 @@ package uz.gita.jaxongir.adminformapp.presentation.main
 
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.presentation.adduser.AddScreen
-import uz.gita.jaxongir.adminformapp.presentation.components.ComponentScreen
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.ComponentScreen
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigator
 import javax.inject.Inject
 
