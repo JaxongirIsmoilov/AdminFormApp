@@ -111,7 +111,7 @@ fun MainScreenContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
-                currentSelectedItem.value = it
+//                currentSelectedItem.value = it
                 UserItem(
                     model = it,
                     onClick = {
@@ -119,7 +119,10 @@ fun MainScreenContent(
                             MainContract.Intent.MoveToPreviewScreen(it)
                         )
                     },
-                    onClickDelete = { showDialog.value = true })
+                    onClickDelete = {
+                        currentSelectedItem.value = it
+                        showDialog.value = true
+                    })
             }
         }
     }

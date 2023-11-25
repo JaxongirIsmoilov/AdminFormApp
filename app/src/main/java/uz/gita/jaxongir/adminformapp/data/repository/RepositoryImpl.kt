@@ -46,7 +46,6 @@ class RepositoryImpl @Inject constructor(
 
             awaitClose()
         }
-
     override fun deleteComponent(componentData: ComponentData): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
@@ -60,7 +59,6 @@ class RepositoryImpl @Inject constructor(
                 }
             awaitClose()
         }
-
     override fun editComponent(componentData: ComponentData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Components")
             .document(componentData.id)
@@ -76,7 +74,6 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
     }
-
     override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .add(request)
@@ -92,7 +89,6 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
-
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .document(userData.userId)
@@ -109,7 +105,6 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
-
     private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
         val resultList = arrayListOf<ComponentData>()
         val converter = Gson()
@@ -183,7 +178,6 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
 
     }
-
     private fun getUser(): Flow<Unit> = callbackFlow {
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
@@ -208,7 +202,6 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
-
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
         getComponents()
             .onEach {
@@ -229,7 +222,6 @@ class RepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
         .catch { emit(Result.failure(Exception("adsf"))) }
-
 
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
         dao.deleteUsers()

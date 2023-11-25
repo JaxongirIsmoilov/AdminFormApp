@@ -112,19 +112,19 @@ fun MainContent(
                         }
 
                         "Selector" -> {
-                            ComponentEnum.Selector
+                            type = ComponentEnum.Selector
                         }
 
                         "Dater" -> {
-                            ComponentEnum.Dater
+                            type = ComponentEnum.Dater
                         }
 
                         "SampleText" -> {
-                            ComponentEnum.SampleText
+                            type = ComponentEnum.SampleText
                         }
 
                         else -> {
-                            ComponentEnum.Input
+                            type = ComponentEnum.Input
                         }
 
                     }
@@ -156,7 +156,6 @@ fun MainContent(
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
-                        myLog("Input")
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
