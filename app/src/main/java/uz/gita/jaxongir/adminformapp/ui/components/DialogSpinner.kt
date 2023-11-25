@@ -60,19 +60,6 @@ fun DialogSpinner(
         var text by remember {
             mutableStateOf("Hello World!")
         }
-//        androidx.compose.material3.TextField(
-//            value = text, onValueChange = {
-//                text = it
-//            },
-//            modifier = Modifier
-//                .padding(top = 10.dp, start = 12.dp, end = 12.dp)
-//                .fillMaxWidth()
-//                .align(Alignment.CenterHorizontally),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = Color(0xFFFF3951),
-//                unfocusedBorderColor = Color(0xFFFF7686)
-//            )
-//        )
         Spacer(modifier = Modifier.height(8.dp))
         Column(
             modifier = Modifier
