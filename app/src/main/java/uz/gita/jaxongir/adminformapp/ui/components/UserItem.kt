@@ -48,11 +48,11 @@ fun UserItem(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(0xFFc4c4c4))
+                .background(color = Color(0x33D1D1D1))
                 .combinedClickable(onClick = { onClick() }, onLongClick = { onClickDelete() })
         ) {
             Image(
-                painter = painterResource(id = R.drawable.user_icon),
+                painter = painterResource(id = R.drawable.user),
                 contentDescription = "",
                 modifier = Modifier
                     .size(64.dp)

@@ -22,6 +22,7 @@ import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 fun InputContent(
@@ -33,6 +34,7 @@ fun InputContent(
     userId: String
 ) {
 
+    myLog("InputContent")
     var type by remember {
         mutableStateOf(TextFieldType.Text)
     }
@@ -217,7 +219,7 @@ fun InputContent(
         item {
             TextButton(
                 onClick = {
-                    onSaveClickListener.invoke(
+                    onEventListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
                                 userId = userId,
