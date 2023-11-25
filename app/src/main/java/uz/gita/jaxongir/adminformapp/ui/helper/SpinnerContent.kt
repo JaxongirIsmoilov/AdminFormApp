@@ -1,12 +1,12 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,70 +14,87 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 fun SpinnerContent(
-    clickListener: (Contracts.Intent) -> Unit,
+    onEventListener: (Contracts.Intent) -> Unit,
     id: String,
+    userId: String,
+    content: String,
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
     }
 
-    var newVariants = ArrayList(variants)
+    val newVariants = arrayListOf<String>()
+    newVariants.addAll(variants)
 
-    var content by remember {
-        mutableStateOf("")
-    }
-
-    var userId by remember {
-        mutableStateOf("")
-    }
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+        variants.forEachIndexed { index, s ->
             item {
                 OutlinedTextField(
-                    value = content,
+                    value = newVariants[index],
                     onValueChange = {
-                        content = it
+                        newVariants[index] = it
+                        variants = newVariants
                     },
-                    label = {
-                        Text(text = "Spinner nima haqida")
-                    },
-                    placeholder = {
-                        Text(text = "Spinner nima haqida")
-                    },
-                    modifier = Modifier.padding(vertical = 6.dp)
+                    label = { Text(text = "$index - variant") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
                 )
             }
+        }
 
-            item {
-                OutlinedTextField(
-                    value = content,
-                    onValueChange = {
-                        content = it
-                    },
-                    label = {
-                        Text(text = "Spinner nima haqida")
-                    },
-                    placeholder = {
-                        Text(text = "Spinner nima haqida")
-                    },
-                    modifier = Modifier.padding(vertical = 6.dp)
-                )
+        item {
+            TextButton(
+                onClick = {
+                    newVariants.add("")
+                    variants = newVariants
+                },
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                Text(text = "Variant qo'shish")
+                myLog("$variants")
             }
+        }
 
-            variants.forEach {
-                item {
-                    OutlinedTextField(value = it, onValueChange = {
-
-                    })
-                }
+        item {
+            TextButton(
+                onClick = {
+                    onEventListener.invoke(
+                        Contracts.Intent.AddComponent(
+                            ComponentData(
+                                userId = userId,
+                                locId = 0,
+                                idEnteredByUser = id,
+                                content = content,
+                                textFieldType = TextFieldType.Text,
+                                maxLines = 0,
+                                maxLength = 0,
+                                minLength = 0,
+                                maxValue = 0,
+                                minValue = 0,
+                                isMulti = false,
+                                variants = variants,
+                                selected = listOf(),
+                                conditions = listOf(),
+                                type = ComponentEnum.Spinner,
+                                id = ""
+                            )
+                        )
+                    )
+                }, modifier = Modifier.wrapContentWidth()
+            ){
+                Text(text = "Componentni qoshish")
             }
         }
     }

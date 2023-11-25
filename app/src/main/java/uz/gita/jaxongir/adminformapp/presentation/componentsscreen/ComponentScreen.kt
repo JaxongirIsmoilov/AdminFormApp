@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -26,28 +26,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
-import com.google.firebase.components.ComponentContainer
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
-import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
+import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
-import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
-import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
+
         viewModel.eventDispatcher(Contracts.Intent.Load(userId))
+
         MainContent(
             userId = userId,
             uiState = viewModel.uiState.collectAsState(),
@@ -70,6 +68,9 @@ fun MainContent(
         mutableStateOf("")
     }
 
+    var content by remember {
+        mutableStateOf("")
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -148,6 +149,25 @@ fun MainContent(
                 )
             )
 
+            Spacer(modifier = Modifier.size(12.dp))
+
+            OutlinedTextField(
+                value = content,
+                onValueChange = {
+                    content = it
+                },
+                label = {
+                    Text(text = "Conetnt kiriting")
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFFFF3951),
+                    unfocusedBorderColor = Color(0xFFFF7686)
+                )
+            )
+
+            Spacer(modifier = Modifier.size(36.dp))
+            
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -158,47 +178,86 @@ fun MainContent(
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
-                            userId = userId
+                            userId = userId,
+                            content= content
                         )
                     }
 
                     ComponentEnum.SampleText -> {
-                        TextContent(
-                            { idComponent, text ->
+                        TextButton(
+                            onClick = {
                                 onEventDispatcher.invoke(
                                     Contracts.Intent.AddComponent(
                                         ComponentData(
-                                            id = "",
-                                            userId,
+                                            userId = userId,
                                             locId = 0,
-                                            idComponent,
-                                            text,
-                                            TextFieldType.Text,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            false,
-                                            listOf(),
-                                            listOf(),
-                                            listOf(),
-                                            ComponentEnum.SampleText
+                                            idEnteredByUser = id,
+                                            content = content,
+                                            textFieldType = TextFieldType.Text,
+                                            maxLines = 0,
+                                            maxLength = 0,
+                                            minLength = 0,
+                                            maxValue = 0,
+                                            minValue = 0,
+                                            isMulti = false,
+                                            variants = listOf(),
+                                            selected = listOf(),
+                                            conditions = listOf(),
+                                            type = ComponentEnum.SampleText,
+                                            id = ""
                                         )
                                     )
                                 )
-                    }, id)}
+                            },
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .align(Alignment.TopCenter)
+                        ) {
+                            Text(text = "Componentni qoshish")
+                        }
+                    }
 
                     ComponentEnum.Dater -> {
+                        TextButton(
+                            onClick = {
+                                onEventDispatcher.invoke(
+                                    Contracts.Intent.AddComponent(
+                                        ComponentData(
+                                            userId = userId,
+                                            locId = 0,
+                                            idEnteredByUser = id,
+                                            content = content,
+                                            textFieldType = TextFieldType.Text,
+                                            maxLines = 0,
+                                            maxLength = 0,
+                                            minLength = 0,
+                                            maxValue = 0,
+                                            minValue = 0,
+                                            isMulti = false,
+                                            variants = listOf(),
+                                            selected = listOf(),
+                                            conditions = listOf(),
+                                            type = ComponentEnum.Dater,
+                                            id = ""
+                                        )
+                                    )
+                                )
+                            },
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .align(Alignment.TopCenter)
+                        ) {
+                            Text(text = "Componentni qoshish")
+                        }
 
                     }
 
                     ComponentEnum.Selector -> {
-
+                        SelectorContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
                     }
 
                     ComponentEnum.Spinner -> {
-                        SpinnerContent(clickListener = {}, id = id)
+                        SpinnerContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
                     }
                 }
             }

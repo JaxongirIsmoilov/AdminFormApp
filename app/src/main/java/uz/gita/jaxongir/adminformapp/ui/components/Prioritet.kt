@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import uz.gita.jaxongir.adminformapp.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Priority() {
 
