@@ -66,11 +66,10 @@ fun InputField(
                         value = it
                     },
                     modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0x33C4C4C4)),
+                        .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        focusedBorderColor = Color(0xFF3951),
+                        unfocusedBorderColor = Color(0xFF7686)
                     ),
                     //                maxLength = maxLength,
                     maxLines = maxLines,
@@ -88,11 +87,10 @@ fun InputField(
                         value = it
                     },
                     modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0x33C4C4C4)),
+                        .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        focusedBorderColor = Color(0xFF3951),
+                        unfocusedBorderColor = Color(0xFF7686)
                     ),
                     //                maxLength = maxLength,
                     maxLines = maxLines,
@@ -110,11 +108,10 @@ fun InputField(
                         value = it
                     },
                     modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0x33C4C4C4)),
+                        .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        focusedBorderColor = Color(0xFF3951),
+                        unfocusedBorderColor = Color(0xFF7686)
                     ),
 //                maxLength = maxLength,
                     maxLines = maxLines,
@@ -132,11 +129,10 @@ fun InputField(
                         value = it
                     },
                     modifier = Modifier
-                        .weight(1f)
-                        .background(Color(0x33C4C4C4)),
+                        .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        focusedBorderColor = Color(0xFF3951),
+                        unfocusedBorderColor = Color(0xFF7686)
                     ),
 
 //                maxLength = maxLength,

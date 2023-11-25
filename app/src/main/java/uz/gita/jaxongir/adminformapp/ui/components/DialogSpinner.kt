@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 @Preview(showBackground = true)
 fun DialogSpinnerPreview() {
-    DialogSpinner(){}
+    DialogSpinner{}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,11 +43,11 @@ fun DialogSpinner(
     onClickSave:()-> Unit
 ) {
 
-    val options = listOf(" <=", "==", ">=", "!=")
+    val options = listOf("<=", "==", ">=", "!=")
     var expanded by remember {
         mutableStateOf(false)
     }
-    var selected by remember {
+    val selected by remember {
         mutableStateOf(selectedItem)
     }
     var selectedOptionText by remember { mutableStateOf(list[0]) }
@@ -82,9 +83,9 @@ fun DialogSpinner(
                             expanded = expanded
                         )
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        unfocusedBorderColor = Color(0xFFFF7686),
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -122,9 +123,9 @@ fun DialogSpinner(
                             expanded = expanded
                         )
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
+                        unfocusedBorderColor = Color(0xFFFF7686),
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -155,9 +156,9 @@ fun DialogSpinner(
                     .padding(top = 10.dp, start = 12.dp, end = 12.dp)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFFFF3951),
-                    unfocusedBorderColor = Color(0xFFFF7686)
+                    unfocusedBorderColor = Color(0xFFFF7686),
                 )
             )
 
@@ -171,7 +172,6 @@ fun DialogSpinner(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)) ) {
                 Text(text = "Saqlash", color = Color(0xFFFFFFFF))
             }
-
 
         }
 
