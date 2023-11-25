@@ -107,8 +107,7 @@ fun MainScreenContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp),
-            contentPadding = PaddingValues(top = 8.dp),
+                .padding(top = 70.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.value.userList) {
