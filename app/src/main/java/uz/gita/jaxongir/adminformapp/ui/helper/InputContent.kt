@@ -220,7 +220,6 @@ fun InputContent(
                     onEventListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
-                                id = "",
                                 userId = userId,
                                 locId = 0,
                                 idEnteredByUser = id,
@@ -234,8 +233,8 @@ fun InputContent(
                                 isMulti = false,
                                 variants = listOf(),
                                 selected = listOf(),
-                                conditions = conditions,
-                                type = ComponentEnum.Input
+                                conditions = listOf(),
+                                type = ComponentEnum.Input, id = ""
                             )
                         )
                     )

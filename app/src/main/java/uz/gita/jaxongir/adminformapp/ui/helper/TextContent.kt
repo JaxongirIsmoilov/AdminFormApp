@@ -25,13 +25,13 @@ fun TextContent(
     var text: String by remember {
         mutableStateOf("")
     }
-    var id: String by remember {
+    var idComponent: String by remember {
         mutableStateOf("")
     }
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
-            value = id,
-            onValueChange = { id = it },
+            value = idComponent,
+            onValueChange = { idComponent = it },
             modifier = Modifier
                 .padding(top = 10.dp, start = 20.dp, end = 20.dp)
                 .fillMaxWidth()
@@ -49,7 +49,7 @@ fun TextContent(
         )
 
         Button(
-            onClick = { },
+            onClick = { onSaveListener.invoke(id, text) },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7686))
 
         ) {

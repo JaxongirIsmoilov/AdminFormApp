@@ -21,6 +21,7 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
+import uz.gita.jaxongir.adminformapp.utils.myLog
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -31,8 +32,9 @@ class RepositoryImpl @Inject constructor(
     override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
-                .add(componentData.copy(locId = id))
+                .add(componentData.copy(locId = id).toRequest())
                 .addOnSuccessListener {
+                    myLog("success repos")
                     coroutineScope.launch {
                         dao.insertData(componentData.toEntity().copy(id = it.id))
                         trySend(Result.success("Component qoshildi"))
@@ -160,7 +162,10 @@ class RepositoryImpl @Inject constructor(
                                 it.data?.getOrDefault("conditions", "[]").toString(),
                                 Array<Conditions>::class.java
                             ).asList(),
-                            type = converter.fromJson(it.data?.getOrDefault("type", "").toString(), ComponentEnum::class.java)
+                            type = converter.fromJson(
+                                it.data?.getOrDefault("type", "").toString(),
+                                ComponentEnum::class.java
+                            )
                         )
                     )
 

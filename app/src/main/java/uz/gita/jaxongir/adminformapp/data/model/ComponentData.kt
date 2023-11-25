@@ -27,7 +27,6 @@ data class ComponentData(
     private val converter = Gson()
 
     fun toRequest(): ComponentRequest = ComponentRequest(
-        id = id,
         locId = locId,
         userId = userId,
         idEnteredByUser = idEnteredByUser,
