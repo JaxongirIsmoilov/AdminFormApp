@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
@@ -117,22 +118,9 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                 when (type) {
                     ComponentEnum.Input -> {
                         InputContent(
-                            onSaveClickListener = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            id = "",
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            type = type,
-                                            content =
-
-                                        )
-                                    )
-                                )
-                            },
-                            id = id
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId
                         )
                     }
 

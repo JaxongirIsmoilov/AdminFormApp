@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
+import android.media.MediaDrm.OnEventListener
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -16,25 +17,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
+import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 
 @Composable
 fun InputContent(
+    onEventListener: (Contracts.Intent) -> Unit,
     onSaveClickListener: (
-        type: TextFieldType,
-        maxLines: Int,
-        maxLength: Int,
-        minLength: Int,
-        maxValue: Int,
-        minValue: Int,
-        required: Boolean,
-        content: String,
-        conditions: List<Conditions>,
-    ) -> Unit,
+        Contracts.Intent,
+    ) -> Unit = {},
     id: String,
+    userId: String
 ) {
+
     var type by remember {
         mutableStateOf(TextFieldType.Text)
     }
@@ -101,7 +100,7 @@ fun InputContent(
 
         }
 
-        item{
+        item {
             when (type.content) {
 
                 "Text" -> {
@@ -216,19 +215,30 @@ fun InputContent(
             }
         }
 
-        item{
+        item {
             TextButton(
                 onClick = {
                     onSaveClickListener.invoke(
-                        type,
-                        Integer.parseInt(maxLines),
-                        Integer.parseInt(maxLength),
-                        Integer.parseInt(minLength),
-                        Integer.parseInt(maxValue),
-                        Integer.parseInt(minValue),
-                        true,
-                        content,
-                        conditions
+                        Contracts.Intent.AddComponent(
+                            ComponentData(
+                                id = "",
+                                userId = userId,
+                                locId = 0,
+                                idEnteredByUser = id,
+                                content = content,
+                                textFieldType = type,
+                                maxLines = Integer.parseInt(maxLines),
+                                maxLength = Integer.parseInt(maxLength),
+                                minLength = Integer.parseInt(minLength),
+                                maxValue = Integer.parseInt(maxValue),
+                                minValue = Integer.parseInt(minValue),
+                                isMulti = false,
+                                variants = listOf(),
+                                selected = listOf(),
+                                conditions = conditions,
+                                type = ComponentEnum.Input
+                            )
+                        )
                     )
                 },
                 modifier = Modifier
