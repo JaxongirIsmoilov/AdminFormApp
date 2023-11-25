@@ -3,6 +3,7 @@ package uz.gita.jaxongir.adminformapp.presentation.preview
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -114,7 +115,7 @@ fun PreviewScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(top = 70.dp, start = 16.dp, end = 16.dp)
+                            .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                     ) {
                         myLog("${uiState.value.compList.size}")
                         uiState.value.compList.forEach { data ->
@@ -155,20 +156,27 @@ fun PreviewScreenContent(
 
                                 ComponentEnum.SampleText -> {
                                     item {
-                                        Column(
+                                        Row(
                                             modifier = Modifier
-                                                .padding(horizontal = 10.dp, vertical = 15.dp)
                                                 .fillMaxWidth()
+                                                .clip(RoundedCornerShape(12.dp))
+                                                .border(
+                                                    1.dp,
+                                                    Color(0xFFFF7686),
+                                                    RoundedCornerShape(12.dp)
+                                                )
+                                                .background(Color(0x33C4C4C4))
+                                                .padding(horizontal = 16.dp, vertical = 5.dp),
+                                            verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Spacer(modifier = Modifier.size(10.dp))
                                             Text(
                                                 text = data.content,
                                                 fontSize = 22.sp,
                                                 modifier = Modifier
                                                     .padding(bottom = 10.dp)
-                                                    .align(Alignment.CenterHorizontally)
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(16.dp))
 
                                     }
                                 }

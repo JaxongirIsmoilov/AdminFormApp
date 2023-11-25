@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
@@ -99,17 +101,17 @@ fun MainContent(
             androidx.compose.material3.Text(
                 text = "Componenta Qo'shish",
                 color = Color.White,
-                fontSize = 28.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
-            TextButton(onClick = {
-                showDialog.value = true
-            }) {
-                Text(text = "</>", fontSize = 18.sp, color = White)
-            }
+//            TextButton(onClick = {
+//                showDialog.value = true
+//            }) {
+//                Text(text = "</>", fontSize = 22.sp, color = White)
+//            }
         }
 
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -187,7 +189,7 @@ fun MainContent(
             )
 
             Spacer(modifier = Modifier.size(36.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -199,7 +201,7 @@ fun MainContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
                             userId = userId,
-                            content= content
+                            content = content
                         )
                     }
 
@@ -232,8 +234,14 @@ fun MainContent(
                             modifier = Modifier
                                 .wrapContentSize()
                                 .align(Alignment.TopCenter)
+                                .padding(5.dp)
+                                .background(Color(0xffff7686))
                         ) {
-                            Text(text = "Componentni qoshish")
+                            Text(
+                                text = "Componentni qoshish",
+                                modifier = Modifier.clip(RoundedCornerShape(12.dp)),
+                                color = Color.White
+                            )
                         }
                     }
 
@@ -273,11 +281,21 @@ fun MainContent(
                     }
 
                     ComponentEnum.Selector -> {
-                        SelectorContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SelectorContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
 
                     ComponentEnum.Spinner -> {
-                        SpinnerContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SpinnerContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
                 }
             }
