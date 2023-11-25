@@ -122,7 +122,6 @@ fun PreviewScreenContent(
                                                     horizontal = 10.dp, vertical = 15.dp
                                                 )
                                                 .fillMaxWidth()
-                                                .background(color = Color.Gray)
                                         ) {
                                             Text(
                                                 text = "Spinner",
@@ -151,7 +150,6 @@ fun PreviewScreenContent(
                                                     horizontal = 10.dp, vertical = 15.dp
                                                 )
                                                 .fillMaxWidth()
-                                                .background(color = Color.Gray)
                                         ) {
                                             Spacer(modifier = Modifier.size(10.dp))
                                             Text(
@@ -173,7 +171,6 @@ fun PreviewScreenContent(
                                             modifier = Modifier
                                                 .padding(horizontal = 10.dp, vertical = 15.dp)
                                                 .fillMaxWidth()
-                                                .background(color = Color.Gray)
                                         ) {
                                             Spacer(modifier = Modifier.size(10.dp))
                                             Text(
@@ -197,8 +194,7 @@ fun PreviewScreenContent(
                                         Column(
                                             modifier = Modifier
                                                 .padding(horizontal = 10.dp, vertical = 15.dp)
-                                                .fillMaxWidth()
-                                                .background(color = Color.Gray),
+                                                .fillMaxWidth(),
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             Text(text = "Text field")
@@ -222,8 +218,7 @@ fun PreviewScreenContent(
                                         Column(
                                             modifier = Modifier
                                                 .padding(horizontal = 10.dp, vertical = 15.dp)
-                                                .fillMaxWidth()
-                                                .background(color = Color.Gray),
+                                                .fillMaxWidth(),
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             Text(text = "Text field")
@@ -233,6 +228,10 @@ fun PreviewScreenContent(
                                     }
                                 }
                             }
+                        }
+                    
+                        item { 
+                            Spacer(modifier = Modifier.size(56.dp))
                         }
                     }
                 }
