@@ -28,7 +28,7 @@ import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
 
-class ComponentScreen(private val userId: String) : AndroidScreen() {
+class ComponentScreen   (private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
