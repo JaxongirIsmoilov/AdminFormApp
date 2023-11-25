@@ -27,6 +27,7 @@ import uz.gita.jaxongir.adminformapp.ui.components.ToolBarView
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.helper.TextContent
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
@@ -117,6 +118,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
             ) {
                 when (type) {
                     ComponentEnum.Input -> {
+                        myLog("Input")
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
                             id = id,
