@@ -1,24 +1,16 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.TextField
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,14 +31,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 @Preview(showBackground = true)
 fun DialogSpinnerPreview() {
-    DialogSpinner()
+    DialogSpinner(){}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogSpinner(
-    list: List<String> = listOf("iphone", "nokia", "samsung", "redmi", "xiomi"),
-    selectedItem: String = ""
+    list: List<String> = listOf("iphone", "nokia", "samsung", "redmi", "xiaomi"),
+    selectedItem: String = "",
+    onClickSave:()-> Unit
 ) {
 
     var expanded by remember {
@@ -60,25 +53,25 @@ fun DialogSpinner(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .height(300.dp)
             .border(1.dp, Color(0xFFFF3951), RoundedCornerShape(12.dp))
     ) {
         var text by remember {
             mutableStateOf("Hello World!")
         }
-        androidx.compose.material3.TextField(
-            value = text, onValueChange = {
-                text = it
-            },
-            modifier = Modifier
-                .padding(top = 10.dp, start = 12.dp, end = 12.dp)
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFFF3951),
-                unfocusedBorderColor = Color(0xFFFF7686)
-            )
-        )
+//        androidx.compose.material3.TextField(
+//            value = text, onValueChange = {
+//                text = it
+//            },
+//            modifier = Modifier
+//                .padding(top = 10.dp, start = 12.dp, end = 12.dp)
+//                .fillMaxWidth()
+//                .align(Alignment.CenterHorizontally),
+//            colors = TextFieldDefaults.outlinedTextFieldColors(
+//                focusedBorderColor = Color(0xFFFF3951),
+//                unfocusedBorderColor = Color(0xFFFF7686)
+//            )
+//        )
         Spacer(modifier = Modifier.height(8.dp))
         Column(
             modifier = Modifier
@@ -163,7 +156,35 @@ fun DialogSpinner(
                         )
                     }
                 }
+
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            androidx.compose.material3.TextField(
+                value = text, onValueChange = {
+                    text = it
+                },
+                modifier = Modifier
+                    .padding(top = 10.dp, start = 12.dp, end = 12.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color(0xFFFF3951),
+                    unfocusedBorderColor = Color(0xFFFF7686)
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { onClickSave() },
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .height(56.dp)
+                    .width(100.dp)
+                    .align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)) ) {
+                Text(text = "Saqlash", color = Color(0xFFFFFFFF))
+            }
+
+
         }
 
     }
