@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -74,6 +75,9 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                     ComponentEnum.Selector.content
                 ),
                 preselected = ComponentEnum.SampleText.content,
+                modifier = Modifier
+                    .padding(horizontal = 15.dp, vertical = 10.dp)
+                    .align(Alignment.CenterHorizontally),
                 onSelectionChanged = {
                     when (it) {
                         "Spinner" -> {
@@ -98,7 +102,7 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 
                     }
                 },
-                content = "Qoshmoqchi bo'lgan component tipini kirit"
+                content = "Qoshmoqchi bo'lgan component tipini kiriting"
             )
 
             Spacer(modifier = Modifier.size(12.dp))
@@ -110,7 +114,11 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
                 },
                 label = {
                     Text(text = "Ixtiyorga qarab id qoshing")
-                }
+                },
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 5.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
             )
 
             Box(

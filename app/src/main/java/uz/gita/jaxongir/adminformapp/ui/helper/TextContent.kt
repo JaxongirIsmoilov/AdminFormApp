@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -50,7 +51,8 @@ fun TextContent(
 
         Button(
             onClick = { onSaveListener.invoke(id, text) },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7686))
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7686)),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
 
         ) {
             Text(text = "Text View ni qo'shish", modifier = Modifier.padding(horizontal = 10.dp))
