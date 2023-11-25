@@ -68,8 +68,8 @@ fun MainScreenContent(
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) DeleteDialog(
         onClickDelete = {
-            onEventDispatcher.invoke(MainContract.Intent.DeleteUser(UserData(userId.value, userName.value, userPass.value)))
             showDialog.value = false
+            onEventDispatcher.invoke(MainContract.Intent.DeleteUser(UserData(userId.value, userName.value, userPass.value)))
         },
         onClickCancel = { showDialog.value = false }
     )
