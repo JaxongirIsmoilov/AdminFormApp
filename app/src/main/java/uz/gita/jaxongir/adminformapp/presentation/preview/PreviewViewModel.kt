@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -18,30 +19,36 @@ class PreviewViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel(), PreviewContract.ViewModel {
     override val uiState = MutableStateFlow(PreviewContract.UiState())
-    private var userId = ""
-    init {
-        loadData()
-    }
     override fun onEventDispatcher(intent: PreviewContract.Intent) {
         when (intent) {
             is PreviewContract.Intent.MoveToComponentScreen -> {
                 viewModelScope.launch {
-                    userId = intent.userId
                     direction.moveToComponentsScreen(intent.userId)
                 }
             }
-            PreviewContract.Intent.LoadData -> {
-                loadData()
+
+            is PreviewContract.Intent.LoadData -> {
+                myLog("repo")
+                viewModelScope.launch {
+                    myLog("launch")
+                    repository.getComponentsByUserId(intent.userId).onEach {
+                        myLog("onEach")
+                        it.onSuccess {ls->
+                        myLog("succ")
+                            uiState.update { it.copy(compList =  ls) }
+                        }
+                    }.collect()
+                }
             }
         }
     }
 
-    private fun loadData(){
+    /*private fun loadData(){
         repository.getComponentsByUserId(userId).onEach {
             it.onSuccess { ls->
                 myLog("size viewModle lsu:${ls.size}")
                 uiState.update { it.copy(ls) }
             }
         }.launchIn(viewModelScope)
-    }
+    }*/
 }
