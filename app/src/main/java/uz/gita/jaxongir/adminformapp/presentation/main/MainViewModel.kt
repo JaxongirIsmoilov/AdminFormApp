@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
 
             is MainContract.Intent.MoveToComponentsScreen -> {
                 viewModelScope.launch {
-                    direction.moveToComponentScreen(intent.userData.userId)
+                    direction.moveToComponentScreen(intent.userData)
                 }
             }
 

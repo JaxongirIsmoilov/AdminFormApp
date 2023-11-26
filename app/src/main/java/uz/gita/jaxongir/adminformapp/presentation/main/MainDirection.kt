@@ -10,20 +10,20 @@ import javax.inject.Singleton
 
 interface MainDirection {
     suspend fun moveToAddScreen()
-    suspend fun moveToComponentScreen(userId: String)
+    suspend fun moveToComponentScreen(userData: UserData)
     suspend fun moveToPreviewScreen(userData: UserData)
 }
 
 @Singleton
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
-): MainDirection{
+) : MainDirection {
     override suspend fun moveToAddScreen() {
         appNavigator.addScreen(AddScreen())
     }
 
-    override suspend fun moveToComponentScreen(userId: String) {
-        appNavigator.addScreen(ComponentScreen(userId))
+    override suspend fun moveToComponentScreen(userData: UserData) {
+        appNavigator.addScreen(ComponentScreen(userData))
     }
 
     override suspend fun moveToPreviewScreen(userData: UserData) {

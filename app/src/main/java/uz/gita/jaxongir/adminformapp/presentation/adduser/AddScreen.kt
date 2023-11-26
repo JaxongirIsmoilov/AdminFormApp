@@ -108,7 +108,7 @@ fun UserAddScreenContent(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFFFF3951),
                     unfocusedBorderColor = Color(0xFFFF7686),
-                )
+                ), singleLine = true
             )
 
             var isPasswordVisible by remember { mutableStateOf(false) }

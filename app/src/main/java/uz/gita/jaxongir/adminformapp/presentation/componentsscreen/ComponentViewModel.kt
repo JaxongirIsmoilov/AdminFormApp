@@ -24,6 +24,7 @@ class ComponentViewModel @Inject constructor(
     private var userId: String = ""
     private var ids = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {
+        ids.addAll(uiState.value.savedIds)
         when (intent) {
             Contracts.Intent.LoadComponentId -> {
                 myLog("Load compId : ${uiState.value.components.size}")
@@ -45,19 +46,12 @@ class ComponentViewModel @Inject constructor(
             }
 
             is Contracts.Intent.AddComponent -> {
-//                ids.addAll(uiState.value.savedIds)
                 if (intent.componentData.idEnteredByUser != "") {
                     ids.add(intent.componentData.idEnteredByUser)
                     uiState.update {
                         it.copy(savedIds = ids)
                     }
-                    myLog("${uiState.value.savedIds}")
-                }else{
-                    uiState.update {
-                        it.copy(savedIds = ids)
-                    }
 
-                    myLog("${uiState.value.savedIds}")
                 }
                 myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
@@ -73,8 +67,11 @@ class ComponentViewModel @Inject constructor(
                                 uiState.update {
                                     it.copy(components = it.components)
                                 }
-                                direction.backToComponent()
-                            }
+                                if (intent.state) {
+                                    direction.moveToPreviewScreenFromUserAdd(intent.userData)
+                                } else {
+                                    direction.moveToPreviewScreenFromMain(userId)
+                                }                            }
                                 .onFailure {
                                 }
                         }
@@ -98,13 +95,6 @@ class ComponentViewModel @Inject constructor(
 
             is Contracts.Intent.Load -> {
                 userId = intent.userId
-                viewModelScope.launch {
-                    repository.getComponentsByUserId(intent.userId).onEach {
-                        it.onSuccess {ls->
-                            uiState.update { it.copy(components =  ls) }
-                        }
-                    }.collect()
-                }
             }
 
             is Contracts.Intent.DeleteComponent -> {
@@ -171,7 +161,7 @@ class ComponentViewModel @Inject constructor(
 
             Contracts.Intent.Save -> {
                 viewModelScope.launch {
-                    direction.backToComponent()
+
                 }
             }
         }
