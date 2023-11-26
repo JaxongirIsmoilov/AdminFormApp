@@ -74,6 +74,7 @@ fun UserAddScreenContent(
     onEventDispatcher: (UserAddContract.Event) -> Unit,
     isVisibleProgress: Boolean
 ) {
+    val context= LocalContext.current
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
 
@@ -88,7 +89,10 @@ fun UserAddScreenContent(
             painter = painterResource(id = R.drawable.cats),
             contentDescription = "cats",
             alignment = Alignment.TopCenter,
-            modifier = Modifier.padding(top = 56.dp, start = 36.dp, end = 36.dp).fillMaxWidth().height(170.dp)
+            modifier = Modifier
+                .padding(top = 56.dp, start = 36.dp, end = 36.dp)
+                .fillMaxWidth()
+                .height(170.dp)
         )
 
         Column(modifier = Modifier.align(Alignment.Center)) {
@@ -145,16 +149,22 @@ fun UserAddScreenContent(
         }
         Button(
             onClick = {
-                onEventDispatcher.invoke(
-                    UserAddContract.Event.AddUser(
-                        username.trim(),
-                        password.trim()
+                if (username.length>3 && password.length>3){
+                    onEventDispatcher.invoke(
+                        UserAddContract.Event.AddUser(
+                            username.trim(),
+                            password.trim()
+                        )
                     )
-                )
+                } else{
+                    Toast.makeText(context, "Username and password should be bigger than 3", Toast.LENGTH_SHORT).show()
+                }
+
             }, modifier = Modifier
                 .padding(bottom = 70.dp, start = 16.dp, end = 16.dp)
                 .fillMaxWidth()
-                .height(60.dp).align(Alignment.BottomCenter),
+                .height(60.dp)
+                .align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
                 (if (password.length > 3 && username.length > 3) Color(0xFFFF3951) else Color(
