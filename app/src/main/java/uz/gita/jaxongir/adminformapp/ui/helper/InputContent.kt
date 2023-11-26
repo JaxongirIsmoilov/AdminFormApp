@@ -59,10 +59,6 @@ fun InputContent(
         mutableStateOf("0")
     }
 
-    var conditions by remember {
-        mutableStateOf(mutableListOf<Conditions>())
-    }
-
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         item {
             SampleSpinner(
@@ -160,32 +156,6 @@ fun InputContent(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        OutlinedTextField(
-                            value = maxLength.toString(),
-                            onValueChange = {
-                                maxLength = it
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(text = "Max length") },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFFFF3951),
-                                unfocusedBorderColor = Color(0xFFFF7686)
-                            ))
-
-                        OutlinedTextField(
-                            value = minLength.toString(),
-                            onValueChange = {
-                                minLength = it
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(text = "Min length = ") },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFFFF3951),
-                                unfocusedBorderColor = Color(0xFFFF7686)
-                            )
-                        )
                     }
                 }
 
@@ -196,15 +166,13 @@ fun InputContent(
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
-
                         OutlinedTextField(
-                            value = maxValue.toString(),
+                            value = minValue.toString(),
                             onValueChange = {
-                                maxValue = it
+                                minValue = it
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(text = "Max Value = ") },
+                            label = { Text(text = "Min Value = ") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),
@@ -213,12 +181,12 @@ fun InputContent(
                         )
 
                         OutlinedTextField(
-                            value = minValue.toString(),
+                            value = maxValue.toString(),
                             onValueChange = {
-                                minValue = it
+                                maxValue = it
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(text = "Min Value = ") },
+                            label = { Text(text = "Max Value ") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),

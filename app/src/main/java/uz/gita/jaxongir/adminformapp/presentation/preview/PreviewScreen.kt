@@ -35,6 +35,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.UserData
+import uz.gita.jaxongir.adminformapp.ui.helper.TextComponent
 import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SampleSpinnerPreview
@@ -155,7 +156,7 @@ fun PreviewScreenContent(
                                 ComponentEnum.SampleText -> {
                                     myLog("Sample Text worked")
                                     item {
-                                        Row(
+                                        /*Row(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .clip(RoundedCornerShape(12.dp))
@@ -176,7 +177,15 @@ fun PreviewScreenContent(
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(16.dp))
-
+*/
+                                        TextComponent(
+                                            onClickDelete = {
+                                                onEventDispatcher.invoke(
+                                                    PreviewContract.Intent.DeleteComponent(data)
+                                                )
+                                            },
+                                            componentData = data
+                                        )
                                     }
                                 }
 

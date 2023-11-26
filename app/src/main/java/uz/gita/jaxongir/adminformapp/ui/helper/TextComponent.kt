@@ -1,5 +1,6 @@
-package uz.gita.jaxongir.adminformapp.ui.components
+package uz.gita.jaxongir.adminformapp.ui.helper
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,12 +11,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,22 +31,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.gita.jaxongir.adminformapp.R
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.Conditions
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TextComponent(
     onClickDelete: () -> Unit,
-    text:String
+    componentData: ComponentData
 ) {
+    Card(
+        modifier = Modifier
+            .padding(vertical = 10.dp, horizontal = 15.dp)
+            .fillMaxWidth()
+            .height(54.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .border(BorderStroke(2.dp , Color(0xFFFF7686)),RoundedCornerShape(12.dp))
 
+    ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(70.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .border(1.dp, Color(0xFFFF7686), RoundedCornerShape(12.dp))
-                .background(Color(0x33C4C4C4))
-                .padding(horizontal = 16.dp, vertical = 5.dp),
+                .fillMaxSize()
+                .background(color = Color(0x33D1D1D1))
+                .padding(vertical = 10.dp, horizontal = 15.dp)
         ) {
 
 
@@ -57,7 +67,7 @@ fun TextComponent(
             ) {
                 Column(modifier = Modifier.align(Alignment.Center)) {
                     Text(
-                        text = text,
+                        text = componentData.content,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -74,13 +84,16 @@ fun TextComponent(
                     .size(34.dp)
                     .padding(end =  8.dp)
                     .align(Alignment.CenterVertically)
-                    .combinedClickable(onClick = { onClickDelete()}, onLongClick = { onClickDelete() })
+                    .combinedClickable(onClick = { }, onLongClick = { onClickDelete() })
             )
         }
-    }
+    }}
 
 @Preview(showBackground = true)
 @Composable
 fun getTextCompPrev(){
-    TextComponent(onClickDelete = { /*TODO*/ }, text = "Quzimurod")
+    uz.gita.jaxongir.adminformapp.ui.components.TextComponent(
+        onClickDelete = { /*TODO*/ },
+        text = "Quzimurod"
+    )
 }
