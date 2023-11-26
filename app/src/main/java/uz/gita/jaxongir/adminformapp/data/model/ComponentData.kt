@@ -41,7 +41,7 @@ data class ComponentData(
         isMulti = isMulti,
         variants = converter.toJson(variants),
         selected = converter.toJson(selected),
-        conditions = convert(conditions),
+        conditions = converter.toJson(conditions),
         type = converter.toJson(type),
     )
 
@@ -63,17 +63,4 @@ data class ComponentData(
         conditions = conditions,
         type = type
     )
-
-
-    private fun convert(conditions: List<Conditions>): String{
-        val arrayList = arrayListOf<String>()
-
-        conditions.forEach {
-            arrayList.add(
-                converter.toJson(it)
-            )
-        }
-
-        return converter.toJson(conditions)
-    }
 }

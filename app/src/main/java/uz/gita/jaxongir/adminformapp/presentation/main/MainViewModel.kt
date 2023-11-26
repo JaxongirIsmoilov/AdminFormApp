@@ -34,7 +34,16 @@ class MainViewModel @Inject constructor(
             }
 
             is MainContract.Intent.DeleteUser -> {
-                repository.deleteUser(intent.userData).onEach { }.launchIn(viewModelScope)
+                repository.deleteUser(intent.userData).onEach {
+                    repository.getUsers()
+                        .onCompletion { uiState.update { it.copy(isLoading = false) } }
+                        .onStart { uiState.update { it.copy(isLoading = true) } }
+                        .onEach {
+                            it.onSuccess { ls ->
+                                uiState.update { it.copy(ls) }
+                            }
+                        }.launchIn(viewModelScope)
+                }.launchIn(viewModelScope)
             }
 
             is MainContract.Intent.MoveToPreviewScreen -> {

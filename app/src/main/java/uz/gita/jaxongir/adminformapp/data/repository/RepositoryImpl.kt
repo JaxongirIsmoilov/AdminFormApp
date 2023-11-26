@@ -151,10 +151,8 @@ class RepositoryImpl @Inject constructor(
                                 it.data?.getOrDefault("selected", "[]").toString(),
                                 Array<Boolean>::class.java
                             ).asList(),
-                            conditions = converter.fromJson(
-                                it.data?.getOrDefault("conditions", "[]").toString(),
-                                Array<Conditions>::class.java
-                            ).asList(),
+                            conditions = converter.fromJson(it.data?.getOrDefault("conditions", "[]").toString(), Array<Conditions>::class.java).asList(),
+//                            reconvert(it.data?.getOrDefault("conditions", "[]").toString()),
                             type = converter.fromJson(
                                 it.data?.getOrDefault("type", "").toString(),
                                 ComponentEnum::class.java
