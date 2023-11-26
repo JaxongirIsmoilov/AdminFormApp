@@ -56,9 +56,7 @@ fun SampleSpinnerPreview(
                     value = (selected),
                     onValueChange = { },
                     label = { Text(text = content) },
-                    modifier = Modifier.weight(1f).clickable(
-                        onClick = { expanded = !expanded }
-                    ),
+                    modifier = Modifier.weight(1f),
                     trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                     readOnly = true,
                     colors = OutlinedTextFieldDefaults.colors(
@@ -103,11 +101,20 @@ fun SampleSpinnerPreview(
                 }
             }
         }
+        Spacer(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Transparent)
+                .padding(end = 65.dp)
+                .clickable(
+                    onClick = { expanded = !expanded }
+                )
+        )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewSimple() {
-//    SampleSpinnerPreview(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewSimple() {
+//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
+//}
