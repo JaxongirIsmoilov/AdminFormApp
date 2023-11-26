@@ -102,8 +102,8 @@ fun MainContent(
             { componentId, selectedOperator, value ->
                 selecetdArrayList.add(selectedOperator)
                 onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-                conditions.add(Conditions(componentId, value, operator = selectedOperator))
-                Toast.makeText(context, "Operatorlar saqlandi!", Toast.LENGTH_SHORT).show()
+                conditions.add(Conditions(id = componentId, value = value, operator = selectedOperator))
+                Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
             }) {
             showDialog.value = false
         }

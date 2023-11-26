@@ -78,9 +78,9 @@ fun DialogSpinner(
                     list = savedIdList,
                     preselected = savedIdList.firstOrNull() ?: "",
                     onSelectionChanged = {
-                        Log.d("TTT", "DialogSpinner: $it")
+                        Log.d("TTT", "DialogSpinner1: $it")
                         selectedId = it
-                        Log.d("TTT", "DialogSpinner: $it")
+                        Log.d("TTT", "DialogSpinner2: $it")
                     },
                     content = "Id tanla"
                 )
@@ -88,7 +88,9 @@ fun DialogSpinner(
                 SampleSpinner(
                     list = listOf("More", "Less", "Equal", "Not equal"),
                     preselected = "More",
-                    onSelectionChanged = { selection -> selectesValue = selection },
+                    onSelectionChanged = { selection ->
+                        selectesValue = selection
+                    },
                     content = "Tanlang!"
                 )
                 Spacer(modifier = Modifier.size(10.dp))
