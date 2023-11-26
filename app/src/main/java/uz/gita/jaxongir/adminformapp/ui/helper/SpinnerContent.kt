@@ -29,9 +29,8 @@ import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 fun SpinnerContent(
     onEventListener: (Contracts.Intent) -> Unit,
     conditions: List<Conditions>,
-    state: Boolean,
     id: String,
-    userData: UserData,
+    userId: String,
     content: String,
 ) {
     var variants by remember {
@@ -81,7 +80,7 @@ fun SpinnerContent(
                     onEventListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
-                                userId = userData.userId,
+                                userId = userId,
                                 locId = 0,
                                 idEnteredByUser = id,
                                 content = content,
@@ -97,7 +96,7 @@ fun SpinnerContent(
                                 conditions = conditions,
                                 type = ComponentEnum.Spinner,
                                 id = ""
-                            ), state = state, userData
+                            )
                         )
                     )
                 }, modifier = Modifier.wrapContentWidth()

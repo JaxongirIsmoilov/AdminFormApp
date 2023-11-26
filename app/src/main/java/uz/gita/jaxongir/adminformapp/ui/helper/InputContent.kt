@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,27 +18,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
-import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 
 @Composable
 fun InputContent(
     onEventListener: (Contracts.Intent) -> Unit,
-    conditions: List<Conditions>,
-    state: Boolean,
     id: String,
-    userData: UserData,
+    userId: String,
     content: String,
+    conditions: List<Conditions>
 ) {
-    val context = LocalContext.current
     var type by remember {
         mutableStateOf(TextFieldType.Text)
     }
@@ -64,6 +59,9 @@ fun InputContent(
         mutableStateOf("0")
     }
 
+    var conditions by remember {
+        mutableStateOf(mutableListOf<Conditions>())
+    }
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         item {
@@ -101,36 +99,7 @@ fun InputContent(
 
         item {
             when (type.content) {
-                "Email" ->{
-                    TextButton(
-                        onClick = {
-                            onEventListener.invoke(
-                                Contracts.Intent.AddComponent(
-                                    ComponentData(
-                                        userId = userData.userId,
-                                        locId = 0,
-                                        idEnteredByUser = id,
-                                        content = content,
-                                        textFieldType = type,
-                                        maxLines = Integer.parseInt(maxLines),
-                                        maxLength = Integer.parseInt(maxLength),
-                                        minLength = Integer.parseInt(minLength),
-                                        maxValue = Integer.parseInt(maxValue),
-                                        minValue = Integer.parseInt(minValue),
-                                        isMulti = false,
-                                        variants = listOf(),
-                                        selected = listOf(),
-                                        conditions = conditions,
-                                        type = ComponentEnum.Input, id = ""
-                                    ), state, userData = userData
-                                )
-                            )
-                        },
-                        modifier = Modifier
-                    ) {
-                        Text(text = "Componentni qoshish")
-                    }
-                }
+
                 "Text" -> {
                     Column(
                         modifier = Modifier
@@ -163,8 +132,7 @@ fun InputContent(
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),
                                 unfocusedBorderColor = Color(0xFFFF7686)
-                            )
-                        )
+                            ))
 
                         OutlinedTextField(
                             value = minLength.toString(),
@@ -179,43 +147,6 @@ fun InputContent(
                                 unfocusedBorderColor = Color(0xFFFF7686)
                             )
                         )
-                        TextButton(
-                            onClick = {
-                                if (minLength.toInt() != 0 && maxLength.toInt() != 0 && maxLength.toInt() > minLength.toInt()) {
-                                    onEventListener.invoke(
-                                        Contracts.Intent.AddComponent(
-                                            ComponentData(
-                                                userId = userData.userId,
-                                                locId = 0,
-                                                idEnteredByUser = id,
-                                                content = content,
-                                                textFieldType = type,
-                                                maxLines = Integer.parseInt(maxLines),
-                                                maxLength = Integer.parseInt(maxLength),
-                                                minLength = Integer.parseInt(minLength),
-                                                maxValue = Integer.parseInt(maxValue),
-                                                minValue = Integer.parseInt(minValue),
-                                                isMulti = false,
-                                                variants = listOf(),
-                                                selected = listOf(),
-                                                conditions = conditions,
-                                                type = ComponentEnum.Input, id = ""
-                                            ), state, userData = userData
-                                        )
-                                    )
-
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "maxLength minLength dan katta bolishi kk",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            },
-                            modifier = Modifier
-                        ) {
-                            Text(text = "Componentni qoshish")
-                        }
 
 
                     }
@@ -228,37 +159,35 @@ fun InputContent(
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                    }
-                    TextButton(
-                        onClick = {
-                            onEventListener.invoke(
-                                Contracts.Intent.AddComponent(
-                                    ComponentData(
-                                        userId = userData.userId,
-                                        locId = 0,
-                                        idEnteredByUser = id,
-                                        content = content,
-                                        textFieldType = type,
-                                        maxLines = Integer.parseInt(maxLines),
-                                        maxLength = Integer.parseInt(maxLength),
-                                        minLength = Integer.parseInt(minLength),
-                                        maxValue = Integer.parseInt(maxValue),
-                                        minValue = Integer.parseInt(minValue),
-                                        isMulti = false,
-                                        variants = listOf(),
-                                        selected = listOf(),
-                                        conditions = conditions,
-                                        type = ComponentEnum.Input, id = ""
-                                    ), state, userData = userData
-                                )
+
+                        OutlinedTextField(
+                            value = maxLength.toString(),
+                            onValueChange = {
+                                maxLength = it
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            label = { Text(text = "Max length") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFFFF3951),
+                                unfocusedBorderColor = Color(0xFFFF7686)
+                            ))
+
+                        OutlinedTextField(
+                            value = minLength.toString(),
+                            onValueChange = {
+                                minLength = it
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            label = { Text(text = "Min length = ") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFFFF3951),
+                                unfocusedBorderColor = Color(0xFFFF7686)
                             )
-                        },
-                        modifier = Modifier
-                    ) {
-                        Text(text = "Componentni qoshish")
+                        )
                     }
                 }
-
 
                 "Number" -> {
                     Column(
@@ -296,44 +225,6 @@ fun InputContent(
                                 unfocusedBorderColor = Color(0xFFFF7686)
                             )
                         )
-
-                        TextButton(
-                            onClick = {
-                                if (minValue.toInt() != 0 && maxValue.toInt() != 0 && maxValue.toInt() > minValue.toInt()) {
-                                    onEventListener.invoke(
-                                        Contracts.Intent.AddComponent(
-                                            ComponentData(
-                                                userId = userData.userId,
-                                                locId = 0,
-                                                idEnteredByUser = id,
-                                                content = content,
-                                                textFieldType = type,
-                                                maxLines = Integer.parseInt(maxLines),
-                                                maxLength = Integer.parseInt(maxLength),
-                                                minLength = Integer.parseInt(minLength),
-                                                maxValue = Integer.parseInt(maxValue),
-                                                minValue = Integer.parseInt(minValue),
-                                                isMulti = false,
-                                                variants = listOf(),
-                                                selected = listOf(),
-                                                conditions = conditions,
-                                                type = ComponentEnum.Input, id = ""
-                                            ), state, userData = userData
-                                        )
-                                    )
-
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "maxValue minValue dan katta bolishi kk",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            },
-                            modifier = Modifier
-                        ) {
-                            Text(text = "Componentni qoshish")
-                        }
                     }
                 }
 
@@ -355,10 +246,38 @@ fun InputContent(
         }
 
         item {
-
+            TextButton(
+                onClick = {
+                    onEventListener.invoke(
+                        Contracts.Intent.AddComponent(
+                            ComponentData(
+                                userId = userId,
+                                locId = 0,
+                                idEnteredByUser = id,
+                                content = content,
+                                textFieldType = type,
+                                maxLines = Integer.parseInt(maxLines),
+                                maxLength = Integer.parseInt(maxLength),
+                                minLength = Integer.parseInt(minLength),
+                                maxValue = Integer.parseInt(maxValue),
+                                minValue = Integer.parseInt(minValue),
+                                isMulti = false,
+                                variants = listOf(),
+                                selected = listOf(),
+                                conditions = conditions,
+                                type = ComponentEnum.Input, id = ""
+                            )
+                        )
+                    )
+                },
+                modifier = Modifier
+            ) {
+                Text(text = "Componentni qoshish")
+            }
         }
     }
 }
+
 
 @Preview
 @Composable

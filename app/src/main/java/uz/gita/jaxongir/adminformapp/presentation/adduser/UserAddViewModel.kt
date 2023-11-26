@@ -30,7 +30,7 @@ class UserAddViewModel @Inject constructor(
                         it.onSuccess {
                             val userId = it
                             postSideEffect(UserAddContract.SideEffect.ShowToast("User muvaffaqiyatli qo'shildi!"))
-                            direction.moveToComponentScreen(
+                            direction.moveToPreview(
                                 UserData(
                                     userId,
                                     event.username,

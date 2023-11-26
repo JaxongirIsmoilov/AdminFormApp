@@ -29,10 +29,9 @@ import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 fun SelectorContent(
     onEventListener: (Contracts.Intent) -> Unit,
     conditions: List<Conditions>,
-    state: Boolean,
     id: String,
-    userData: UserData,
     content: String,
+    userId: String
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -80,7 +79,7 @@ fun SelectorContent(
                     onEventListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
-                                userId = userData.userId,
+                                userId = userId,
                                 locId = 0,
                                 idEnteredByUser = id,
                                 content = content,
@@ -96,7 +95,7 @@ fun SelectorContent(
                                 conditions = conditions,
                                 type = ComponentEnum.Selector,
                                 id = ""
-                            ), state, userData
+                            )
                         )
                     )
                 }, modifier = Modifier.wrapContentWidth()

@@ -14,9 +14,7 @@ interface Contracts {
 
     interface Intent {
         data class AddComponent(
-            val componentData: ComponentData,
-            val state:Boolean,
-            val userData: UserData
+            val componentData: ComponentData
         ) : Intent
 
         data class DeleteComponent(

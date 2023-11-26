@@ -21,7 +21,7 @@ class PreviewViewModel @Inject constructor(
         when (intent) {
             is PreviewContract.Intent.MoveToComponentScreen -> {
                 viewModelScope.launch {
-                    direction.moveToComponentsScreen(intent.userData)
+                    direction.moveToComponentsScreen(intent.userId)
                 }
             }
 

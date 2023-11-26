@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 @Preview(showBackground = true)
@@ -76,8 +77,9 @@ fun DialogSpinner(
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-
+                myLog("$savedIdList")
                 SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
+
                                                                                                           selectedId = it
                 }, content = "Id tanla")
 
