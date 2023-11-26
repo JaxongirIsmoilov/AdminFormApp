@@ -3,6 +3,7 @@ package uz.gita.jaxongir.adminformapp.presentation.preview
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +37,6 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
-import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SampleSpinnerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SelectorItem
 import uz.gita.jaxongir.adminformapp.utils.myLog
@@ -114,7 +113,7 @@ fun PreviewScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(top = 70.dp, start = 16.dp, end = 16.dp)
+                            .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                     ) {
                         myLog("${uiState.value.compList.size}")
                         uiState.value.compList.forEach { data ->
@@ -154,26 +153,35 @@ fun PreviewScreenContent(
                                 }
 
                                 ComponentEnum.SampleText -> {
+                                    myLog("Sample Text worked")
                                     item {
-                                        Column(
+                                        Row(
                                             modifier = Modifier
-                                                .padding(horizontal = 10.dp, vertical = 15.dp)
                                                 .fillMaxWidth()
+                                                .clip(RoundedCornerShape(12.dp))
+                                                .border(
+                                                    1.dp,
+                                                    Color(0xFFFF7686),
+                                                    RoundedCornerShape(12.dp)
+                                                )
+                                                .background(Color(0x33C4C4C4))
+                                                .padding(horizontal = 16.dp, vertical = 5.dp),
+                                            verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Spacer(modifier = Modifier.size(10.dp))
                                             Text(
                                                 text = data.content,
                                                 fontSize = 22.sp,
                                                 modifier = Modifier
                                                     .padding(bottom = 10.dp)
-                                                    .align(Alignment.CenterHorizontally)
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(16.dp))
 
                                     }
                                 }
 
                                 ComponentEnum.Input -> {
+                                    myLog("Input type worked")
                                     item {
                                         InputField(
                                             textFieldType = data.textFieldType,
@@ -184,8 +192,12 @@ fun PreviewScreenContent(
                                             minValue = data.minValue,
                                             question = data.content,
                                             data
-                                        ){
-                                            onEventDispatcher.invoke(PreviewContract.Intent.DeleteComponent(data))
+                                        ) {
+                                            onEventDispatcher.invoke(
+                                                PreviewContract.Intent.DeleteComponent(
+                                                    data
+                                                )
+                                            )
                                         }
                                     }
                                 }
@@ -216,7 +228,7 @@ fun PreviewScreenContent(
                     onClick = {
                         onEventDispatcher.invoke(
                             PreviewContract.Intent.MoveToComponentScreen(
-                                userData.userId
+                                userId = userData.userId
                             )
                         )
                     },

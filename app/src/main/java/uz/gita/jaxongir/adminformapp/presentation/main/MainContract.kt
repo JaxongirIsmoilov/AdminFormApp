@@ -5,7 +5,6 @@ import uz.gita.jaxongir.adminformapp.data.model.UserData
 
 interface MainContract {
     interface ViewModel {
-
         val uiState: StateFlow<UIState>
         fun onEventDispatcher(intent: Intent)
     }
@@ -23,7 +22,8 @@ interface MainContract {
     }
 
     data class UIState(
-        val userList: List<UserData> = emptyList()
+        val userList: List<UserData> = emptyList(),
+        var isLoading: Boolean = false
     )
 
 

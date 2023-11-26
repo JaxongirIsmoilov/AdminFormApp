@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -24,8 +26,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +45,7 @@ import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
+import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
@@ -75,14 +80,25 @@ fun MainContent(
     var content by remember {
         mutableStateOf("")
     }
+    val context = LocalContext.current
 
     var conditions by remember {
         mutableStateOf(arrayListOf<Conditions>())
     }
     val showDialog = remember { mutableStateOf(false) }
-    if (showDialog.value) DialogSpinner(
-        uiState.value.savedIds, uiState.value.savedIds.first()
-    ) { onEventDispatcher.invoke(Contracts.Intent.Save) }
+    if (showDialog.value) {
+        myLog("dialog")
+        DialogSpinner(uiState.value.savedIds,
+            { componentId, selectedOperator, value ->
+                conditions.add(Conditions(componentId, value, operator = selectedOperator))
+                Toast.makeText(context, "Operatorlar saqlandi!", Toast.LENGTH_SHORT).show()
+            }) {
+            showDialog.value = false
+        }
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,9 +121,15 @@ fun MainContent(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            TextButton(onClick = {
-                showDialog.value = true
-            }) {
+            TextButton(
+                onClick = {
+                    onEventDispatcher.invoke(Contracts.Intent.LoadComponentId)
+                    showDialog.value = true
+                },
+                modifier = Modifier
+                    .clip(RoundedCornerShape(15.dp))
+                    .background(color = Color(0xFFFF3951))
+            ) {
                 Text(text = "</>", fontSize = 18.sp, color = White)
             }
         }
@@ -187,7 +209,7 @@ fun MainContent(
             )
 
             Spacer(modifier = Modifier.size(36.dp))
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -197,9 +219,10 @@ fun MainContent(
                     ComponentEnum.Input -> {
                         InputContent(
                             onEventListener = onEventDispatcher::invoke,
+                            conditions = conditions,
                             id = id,
                             userId = userId,
-                            content= content
+                            content = content
                         )
                     }
 
@@ -222,16 +245,19 @@ fun MainContent(
                                             isMulti = false,
                                             variants = listOf(),
                                             selected = listOf(),
-                                            conditions = listOf(),
+                                            conditions = conditions,
                                             type = ComponentEnum.SampleText,
                                             id = ""
                                         )
                                     )
                                 )
+                                myLog("conditions:$conditions")
                             },
                             modifier = Modifier
                                 .wrapContentSize()
                                 .align(Alignment.TopCenter)
+                                .padding(5.dp)
+                                .background(Color(0xffff7686))
                         ) {
                             Text(text = "Componentni qoshish")
                         }
@@ -256,7 +282,7 @@ fun MainContent(
                                             isMulti = false,
                                             variants = listOf(),
                                             selected = listOf(),
-                                            conditions = listOf(),
+                                            conditions = conditions,
                                             type = ComponentEnum.Dater,
                                             id = ""
                                         )
@@ -273,11 +299,23 @@ fun MainContent(
                     }
 
                     ComponentEnum.Selector -> {
-                        SelectorContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SelectorContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            conditions,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
 
                     ComponentEnum.Spinner -> {
-                        SpinnerContent(onEventListener = onEventDispatcher::invoke, id = id, userId = userId, content = content)
+                        SpinnerContent(
+                            onEventListener = onEventDispatcher::invoke,
+                            conditions = conditions,
+                            id = id,
+                            userId = userId,
+                            content = content
+                        )
                     }
                 }
             }

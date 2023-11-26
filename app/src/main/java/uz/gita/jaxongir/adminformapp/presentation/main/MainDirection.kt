@@ -17,7 +17,7 @@ interface MainDirection {
 @Singleton
 class MainDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
-): MainDirection{
+) : MainDirection {
     override suspend fun moveToAddScreen() {
         appNavigator.addScreen(AddScreen())
     }

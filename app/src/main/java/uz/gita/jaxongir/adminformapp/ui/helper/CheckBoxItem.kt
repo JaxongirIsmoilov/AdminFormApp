@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CheckBoxItem(title: String) {
-    var checkedState = remember { mutableStateOf(true) }
+    var checkedState = remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .fillMaxWidth()

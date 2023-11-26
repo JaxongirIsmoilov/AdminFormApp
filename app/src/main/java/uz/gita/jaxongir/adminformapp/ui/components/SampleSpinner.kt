@@ -47,7 +47,7 @@ fun SampleSpinner(
                 value = (selected),
                 onValueChange = { },
                 label = { Text(text = content) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
                 trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                 readOnly = true,
                 colors = OutlinedTextFieldDefaults.colors(

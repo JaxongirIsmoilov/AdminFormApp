@@ -33,6 +33,7 @@ fun InputContent(
     id: String,
     userId: String,
     content: String,
+    conditions: List<Conditions>
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -263,7 +264,7 @@ fun InputContent(
                                 isMulti = false,
                                 variants = listOf(),
                                 selected = listOf(),
-                                conditions = listOf(),
+                                conditions = conditions,
                                 type = ComponentEnum.Input, id = ""
                             )
                         )
@@ -276,6 +277,7 @@ fun InputContent(
         }
     }
 }
+
 
 @Preview
 @Composable
