@@ -94,6 +94,6 @@ fun TextComponent(
 fun getTextCompPrev(){
     uz.gita.jaxongir.adminformapp.ui.components.TextComponent(
         onClickDelete = { /*TODO*/ },
-        text = "Quzimurod"
+        text = "John Doe"
     )
 }

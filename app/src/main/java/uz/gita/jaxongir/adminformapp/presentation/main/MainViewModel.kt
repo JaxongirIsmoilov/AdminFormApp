@@ -43,8 +43,7 @@ class MainViewModel @Inject constructor(
                                 uiState.update { it.copy(ls) }
                             }
                         }.launchIn(viewModelScope)
-                }.launchIn(viewModelScope)
-            }
+                }.launchIn(viewModelScope)            }
 
             is MainContract.Intent.MoveToPreviewScreen -> {
                 viewModelScope.launch {

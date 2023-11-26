@@ -118,25 +118,26 @@ fun InputContent(
                         )
 
                         OutlinedTextField(
-                            value = maxLength,
-                            onValueChange = {
-                                maxLength = it
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(text = "Max length") },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFFFF3951),
-                                unfocusedBorderColor = Color(0xFFFF7686)
-                            ))
-
-                        OutlinedTextField(
                             value = minLength.toString(),
                             onValueChange = {
                                 minLength = it
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Min length = ") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFFFF3951),
+                                unfocusedBorderColor = Color(0xFFFF7686)
+                            )
+                        )
+
+                        OutlinedTextField(
+                            value = maxLength,
+                            onValueChange = {
+                                maxLength = it
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            label = { Text(text = "Max length") },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),
