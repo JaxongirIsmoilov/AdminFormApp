@@ -13,7 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -37,7 +39,7 @@ fun DialogSpinnerPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogSpinner(
-
+    savedIdList: List<String>,
     onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
 ) {
@@ -58,7 +60,10 @@ fun DialogSpinner(
                 mutableStateOf("")
             }
 
-            var id by remember {
+            var expanded by remember {
+                mutableStateOf(true)
+            }
+            var selectedId by remember {
                 mutableStateOf("")
             }
             var selectesValue by remember {
@@ -71,60 +76,46 @@ fun DialogSpinner(
                     .padding(top = 10.dp, start = 12.dp, end = 12.dp, bottom = 10.dp)
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Mavjud bo'lgan componenta id kiriting!")
-                Spacer(modifier = Modifier.size(10.dp))
-                OutlinedTextField(
-                    value = id, onValueChange = {
-                        id = it
+
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = {
+                        expanded = !expanded
                     },
-                    modifier = Modifier
-                        .padding(top = 10.dp, start = 12.dp, end = 12.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686),
-                    ), label = { Text(text = "Component id") }
-                )
-//                ExposedDropdownMenuBox(
-//                    expanded = expanded,
-//                    onExpandedChange = {
-//                        expanded = !expanded
-//                    },
-//                ) {
-//                    androidx.compose.material3.TextField(
-//                        readOnly = true,
-//                        value = selected,
-//                        onValueChange = { },
-//                        label = { Text("Label") },
-//                        trailingIcon = {
-//                            androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon(
-//                                expanded = expanded
-//                            )
-//                        },
-//                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedBorderColor = Color(0xFFFF3951),
-//                            unfocusedBorderColor = Color(0xFFFF7686),
-//                        ),
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
-//                    ExposedDropdownMenu(
-//                        expanded = expanded,
-//                        onDismissRequest = {
-//                            expanded = false
-//                        }
-//                    ) {
-//                        list.forEach { selectionOption ->
-//                            DropdownMenuItem(
-//                                text = { Text(text = selectionOption) },
-//                                onClick = {
-//                                    selectedOptionText = selectionOption
-//                                    expanded = false
-//                                }
-//                            )
-//                        }
-//                    }
-//                }
+                ) {
+                    androidx.compose.material3.TextField(
+                        readOnly = true,
+                        value = selectesValue,
+                        onValueChange = { },
+                        label = { Text("Label") },
+                        trailingIcon = {
+                            androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon(
+                                expanded = expanded
+                            )
+                        },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color(0xFFFF3951),
+                            unfocusedBorderColor = Color(0xFFFF7686),
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = {
+                            expanded = false
+                        }
+                    ) {
+                        savedIdList.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                text = { Text(text = selectionOption) },
+                                onClick = {
+                                    selectedId = selectionOption
+                                    expanded = false
+                                }
+                            )
+                        }
+                    }
+                }
 
 
                 SampleSpinner(
@@ -152,7 +143,7 @@ fun DialogSpinner(
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
-                        onSaveClick.invoke(id, selectesValue, value)
+                        onSaveClick.invoke(selectedId, selectesValue, value)
                         onClickCancel()
                     },
                     modifier = Modifier
