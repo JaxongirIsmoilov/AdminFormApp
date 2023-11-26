@@ -153,6 +153,7 @@ fun PreviewScreenContent(
                                 }
 
                                 ComponentEnum.SampleText -> {
+                                    myLog("Sample Text worked")
                                     item {
                                         Row(
                                             modifier = Modifier
@@ -180,6 +181,7 @@ fun PreviewScreenContent(
                                 }
 
                                 ComponentEnum.Input -> {
+                                    myLog("Input type worked")
                                     item {
                                         InputField(
                                             textFieldType = data.textFieldType,

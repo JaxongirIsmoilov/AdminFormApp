@@ -43,8 +43,6 @@ fun DialogSpinner(
     onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
 ) {
-
-
     androidx.compose.material3.AlertDialog(
         onDismissRequest = {
             onClickCancel()
@@ -77,7 +75,7 @@ fun DialogSpinner(
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                ExposedDropdownMenuBox(
+                /*ExposedDropdownMenuBox(
                     expanded = expanded,
                     onExpandedChange = {
                         expanded = !expanded
@@ -116,7 +114,11 @@ fun DialogSpinner(
                         }
                     }
                 }
+*/
 
+                SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
+                                                                                                          selectedId = it
+                }, content = "Id tanla")
 
                 SampleSpinner(
                     list = listOf(">", "<", "==", "!="),

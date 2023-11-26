@@ -32,6 +32,8 @@ interface Contracts {
         ) : Intent
 
         object Save : Intent
+
+        object LoadComponentId : Intent
     }
 
     data class UIState(
