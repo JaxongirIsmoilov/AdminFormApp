@@ -24,15 +24,21 @@ class ComponentViewModel @Inject constructor(
     private var userId: String = ""
     private var ids = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {
-        ids.addAll(uiState.value.savedIds)
         when (intent) {
             is Contracts.Intent.AddComponent -> {
+                ids.addAll(uiState.value.savedIds)
                 if (intent.componentData.idEnteredByUser != "") {
                     ids.add(intent.componentData.idEnteredByUser)
                     uiState.update {
                         it.copy(savedIds = ids)
                     }
+                    myLog("${uiState.value.savedIds}")
+                }else{
+                    uiState.update {
+                        it.copy(savedIds = ids)
+                    }
 
+                    myLog("${uiState.value.savedIds}")
                 }
                 myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
