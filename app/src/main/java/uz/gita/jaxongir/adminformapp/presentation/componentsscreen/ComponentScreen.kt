@@ -40,24 +40,28 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
+import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.ui.helper.ConditionsContent
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.utils.myLog
 
-class ComponentScreen(private val userId: String) : AndroidScreen() {
+class ComponentScreen(private val userData: UserData, private val state: Boolean = false) :
+    AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
 
-        viewModel.eventDispatcher(Contracts.Intent.Load(userId))
+        viewModel.eventDispatcher(Contracts.Intent.Load(userData.userId))
 
         MainContent(
-            userId = userId,
+            userData = userData,
             uiState = viewModel.uiState.collectAsState(),
-            onEventDispatcher = viewModel::eventDispatcher
+            onEventDispatcher = viewModel::eventDispatcher,
+            state
         )
     }
 }
@@ -65,9 +69,10 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun MainContent(
-    userId: String,
+    userData: UserData,
     uiState: State<Contracts.UIState>,
     onEventDispatcher: (Contracts.Intent) -> Unit,
+    state: Boolean
 ) {
     var type by remember {
         mutableStateOf(ComponentEnum.SampleText)
@@ -85,9 +90,11 @@ fun MainContent(
     var conditions by remember {
         mutableStateOf(arrayListOf<Conditions>())
     }
+
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         myLog("dialog")
+        myLog("list size:${uiState.value.savedIds}")
         DialogSpinner(uiState.value.savedIds,
             { componentId, selectedOperator, value ->
                 conditions.add(Conditions(componentId, value, operator = selectedOperator))
@@ -99,229 +106,239 @@ fun MainContent(
 
 
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Row(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFff7686))
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxSize()
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            androidx.compose.material3.Text(
-                text = "Componenta Qo'shish",
-                color = Color.White,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            TextButton(
-                onClick = {
-                    showDialog.value = true
-                    myLog("valie${showDialog.value}")
-                },
-                modifier = Modifier
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(color = Color(0xFFFF3951))
-            ) {
-                Text(text = "</>", fontSize = 18.sp, color = White)
-            }
-        }
-
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-
-            Spacer(modifier = Modifier.size(12.dp))
-
-            SampleSpinner(
-                list = listOf(
-                    ComponentEnum.Spinner.content,
-                    ComponentEnum.SampleText.content,
-                    ComponentEnum.Dater.content,
-                    ComponentEnum.Input.content,
-                    ComponentEnum.Selector.content
-                ),
-                preselected = ComponentEnum.SampleText.content,
-                onSelectionChanged = {
-                    when (it) {
-                        "Spinner" -> {
-                            type = ComponentEnum.Spinner
-                        }
-
-                        "Selector" -> {
-                            type = ComponentEnum.Selector
-                        }
-
-                        "Dater" -> {
-                            type = ComponentEnum.Dater
-                        }
-
-                        "SampleText" -> {
-                            type = ComponentEnum.SampleText
-                        }
-
-                        else -> {
-                            type = ComponentEnum.Input
-                        }
-
-                    }
-                },
-                content = "Qoshmoqchi bo'lgan component tipini kiriting"
-            )
-
-            Spacer(modifier = Modifier.size(12.dp))
-
-            OutlinedTextField(
-                value = id,
-                onValueChange = {
-                    id = it
-                },
-                label = {
-                    Text(text = "Ixtiyorga qarab id qoshing")
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFFF3951),
-                    unfocusedBorderColor = Color(0xFFFF7686)
-                )
-            )
-
-            Spacer(modifier = Modifier.size(12.dp))
-
-            OutlinedTextField(
-                value = content,
-                onValueChange = {
-                    content = it
-                },
-                label = {
-                    Text(text = "Conetnt kiriting")
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFFF3951),
-                    unfocusedBorderColor = Color(0xFFFF7686)
-                )
-            )
-
-            Spacer(modifier = Modifier.size(36.dp))
-
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .background(Color(0xFFff7686))
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                when (type) {
-                    ComponentEnum.Input -> {
-                        InputContent(
-                            onEventListener = onEventDispatcher::invoke,
-                            conditions = conditions,
-                            id = id,
-                            userId = userId,
-                            content = content
-                        )
-                    }
+                androidx.compose.material3.Text(
+                    text = "Componenta Qo'shish",
+                    color = White,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                )
 
-                    ComponentEnum.SampleText -> {
-                        TextButton(
-                            onClick = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            content = content,
-                                            textFieldType = TextFieldType.Text,
-                                            maxLines = 0,
-                                            maxLength = 0,
-                                            minLength = 0,
-                                            maxValue = 0,
-                                            minValue = 0,
-                                            isMulti = false,
-                                            variants = listOf(),
-                                            selected = listOf(),
-                                            conditions = conditions,
-                                            type = ComponentEnum.SampleText,
-                                            id = ""
+                Spacer(modifier = Modifier.weight(1f))
+
+                TextButton(
+                    onClick = {
+                        showDialog.value = true
+                        myLog("valie${showDialog.value}")
+                    },
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(15.dp))
+                        .background(color = Color(0xFFFF3951))
+                ) {
+                    Text(text = "</>", fontSize = 18.sp, color = White)
+                }
+            }
+
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+
+                Spacer(modifier = Modifier.size(12.dp))
+
+                SampleSpinner(
+                    list = listOf(
+                        ComponentEnum.Spinner.content,
+                        ComponentEnum.SampleText.content,
+                        ComponentEnum.Dater.content,
+                        ComponentEnum.Input.content,
+                        ComponentEnum.Selector.content
+                    ),
+                    preselected = ComponentEnum.SampleText.content,
+                    onSelectionChanged = {
+                        when (it) {
+                            "Spinner" -> {
+                                type = ComponentEnum.Spinner
+                            }
+
+                            "Selector" -> {
+                                type = ComponentEnum.Selector
+                            }
+
+                            "Dater" -> {
+                                type = ComponentEnum.Dater
+                            }
+
+                            "SampleText" -> {
+                                type = ComponentEnum.SampleText
+                            }
+
+                            else -> {
+                                type = ComponentEnum.Input
+                            }
+
+                        }
+                    },
+                    content = "Qoshmoqchi bo'lgan component tipini kiriting"
+                )
+
+                Spacer(modifier = Modifier.size(12.dp))
+
+                OutlinedTextField(
+                    value = id,
+                    onValueChange = {
+                        id = it
+                    },
+                    label = {
+                        Text(text = "Ixtiyorga qarab id qoshing")
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
+                )
+
+                Spacer(modifier = Modifier.size(12.dp))
+
+                OutlinedTextField(
+                    value = content,
+                    onValueChange = {
+                        content = it
+                    },
+                    label = {
+                        Text(text = "Conetnt kiriting")
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
+                )
+
+                Spacer(modifier = Modifier.size(36.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
+                    when (type) {
+                        ComponentEnum.Input -> {
+                            InputContent(
+                                onEventListener = onEventDispatcher::invoke,
+                                conditions = conditions,
+                                id = id,
+                                content = content,
+                                state = state,
+                                userData = userData
+                            )
+                        }
+
+                        ComponentEnum.SampleText -> {
+                            TextButton(
+                                onClick = {
+                                    onEventDispatcher.invoke(
+                                        Contracts.Intent.AddComponent(
+                                            ComponentData(
+                                                userId = userData.userId,
+                                                locId = 0,
+                                                idEnteredByUser = id,
+                                                content = content,
+                                                textFieldType = TextFieldType.Text,
+                                                maxLines = 0,
+                                                maxLength = 0,
+                                                minLength = 0,
+                                                maxValue = 0,
+                                                minValue = 0,
+                                                isMulti = false,
+                                                variants = listOf(),
+                                                selected = listOf(),
+                                                conditions = conditions,
+                                                type = ComponentEnum.SampleText,
+                                                id = ""
+                                            ), state, userData
                                         )
                                     )
-                                )
-                                myLog("conditions:$conditions")
-                            },
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .align(Alignment.TopCenter)
-                                .padding(5.dp)
-                                .background(Color(0xffff7686))
-                        ) {
-                            Text(text = "Componentni qoshish")
+                                    myLog("conditions:$conditions")
+                                },
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .align(Alignment.TopCenter)
+                                    .padding(5.dp)
+                                    .background(Color(0xffff7686))
+                            ) {
+                                Text(text = "Componentni qoshish")
+                            }
+                        }
+
+                        ComponentEnum.Dater -> {
+                            TextButton(
+                                onClick = {
+                                    onEventDispatcher.invoke(
+                                        Contracts.Intent.AddComponent(
+                                            ComponentData(
+                                                userId = userData.userId,
+                                                locId = 0,
+                                                idEnteredByUser = id,
+                                                content = content,
+                                                textFieldType = TextFieldType.Text,
+                                                maxLines = 0,
+                                                maxLength = 0,
+                                                minLength = 0,
+                                                maxValue = 0,
+                                                minValue = 0,
+                                                isMulti = false,
+                                                variants = listOf(),
+                                                selected = listOf(),
+                                                conditions = conditions,
+                                                type = ComponentEnum.Dater,
+                                                id = ""
+                                            ), state = state, userData
+                                        )
+                                    )
+                                },
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .align(Alignment.TopCenter)
+                            ) {
+                                Text(text = "Componentni qoshish")
+                            }
+
+                        }
+
+                        ComponentEnum.Selector -> {
+                            SelectorContent(
+                                onEventListener = onEventDispatcher::invoke,
+                                conditions,
+                                state,
+                                id = id,
+                                content = content,
+                                userData = userData
+                            )
+                        }
+
+                        ComponentEnum.Spinner -> {
+                            SpinnerContent(
+                                onEventListener = onEventDispatcher::invoke,
+                                conditions = conditions,
+                                state,
+                                id = id,
+                                content = content,
+                                userData = userData
+                            )
                         }
                     }
 
-                    ComponentEnum.Dater -> {
-                        TextButton(
-                            onClick = {
-                                onEventDispatcher.invoke(
-                                    Contracts.Intent.AddComponent(
-                                        ComponentData(
-                                            userId = userId,
-                                            locId = 0,
-                                            idEnteredByUser = id,
-                                            content = content,
-                                            textFieldType = TextFieldType.Text,
-                                            maxLines = 0,
-                                            maxLength = 0,
-                                            minLength = 0,
-                                            maxValue = 0,
-                                            minValue = 0,
-                                            isMulti = false,
-                                            variants = listOf(),
-                                            selected = listOf(),
-                                            conditions = conditions,
-                                            type = ComponentEnum.Dater,
-                                            id = ""
-                                        )
-                                    )
-                                )
-                            },
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .align(Alignment.TopCenter)
-                        ) {
-                            Text(text = "Componentni qoshish")
-                        }
 
-                    }
-
-                    ComponentEnum.Selector -> {
-                        SelectorContent(
-                            onEventListener = onEventDispatcher::invoke,
-                            conditions,
-                            id = id,
-                            userId = userId,
-                            content = content
-                        )
-                    }
-
-                    ComponentEnum.Spinner -> {
-                        SpinnerContent(
-                            onEventListener = onEventDispatcher::invoke,
-                            conditions = conditions,
-                            id = id,
-                            userId = userId,
-                            content = content
-                        )
-                    }
                 }
             }
         }
-
-
+        val list = ArrayList<String>()
+        conditions.forEach {
+            list.add(it.value)
+        }
+        ConditionsContent(list = list, modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
@@ -329,6 +346,6 @@ fun MainContent(
 @Composable
 @Preview
 fun ComponentScreenPreview() {
-    MainContent("1", mutableStateOf(Contracts.UIState())) {}
+    MainContent(UserData("", "", ""), mutableStateOf(Contracts.UIState()), {}, false)
 }
 

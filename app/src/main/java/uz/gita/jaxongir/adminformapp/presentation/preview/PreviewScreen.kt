@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +37,6 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.ui.previewitems.DatePickerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputField
-import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SampleSpinnerPreview
 import uz.gita.jaxongir.adminformapp.ui.previewitems.SelectorItem
 import uz.gita.jaxongir.adminformapp.utils.myLog
@@ -80,7 +78,7 @@ fun PreviewScreenContent(
                 onClick = {
                     onEventDispatcher.invoke(
                         PreviewContract.Intent.MoveToComponentScreen(
-                            userData.userId
+                            userData
                         )
                     )
                 },
@@ -192,8 +190,12 @@ fun PreviewScreenContent(
                                             minValue = data.minValue,
                                             question = data.content,
                                             data
-                                        ){
-                                            onEventDispatcher.invoke(PreviewContract.Intent.DeleteComponent(data))
+                                        ) {
+                                            onEventDispatcher.invoke(
+                                                PreviewContract.Intent.DeleteComponent(
+                                                    data
+                                                )
+                                            )
                                         }
                                     }
                                 }
@@ -224,7 +226,7 @@ fun PreviewScreenContent(
                     onClick = {
                         onEventDispatcher.invoke(
                             PreviewContract.Intent.MoveToComponentScreen(
-                                userData.userId
+                                userData
                             )
                         )
                     },

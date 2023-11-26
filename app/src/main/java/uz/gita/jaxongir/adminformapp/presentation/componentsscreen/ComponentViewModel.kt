@@ -25,14 +25,22 @@ class ComponentViewModel @Inject constructor(
     private var ids = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {
         ids.addAll(uiState.value.savedIds)
+        myLog("ids:${ids.size}")
         when (intent) {
             is Contracts.Intent.AddComponent -> {
                 if (intent.componentData.idEnteredByUser != "") {
                     ids.add(intent.componentData.idEnteredByUser)
+                    myLog("ids2:${ids.size}")
                     uiState.update {
                         it.copy(savedIds = ids)
                     }
 
+                } else {
+                    uiState.update {
+                        it.copy(savedIds = ids)
+
+                    }
+                    myLog("ids3:${ids.size}")
                 }
                 myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
@@ -48,7 +56,11 @@ class ComponentViewModel @Inject constructor(
                                 uiState.update {
                                     it.copy(components = it.components)
                                 }
-                                direction.backToComponent()
+                                if (intent.state) {
+                                    direction.moveToPreviewScreenFromUserAdd(intent.userData)
+                                } else {
+                                    direction.moveToPreviewScreenFromMain(userId)
+                                }
                             }
                                 .onFailure {
                                 }
@@ -139,7 +151,7 @@ class ComponentViewModel @Inject constructor(
 
             Contracts.Intent.Save -> {
                 viewModelScope.launch {
-                    direction.backToComponent()
+
                 }
             }
         }

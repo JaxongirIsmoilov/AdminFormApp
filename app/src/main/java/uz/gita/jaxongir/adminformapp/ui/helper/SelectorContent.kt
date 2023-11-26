@@ -22,14 +22,16 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
+import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 
 @Composable
 fun SelectorContent(
     onEventListener: (Contracts.Intent) -> Unit,
     conditions: List<Conditions>,
+    state: Boolean,
     id: String,
-    userId: String,
+    userData: UserData,
     content: String,
 ) {
     var variants by remember {
@@ -48,7 +50,7 @@ fun SelectorContent(
                         newVariants[index] = it
                         variants = newVariants
                     },
-                    label = { Text(text = "$index - variant") },
+                    label = { Text(text = "${index + 1} - variant") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
@@ -78,7 +80,7 @@ fun SelectorContent(
                     onEventListener.invoke(
                         Contracts.Intent.AddComponent(
                             ComponentData(
-                                userId = userId,
+                                userId = userData.userId,
                                 locId = 0,
                                 idEnteredByUser = id,
                                 content = content,
@@ -94,7 +96,7 @@ fun SelectorContent(
                                 conditions = conditions,
                                 type = ComponentEnum.Selector,
                                 id = ""
-                            )
+                            ), state, userData
                         )
                     )
                 }, modifier = Modifier.wrapContentWidth()
