@@ -125,7 +125,6 @@ fun MainContent(
                 onClick = {
                     onEventDispatcher.invoke(Contracts.Intent.LoadComponentId)
                     showDialog.value = true
-                    myLog("valie${showDialog.value}")
                 },
                 modifier = Modifier
                     .clip(RoundedCornerShape(15.dp))

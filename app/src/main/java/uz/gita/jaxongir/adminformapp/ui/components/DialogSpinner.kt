@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.gson.Gson
 
 @Composable
 @Preview(showBackground = true)
@@ -65,7 +66,7 @@ fun DialogSpinner(
                 mutableStateOf("")
             }
             var selectesValue by remember {
-                mutableStateOf("")
+                mutableStateOf(">=")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -75,54 +76,14 @@ fun DialogSpinner(
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                /*ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = {
-                        expanded = !expanded
-                    },
-                ) {
-                    androidx.compose.material3.TextField(
-                        readOnly = true,
-                        value = selectesValue,
-                        onValueChange = { },
-                        label = { Text("Label") },
-                        trailingIcon = {
-                            androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon(
-                                expanded = expanded
-                            )
-                        },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFFFF3951),
-                            unfocusedBorderColor = Color(0xFFFF7686),
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = {
-                            expanded = false
-                        }
-                    ) {
-                        savedIdList.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                text = { Text(text = selectionOption) },
-                                onClick = {
-                                    selectedId = selectionOption
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-*/
 
                 SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
                                                                                                           selectedId = it
                 }, content = "Id tanla")
 
                 SampleSpinner(
-                    list = listOf(">", "<", "==", "!="),
-                    preselected = ">",
+                    list = listOf(">=", "<=", "==", "!="),
+                    preselected = ">=",
                     onSelectionChanged = { selection -> selectesValue = selection },
                     content = "Tanlang!"
                 )
@@ -163,6 +124,7 @@ fun DialogSpinner(
         }
     }
 }
+
 
 
 
