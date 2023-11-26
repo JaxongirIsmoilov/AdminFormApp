@@ -111,7 +111,6 @@ fun DialogSpinner(
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
-                        Log.d("TTT", "DialogSpinner: $selectedId")
                         onSaveClick.invoke(selectedId, selectesValue, value)
                         onClickCancel()
                     },

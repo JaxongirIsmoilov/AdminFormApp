@@ -56,7 +56,6 @@ class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: Contracts.ViewModel = getViewModel<ComponentViewModel>()
-
         viewModel.eventDispatcher(Contracts.Intent.Load(userId))
 
         MainContent(
@@ -93,19 +92,23 @@ fun MainContent(
     var selectedOperators by remember {
         mutableStateOf(arrayListOf<String>())
     }
+    val selecetdArrayList by remember {
+        mutableStateOf(arrayListOf<String>())
+    }
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         myLog("dialog")
         DialogSpinner(uiState.value.savedIds,
             { componentId, selectedOperator, value ->
-                selectedOperators.add(selectedOperator)
-                onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperators))
+                selecetdArrayList.add(selectedOperator)
+                onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
                 conditions.add(Conditions(componentId, value, operator = selectedOperator))
                 Toast.makeText(context, "Operatorlar saqlandi!", Toast.LENGTH_SHORT).show()
             }) {
             showDialog.value = false
         }
     }
+    myLog("conditiion size first:${conditions.size}")
 
 
 
@@ -348,17 +351,21 @@ fun MainContent(
                 .align(Alignment.BottomCenter)
                 .clip(RoundedCornerShape(12.dp))
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color(0xFFFFC1C8))) {
-                LazyRow(verticalAlignment = Alignment.CenterVertically) {
-                    item { Spacer(modifier = Modifier.size(10.dp)) }
-                    items(uiState.value.selectedOperators) {
-                        InputChipExample(text = it) {
+            if (uiState.value.selectedIdsList.isNotEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color(0xFFFFC1C8))
+                ) {
+                    LazyRow(verticalAlignment = Alignment.CenterVertically) {
+                        item { Spacer(modifier = Modifier.size(10.dp)) }
+                        items(uiState.value.selectedIdsList) {
+                            InputChipExample(text = it) {
 
+                            }
                         }
+                        item { Spacer(modifier = Modifier.size(10.dp)) }
                     }
-                    item {Spacer(modifier = Modifier.size(10.dp))  }
                 }
             }
 

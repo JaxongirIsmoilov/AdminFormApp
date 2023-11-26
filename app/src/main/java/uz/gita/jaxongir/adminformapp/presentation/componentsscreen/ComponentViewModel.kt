@@ -23,6 +23,7 @@ class ComponentViewModel @Inject constructor(
     override val uiState = MutableStateFlow(Contracts.UIState())
     private var userId: String = ""
     private var ids = arrayListOf<String>()
+    private var selectedIds = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {
 //        ids.addAll(uiState.value.savedIds)
         when (intent) {
@@ -152,10 +153,10 @@ class ComponentViewModel @Inject constructor(
 
                     repository.getComponentsByUserId(userId).onEach {
                         it.onSuccess {
-                                uiState.update { uiState ->
-                                    uiState.copy(components = it)
-                                }
+                            uiState.update { uiState ->
+                                uiState.copy(components = it)
                             }
+                        }
                             .onFailure {
                             }
                     }.collect()
@@ -169,7 +170,9 @@ class ComponentViewModel @Inject constructor(
             }
 
             is Contracts.Intent.SaveSelectedIds -> {
+                selectedIds.add(intent.selectedValues)
                 uiState.update { it.copy(selectedOperators = intent.selectedValues) }
+                uiState.update { it.copy(selectedIdsList = selectedIds) }
             }
         }
     }
