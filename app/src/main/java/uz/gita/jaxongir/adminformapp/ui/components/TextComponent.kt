@@ -76,9 +76,7 @@ fun TextComponent(
                     .align(Alignment.CenterVertically)
                     .combinedClickable(onClick = { onClickDelete() })
             )
-
         }
-
 
     }
 
