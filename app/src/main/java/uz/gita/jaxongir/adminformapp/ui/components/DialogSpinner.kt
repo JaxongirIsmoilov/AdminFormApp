@@ -81,7 +81,7 @@ fun DialogSpinner(
                 SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
 
                                                                                                           selectedId = it
-                }, content = "Id tanla")
+                }, content = "Id tanlang")
 
                 SampleSpinner(
                     list = listOf(">=", "<=", "==", "!="),
@@ -120,9 +120,7 @@ fun DialogSpinner(
                 ) {
                     Text(text = "Saqlash", color = Color(0xFFFFFFFF))
                 }
-
             }
-
         }
     }
 }
