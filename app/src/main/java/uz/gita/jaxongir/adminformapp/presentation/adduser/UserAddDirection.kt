@@ -13,7 +13,7 @@ class UserAddDirectionImpl @Inject constructor(
     private val appNavigator: AppNavigator
 ) : UserAddDirection {
     override suspend fun moveToComponentScreen(data: UserData) {
-        appNavigator.replaceScreen(ComponentScreen(data.userId))
+        appNavigator.replaceScreen(ComponentScreen(data, true))
     }
 
 }

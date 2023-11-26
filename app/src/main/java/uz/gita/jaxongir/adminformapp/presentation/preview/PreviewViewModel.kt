@@ -21,15 +21,15 @@ class PreviewViewModel @Inject constructor(
         when (intent) {
             is PreviewContract.Intent.MoveToComponentScreen -> {
                 viewModelScope.launch {
-                    direction.moveToComponentsScreen(intent.userId)
+                    direction.moveToComponentsScreen(intent.userData)
                 }
             }
 
             is PreviewContract.Intent.LoadData -> {
                 viewModelScope.launch {
                     repository.getComponentsByUserId(intent.userId).onEach {
-                        it.onSuccess {ls->
-                            uiState.update { it.copy(compList =  ls) }
+                        it.onSuccess { ls ->
+                            uiState.update { it.copy(compList = ls) }
                         }
                     }.collect()
                 }
@@ -40,8 +40,8 @@ class PreviewViewModel @Inject constructor(
                     repository.deleteComponent(intent.componentData).onEach {
                         it.onSuccess {
                             repository.getComponentsByUserId(intent.componentData.userId).onEach {
-                                it.onSuccess {ls->
-                                    uiState.update { it.copy(compList =  ls) }
+                                it.onSuccess { ls ->
+                                    uiState.update { it.copy(compList = ls) }
                                 }
                             }.collect()
                         }

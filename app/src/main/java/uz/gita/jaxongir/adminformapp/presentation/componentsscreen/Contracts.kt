@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 
 interface Contracts {
@@ -13,7 +14,9 @@ interface Contracts {
 
     interface Intent {
         data class AddComponent(
-            val componentData: ComponentData
+            val componentData: ComponentData,
+            val state:Boolean,
+            val userData: UserData
         ) : Intent
 
         data class DeleteComponent(

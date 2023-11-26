@@ -78,7 +78,7 @@ fun PreviewScreenContent(
                 onClick = {
                     onEventDispatcher.invoke(
                         PreviewContract.Intent.MoveToComponentScreen(
-                            userData.userId
+                            userData
                         )
                     )
                 },
@@ -228,7 +228,7 @@ fun PreviewScreenContent(
                     onClick = {
                         onEventDispatcher.invoke(
                             PreviewContract.Intent.MoveToComponentScreen(
-                                userData.userId
+                                userData
                             )
                         )
                     },
