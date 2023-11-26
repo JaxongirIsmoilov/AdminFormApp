@@ -266,7 +266,7 @@ fun InputContent(
                                 isMulti = false,
                                 variants = listOf(),
                                 selected = listOf(),
-                                conditions = listOf(),
+                                conditions = conditions,
                                 type = ComponentEnum.Input, id = ""
                             )
                         )

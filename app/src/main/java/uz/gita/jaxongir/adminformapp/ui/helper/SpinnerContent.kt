@@ -92,7 +92,7 @@ fun SpinnerContent(
                                 isMulti = false,
                                 variants = variants,
                                 selected = listOf(),
-                                conditions = listOf(),
+                                conditions = conditions,
                                 type = ComponentEnum.Spinner,
                                 id = ""
                             )
