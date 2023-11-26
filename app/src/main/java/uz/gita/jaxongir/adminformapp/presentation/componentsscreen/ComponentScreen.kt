@@ -123,6 +123,7 @@ fun MainContent(
 
             TextButton(
                 onClick = {
+                    onEventDispatcher.invoke(Contracts.Intent.LoadComponentId)
                     showDialog.value = true
                     myLog("valie${showDialog.value}")
                 },

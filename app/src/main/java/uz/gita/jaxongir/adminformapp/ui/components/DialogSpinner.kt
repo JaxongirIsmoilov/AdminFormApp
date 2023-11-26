@@ -116,7 +116,7 @@ fun DialogSpinner(
                 }
 */
 
-                SampleSpinner(list = savedIdList, preselected = savedIdList.first(), onSelectionChanged = {
+                SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
                                                                                                           selectedId = it
                 }, content = "Id tanla")
 

@@ -25,8 +25,27 @@ class ComponentViewModel @Inject constructor(
     private var ids = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {
         when (intent) {
+            Contracts.Intent.LoadComponentId -> {
+                myLog("Load compId : ${uiState.value.components.size}")
+                uiState.value.components.forEach {
+                    if (it.idEnteredByUser != "") {
+                        ids.add(it.idEnteredByUser)
+                        uiState.update {
+                            it.copy(savedIds = ids)
+                        }
+                        myLog("Saved IDs if: ${uiState.value.savedIds}")
+                    }else{
+                        uiState.update {
+                            it.copy(savedIds = ids)
+                        }
+
+                        myLog("Saved IDs else:${uiState.value.savedIds}")
+                    }
+                }
+            }
+
             is Contracts.Intent.AddComponent -> {
-                ids.addAll(uiState.value.savedIds)
+//                ids.addAll(uiState.value.savedIds)
                 if (intent.componentData.idEnteredByUser != "") {
                     ids.add(intent.componentData.idEnteredByUser)
                     uiState.update {
@@ -79,6 +98,13 @@ class ComponentViewModel @Inject constructor(
 
             is Contracts.Intent.Load -> {
                 userId = intent.userId
+                viewModelScope.launch {
+                    repository.getComponentsByUserId(intent.userId).onEach {
+                        it.onSuccess {ls->
+                            uiState.update { it.copy(components =  ls) }
+                        }
+                    }.collect()
+                }
             }
 
             is Contracts.Intent.DeleteComponent -> {
