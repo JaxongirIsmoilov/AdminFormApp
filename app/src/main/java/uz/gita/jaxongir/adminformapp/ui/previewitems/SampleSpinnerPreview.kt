@@ -49,15 +49,16 @@ fun SampleSpinnerPreview(
     var selected by remember { mutableStateOf(preselected) }
     var expanded by remember { mutableStateOf(false) }
 
-    Box() {
+    Box {
         Column {
             Row {
-
                 OutlinedTextField(
                     value = (selected),
                     onValueChange = { },
                     label = { Text(text = content) },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).clickable(
+                        onClick = { expanded = !expanded }
+                    ),
                     trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                     readOnly = true,
                     colors = OutlinedTextFieldDefaults.colors(
@@ -102,20 +103,11 @@ fun SampleSpinnerPreview(
                 }
             }
         }
-        Spacer(
-            modifier = Modifier
-                .matchParentSize()
-                .background(Color.Transparent)
-                .padding(10.dp)
-                .clickable(
-                    onClick = { expanded = !expanded }
-                )
-        )
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewSimple() {
-//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
-//}
+@Preview(showBackground = true)
+@Composable
+fun PreviewSimple() {
+//    SampleSpinnerPreview(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
+}
