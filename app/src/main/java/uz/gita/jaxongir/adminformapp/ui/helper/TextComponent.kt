@@ -31,13 +31,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.gita.jaxongir.adminformapp.R
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TextComponent(
-    onClickDelete: (Conditions) -> Unit,
-    condition: Conditions
+    onClickDelete: () -> Unit,
+    componentData: ComponentData
 ) {
     Card(
         modifier = Modifier
@@ -66,7 +67,7 @@ fun TextComponent(
             ) {
                 Column(modifier = Modifier.align(Alignment.Center)) {
                     Text(
-                        text = condition.value,
+                        text = componentData.content,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -83,7 +84,7 @@ fun TextComponent(
                     .size(34.dp)
                     .padding(end =  8.dp)
                     .align(Alignment.CenterVertically)
-                    .combinedClickable(onClick = { }, onLongClick = { onClickDelete(condition) })
+                    .combinedClickable(onClick = { }, onLongClick = { onClickDelete() })
             )
         }
     }}

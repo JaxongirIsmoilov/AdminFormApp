@@ -215,14 +215,6 @@ fun MainContent(
 
             Spacer(modifier = Modifier.size(36.dp))
 
-            LazyHorizontalGrid(rows = GridCells.Fixed(4), content = {
-                items(conditions){
-                    TextComponent(onClickDelete = {
-                                                  conditions.remove(it)
-                    }, condition =it )
-                }
-            })
-
             Spacer(modifier = Modifier.size(12.dp))
 
             Box(
