@@ -3,6 +3,7 @@ package uz.gita.jaxongir.adminformapp.ui.helper
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -14,15 +15,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 
 @Composable
 fun SpinnerContent(
     onEventListener: (Contracts.Intent) -> Unit,
+    conditions: List<Conditions>,
     id: String,
     userId: String,
     content: String,
@@ -59,7 +64,9 @@ fun SpinnerContent(
                     newVariants.add("")
                     variants = newVariants
                 },
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clip(RoundedCornerShape(12.dp))
             ) {
                 Text(text = "Variant qo'shish")
 
@@ -92,7 +99,7 @@ fun SpinnerContent(
                         )
                     )
                 }, modifier = Modifier.wrapContentWidth()
-            ){
+            ) {
                 Text(text = "Componentni qoshish")
             }
         }

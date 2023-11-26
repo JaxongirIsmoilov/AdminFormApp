@@ -21,7 +21,6 @@ class ComponentViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel(), Contracts.ViewModel {
     override val uiState = MutableStateFlow(Contracts.UIState())
-
     private var userId: String = ""
     private var ids = arrayListOf<String>()
     override fun eventDispatcher(intent: Contracts.Intent) {

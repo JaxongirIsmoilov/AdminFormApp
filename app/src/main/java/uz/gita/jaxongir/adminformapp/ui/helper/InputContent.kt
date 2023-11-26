@@ -30,6 +30,7 @@ import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 @Composable
 fun InputContent(
     onEventListener: (Contracts.Intent) -> Unit,
+    conditions: List<Conditions>,
     id: String,
     userId: String,
     content: String,
@@ -131,7 +132,8 @@ fun InputContent(
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),
                                 unfocusedBorderColor = Color(0xFFFF7686)
-                            ))
+                            )
+                        )
 
                         OutlinedTextField(
                             value = minLength.toString(),
@@ -170,7 +172,8 @@ fun InputContent(
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFFFF3951),
                                 unfocusedBorderColor = Color(0xFFFF7686)
-                            ))
+                            )
+                        )
 
                         OutlinedTextField(
                             value = minLength.toString(),
