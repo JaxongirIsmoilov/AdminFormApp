@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
+import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -151,8 +152,7 @@ class RepositoryImpl @Inject constructor(
                                 it.data?.getOrDefault("selected", "[]").toString(),
                                 Array<Boolean>::class.java
                             ).asList(),
-                            conditions = converter.fromJson(it.data?.getOrDefault("conditions", "[]").toString(), Array<Conditions>::class.java).asList(),
-//                            reconvert(it.data?.getOrDefault("conditions", "[]").toString()),
+                            conditions = converter.fromJson<List<Conditions>>(it.data?.getOrDefault("conditions", "[]").toString(), object : TypeToken<List<Conditions>>() {}.type),
                             type = converter.fromJson(
                                 it.data?.getOrDefault("type", "").toString(),
                                 ComponentEnum::class.java
