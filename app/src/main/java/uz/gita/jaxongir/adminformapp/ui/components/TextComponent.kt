@@ -72,11 +72,13 @@ fun TextComponent(
                 contentDescription = "",
                 modifier = Modifier
                     .size(34.dp)
-                    .padding(end =  8.dp)
+                    .padding(end = 8.dp)
                     .align(Alignment.CenterVertically)
-                    .combinedClickable(onClick = { onClickDelete()}, onLongClick = { onClickDelete() })
+                    .combinedClickable(onClick = { onClickDelete() })
             )
         }
+
+    Spacer(modifier = Modifier.height(10.dp))
     }
 
 @Preview(showBackground = true)

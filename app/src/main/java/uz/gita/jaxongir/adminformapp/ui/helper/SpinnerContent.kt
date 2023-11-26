@@ -49,7 +49,7 @@ fun SpinnerContent(
                         newVariants[index] = it
                         variants = newVariants
                     },
-                    label = { Text(text = "$index - variant") },
+                    label = { Text(text = "${index + 1} - variant") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),

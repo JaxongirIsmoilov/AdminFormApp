@@ -49,10 +49,9 @@ fun SampleSpinnerPreview(
     var selected by remember { mutableStateOf(preselected) }
     var expanded by remember { mutableStateOf(false) }
 
-    Box() {
+    Box {
         Column {
             Row {
-
                 OutlinedTextField(
                     value = (selected),
                     onValueChange = { },
@@ -96,11 +95,6 @@ fun SampleSpinnerPreview(
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .align(Alignment.Start)
-                                    .clickable {
-                                        selected = entry
-                                        expanded = !expanded
-                                        onSelectionChanged(entry)
-                                    }
                             )
                         }
                     )
@@ -111,7 +105,7 @@ fun SampleSpinnerPreview(
             modifier = Modifier
                 .matchParentSize()
                 .background(Color.Transparent)
-                .padding(10.dp)
+                .padding(end = 65.dp)
                 .clickable(
                     onClick = { expanded = !expanded }
                 )

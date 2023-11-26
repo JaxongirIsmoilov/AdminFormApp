@@ -13,9 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -29,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
@@ -67,7 +64,7 @@ fun DialogSpinner(
                 mutableStateOf("")
             }
             var selectesValue by remember {
-                mutableStateOf(">=")
+                mutableStateOf("More")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -84,8 +81,8 @@ fun DialogSpinner(
                 }, content = "Id tanlang")
 
                 SampleSpinner(
-                    list = listOf(">=", "<=", "==", "!="),
-                    preselected = ">=",
+                    list = listOf("More", "Less", "Equal", "Not equal"),
+                    preselected = "More",
                     onSelectionChanged = { selection -> selectesValue = selection },
                     content = "Tanlang!"
                 )
@@ -102,7 +99,8 @@ fun DialogSpinner(
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
                         unfocusedBorderColor = Color(0xFFFF7686),
-                    ), label = { Text(text = "value") }
+                    ), label = { Text(text = "value") },
+                    maxLines = 1
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
