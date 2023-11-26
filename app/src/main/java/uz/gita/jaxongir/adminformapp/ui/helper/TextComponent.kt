@@ -84,7 +84,7 @@ fun TextComponent(
                     .size(34.dp)
                     .padding(end =  8.dp)
                     .align(Alignment.CenterVertically)
-                    .combinedClickable(onClick = { }, onLongClick = { onClickDelete() })
+                    .combinedClickable(onClick = {onClickDelete() }, onLongClick = { })
             )
         }
     }}
