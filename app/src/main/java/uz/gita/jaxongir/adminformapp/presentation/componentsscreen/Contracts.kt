@@ -30,7 +30,7 @@ interface Contracts {
         object Save : Intent
 
         object LoadComponentId : Intent
-        data class SaveSelectedIds(val selectedValues: List<String>) : Intent
+        data class SaveSelectedIds(val selectedValues: String) : Intent
     }
 
     data class UIState(
@@ -38,6 +38,7 @@ interface Contracts {
         val isLoading: Boolean = false,
         var index: Int = 0,
         val savedIds: List<String> = listOf(),
-        val selectedOperators: List<String> = listOf()
+        val selectedOperators: String = "",
+        val selectedIdsList: List<String> = listOf()
     )
 }

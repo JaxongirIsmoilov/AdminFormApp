@@ -64,7 +64,7 @@ fun DialogSpinner(
                 mutableStateOf("")
             }
             var selectesValue by remember {
-                mutableStateOf(">=")
+                mutableStateOf("More")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -78,11 +78,11 @@ fun DialogSpinner(
                 SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
 
                                                                                                           selectedId = it
-                }, content = "Id tanla")
+                }, content = "Id tanlang")
 
                 SampleSpinner(
-                    list = listOf(">=", "<=", "==", "!="),
-                    preselected = ">=",
+                    list = listOf("More", "Less", "Equal", "Not equal"),
+                    preselected = "More",
                     onSelectionChanged = { selection -> selectesValue = selection },
                     content = "Tanlang!"
                 )
@@ -118,9 +118,7 @@ fun DialogSpinner(
                 ) {
                     Text(text = "Saqlash", color = Color(0xFFFFFFFF))
                 }
-
             }
-
         }
     }
 }
