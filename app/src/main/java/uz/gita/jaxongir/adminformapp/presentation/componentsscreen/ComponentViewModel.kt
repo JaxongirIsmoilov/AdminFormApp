@@ -35,7 +35,7 @@ class ComponentViewModel @Inject constructor(
                             it.copy(savedIds = ids)
                         }
                         myLog("Saved IDs if: ${uiState.value.savedIds}")
-                    }else{
+                    } else {
                         uiState.update {
                             it.copy(savedIds = ids)
                         }
@@ -151,8 +151,7 @@ class ComponentViewModel @Inject constructor(
                         .collect()
 
                     repository.getComponentsByUserId(userId).onEach {
-                        it
-                            .onSuccess {
+                        it.onSuccess {
                                 uiState.update { uiState ->
                                     uiState.copy(components = it)
                                 }
@@ -167,6 +166,10 @@ class ComponentViewModel @Inject constructor(
                 viewModelScope.launch {
 
                 }
+            }
+
+            is Contracts.Intent.SaveSelectedIds -> {
+                uiState.update { it.copy(selectedOperators = intent.selectedValues) }
             }
         }
     }

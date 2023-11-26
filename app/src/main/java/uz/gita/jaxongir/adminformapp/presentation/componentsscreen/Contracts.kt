@@ -2,8 +2,6 @@ package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.UserData
-import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 
 interface Contracts {
     interface ViewModel {
@@ -32,12 +30,14 @@ interface Contracts {
         object Save : Intent
 
         object LoadComponentId : Intent
+        data class SaveSelectedIds(val selectedValues: List<String>) : Intent
     }
 
     data class UIState(
         val components: List<ComponentData> = listOf(),
         val isLoading: Boolean = false,
         var index: Int = 0,
-        val savedIds: List<String> = listOf()
+        val savedIds: List<String> = listOf(),
+        val selectedOperators: List<String> = listOf()
     )
 }
