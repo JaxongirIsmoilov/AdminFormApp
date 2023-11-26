@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,14 +10,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,20 +35,15 @@ fun TextComponent(
     onClickDelete: () -> Unit,
     text:String
 ) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = 10.dp, horizontal = 15.dp)
-            .fillMaxWidth()
-            .height(54.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .border(BorderStroke(2.dp , Color(0xFFFF7686)),RoundedCornerShape(12.dp))
 
-    ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color(0x33D1D1D1))
-                .padding(vertical = 10.dp, horizontal = 15.dp)
+                .fillMaxWidth()
+                .height(70.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .border(1.dp, Color(0xFFFF7686), RoundedCornerShape(12.dp))
+                .background(Color(0x33C4C4C4))
+                .padding(horizontal = 16.dp, vertical = 5.dp),
         ) {
 
 
@@ -82,10 +74,10 @@ fun TextComponent(
                     .size(34.dp)
                     .padding(end =  8.dp)
                     .align(Alignment.CenterVertically)
-                    .combinedClickable(onClick = { }, onLongClick = { onClickDelete() })
+                    .combinedClickable(onClick = { onClickDelete()}, onLongClick = { onClickDelete() })
             )
         }
-    }}
+    }
 
 @Preview(showBackground = true)
 @Composable
