@@ -171,10 +171,7 @@ fun DialogSpinner(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)) ) {
                 Text(text = "Saqlash", color = Color(0xFFFFFFFF))
             }
-
-
         }
-
     }
 }
 

@@ -1,8 +1,10 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +43,8 @@ fun TextComponent(
             .padding(vertical = 10.dp, horizontal = 15.dp)
             .fillMaxWidth()
             .height(54.dp)
-            .clip(RoundedCornerShape(15.dp))
+            .clip(RoundedCornerShape(12.dp))
+            .border(BorderStroke(2.dp , Color(0xFFFF7686)),RoundedCornerShape(12.dp))
 
     ) {
         Row(
