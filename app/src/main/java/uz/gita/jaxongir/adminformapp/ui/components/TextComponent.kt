@@ -76,9 +76,10 @@ fun TextComponent(
                     .align(Alignment.CenterVertically)
                     .combinedClickable(onClick = { onClickDelete() })
             )
+
         }
 
-    Spacer(modifier = Modifier.height(10.dp))
+
     }
 
 @Preview(showBackground = true)

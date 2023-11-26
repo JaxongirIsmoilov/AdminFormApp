@@ -134,6 +134,7 @@ fun PreviewScreenContent(
                                                 )
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
 
@@ -150,6 +151,7 @@ fun PreviewScreenContent(
                                                 )
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
 
@@ -186,6 +188,7 @@ fun PreviewScreenContent(
                                             },
                                             componentData = data
                                         )
+                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
 
@@ -208,6 +211,7 @@ fun PreviewScreenContent(
                                                 )
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
 
@@ -223,6 +227,7 @@ fun PreviewScreenContent(
                                                 )
                                             )
                                         }
+                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
                             }
