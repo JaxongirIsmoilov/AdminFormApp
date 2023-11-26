@@ -100,7 +100,7 @@ fun UserAddScreenContent(
                 value = username, onValueChange = {
                     username = it
                 }, modifier = Modifier
-                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
                     .height(58.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),

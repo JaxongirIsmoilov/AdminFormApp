@@ -96,11 +96,6 @@ fun SampleSpinnerPreview(
                                 modifier = Modifier
                                     .wrapContentWidth()
                                     .align(Alignment.Start)
-                                    .clickable {
-                                        selected = entry
-                                        expanded = !expanded
-                                        onSelectionChanged(entry)
-                                    }
                             )
                         }
                     )
