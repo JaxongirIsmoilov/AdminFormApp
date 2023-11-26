@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -73,12 +74,16 @@ fun DialogSpinner(
                     .padding(top = 10.dp, start = 12.dp, end = 12.dp, bottom = 10.dp)
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                myLog("$savedIdList")
-                SampleSpinner(list = savedIdList, preselected = savedIdList.firstOrNull() ?: "", onSelectionChanged = {
-
-                                                                                                          selectedId = it
-                }, content = "Id tanla")
+                SampleSpinner(
+                    list = savedIdList,
+                    preselected = savedIdList.firstOrNull() ?: "",
+                    onSelectionChanged = {
+                        Log.d("TTT", "DialogSpinner: $it")
+                        selectedId = it
+                        Log.d("TTT", "DialogSpinner: $it")
+                    },
+                    content = "Id tanla"
+                )
 
                 SampleSpinner(
                     list = listOf("More", "Less", "Equal", "Not equal"),
@@ -106,6 +111,7 @@ fun DialogSpinner(
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
+                        Log.d("TTT", "DialogSpinner: $selectedId")
                         onSaveClick.invoke(selectedId, selectesValue, value)
                         onClickCancel()
                     },
