@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.OutlinedTextField
@@ -45,6 +48,7 @@ import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
+import uz.gita.jaxongir.adminformapp.ui.helper.TextComponent
 import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class ComponentScreen(private val userId: String) : AndroidScreen() {
@@ -80,6 +84,7 @@ fun MainContent(
     var content by remember {
         mutableStateOf("")
     }
+
     val context = LocalContext.current
 
     var conditions by remember {
@@ -209,6 +214,8 @@ fun MainContent(
             )
 
             Spacer(modifier = Modifier.size(36.dp))
+
+            Spacer(modifier = Modifier.size(12.dp))
 
             Box(
                 modifier = Modifier
