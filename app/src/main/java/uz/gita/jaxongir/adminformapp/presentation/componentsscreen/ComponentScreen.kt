@@ -88,9 +88,8 @@ fun MainContent(
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         myLog("dialog")
-        DialogSpinner(
+        DialogSpinner(uiState.value.savedIds,
             { componentId, selectedOperator, value ->
-                myLog("comId:$componentId operator:$selectedOperator value:$value")
                 conditions.add(Conditions(componentId, value, operator = selectedOperator))
                 Toast.makeText(context, "Operatorlar saqlandi!", Toast.LENGTH_SHORT).show()
             }) {
@@ -252,6 +251,7 @@ fun MainContent(
                                         )
                                     )
                                 )
+                                myLog("conditions:$conditions")
                             },
                             modifier = Modifier
                                 .wrapContentSize()
