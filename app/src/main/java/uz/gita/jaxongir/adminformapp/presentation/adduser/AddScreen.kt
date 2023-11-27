@@ -101,7 +101,6 @@ fun UserAddScreenContent(
                     username = it
                 }, modifier = Modifier
                     .padding(vertical = 8.dp, horizontal = 16.dp)
-                    .height(58.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 label = { Text(text = "Username") },
@@ -121,7 +120,6 @@ fun UserAddScreenContent(
                 },
                 modifier = Modifier
                     .padding(vertical = 12.dp, horizontal = 16.dp)
-                    .height(58.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
