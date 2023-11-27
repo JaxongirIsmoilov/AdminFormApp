@@ -85,7 +85,7 @@ fun DialogSpinner(
                 )
 
                 SampleSpinner(
-                    list = listOf("More", "Less", "Equal", "Not equal"),
+                    list = listOf("More", "Less", "Equal", "Not"),
                     preselected = "More",
                     onSelectionChanged = { selection ->
                         selectesValue = selection
