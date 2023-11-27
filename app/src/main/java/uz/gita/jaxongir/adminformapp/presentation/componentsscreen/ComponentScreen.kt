@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
@@ -35,6 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -201,6 +204,7 @@ fun MainContent(
                     onValueChange = {
                         id = it
                     },
+                    singleLine = true,
                     label = {
                         Text(text = "Ixtiyorga qarab id qoshing")
                     },
@@ -208,7 +212,11 @@ fun MainContent(
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
                         unfocusedBorderColor = Color(0xFFFF7686)
+                    ), maxLines = 1,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.None // "Enter" tugmasini ishlamay qo'yish
                     )
+
                 )
 
                 Spacer(modifier = Modifier.size(12.dp))
@@ -219,8 +227,8 @@ fun MainContent(
                         content = it
                     },
                     label = {
-                        Text(text = "Conetnt kiriting")
-                    },
+                        Text(text = "Sarlavhani kiriting")
+                    }, singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xFFFF3951),
@@ -328,9 +336,9 @@ fun MainContent(
                             SelectorContent(
                                 onEventListener = onEventDispatcher::invoke,
                                 id = id,
-                                connectedIds=selectedIds,
-                                connectedValues=selectedValues,
-                                operators=selectedOperators,
+                                connectedIds = selectedIds,
+                                connectedValues = selectedValues,
+                                operators = selectedOperators,
                                 userId = userId,
                                 content = content
                             )
@@ -339,9 +347,9 @@ fun MainContent(
                         ComponentEnum.Spinner -> {
                             SpinnerContent(
                                 onEventListener = onEventDispatcher::invoke,
-                                connectedIds=selectedIds,
-                                connectedValues=selectedValues,
-                                operators=selectedOperators,
+                                connectedIds = selectedIds,
+                                connectedValues = selectedValues,
+                                operators = selectedOperators,
                                 id = id,
                                 userId = userId,
                                 content = content

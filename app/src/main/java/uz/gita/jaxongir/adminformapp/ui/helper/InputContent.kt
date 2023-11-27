@@ -109,7 +109,7 @@ fun InputContent(
                             value = maxLines,
                             onValueChange = {
                                 maxLines = it
-                            },
+                            }, singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Qatorla soni") },
                             modifier = Modifier.fillMaxWidth(),
@@ -123,7 +123,7 @@ fun InputContent(
                             value = minLength.toString(),
                             onValueChange = {
                                 minLength = it
-                            },
+                            }, singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Min length = ") },
                             modifier = Modifier.fillMaxWidth(),
@@ -137,7 +137,7 @@ fun InputContent(
                             value = maxLength,
                             onValueChange = {
                                 maxLength = it
-                            },
+                            }, singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Max length") },
                             modifier = Modifier.fillMaxWidth(),
@@ -173,7 +173,7 @@ fun InputContent(
                             value = minValue.toString(),
                             onValueChange = {
                                 minValue = it
-                            },
+                            }, singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Min Value = ") },
                             modifier = Modifier.fillMaxWidth(),
