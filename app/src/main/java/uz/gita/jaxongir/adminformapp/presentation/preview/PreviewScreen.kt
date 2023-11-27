@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.presentation.preview
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -259,8 +261,9 @@ fun PreviewScreenContent(
     }
 }
 
+@SuppressLint("UnrememberedMutableState", "NewApi")
 @Preview
 @Composable
 fun PreviewScreenPreview() {
-//    PreviewScreenContent(mutableStateOf())
+    PreviewScreenContent(mutableStateOf(PreviewContract.UiState()), {}, UserData("", "", ""))
 }

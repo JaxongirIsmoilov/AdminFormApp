@@ -28,9 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uz.gita.jaxongir.adminformapp.R
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 
 @Composable
 fun SampleSpinnerPreview(
@@ -112,5 +114,5 @@ fun SampleSpinnerPreview(
 //@Preview(showBackground = true)
 //@Composable
 //fun PreviewSimple() {
-//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, "Hello world",{})
+//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, Modifier,{})
 //}
