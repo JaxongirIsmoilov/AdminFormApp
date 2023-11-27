@@ -38,8 +38,8 @@ fun DialogSpinnerPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogSpinner(
-    savedIdList: List<String>,
-    onSaveClick: (String, String, String) -> Unit,
+    savedIdList: List<String> ,
+    onSaveClick: (String, String, String) -> Unit ,
     onClickCancel: () -> Unit,
 ) {
     androidx.compose.material3.AlertDialog(
@@ -81,7 +81,7 @@ fun DialogSpinner(
                         selectedId = it
                         Log.d("TTT", "DialogSpinner2: $it")
                     },
-                    content = "Id tanla"
+                    content = "Id tanlang"
                 )
 
                 SampleSpinner(
@@ -97,7 +97,7 @@ fun DialogSpinner(
                 OutlinedTextField(
                     value = value, onValueChange = {
                         value = it
-                    },
+                    }, singleLine = true,
                     modifier = Modifier
                         .padding(top = 10.dp, start = 12.dp, end = 12.dp)
                         .fillMaxWidth()
@@ -121,7 +121,7 @@ fun DialogSpinner(
                     modifier = Modifier
                         .padding(top = 10.dp)
                         .height(56.dp)
-                        .width(100.dp)
+                        .width(120.dp)
                         .align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466))
                 ) {

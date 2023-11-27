@@ -216,7 +216,6 @@ fun MainContent(
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.None // "Enter" tugmasini ishlamay qo'yish
                     )
-
                 )
 
                 Spacer(modifier = Modifier.size(12.dp))
