@@ -31,7 +31,8 @@ fun SelectorContent(
     operators: List<String>,
     id: String,
     content: String,
-    userId: String
+    userId: String,
+    isRequruired: Boolean
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -96,7 +97,7 @@ fun SelectorContent(
                                 connectedValues = connectedValues,
                                 operators = operators,
                                 type = ComponentEnum.Selector,
-                                id = ""
+                                id = "", isRequired = isRequruired
                             )
                         )
                     )

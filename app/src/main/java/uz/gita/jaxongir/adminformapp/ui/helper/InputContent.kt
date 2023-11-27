@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 
@@ -36,6 +35,7 @@ fun InputContent(
     connectedIds: List<String>,
     connectedValues: List<String>,
     operators: List<String>,
+    isRequired: Boolean
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -238,7 +238,8 @@ fun InputContent(
                                 connectedIds = connectedIds,
                                 connectedValues = connectedValues,
                                 operators = operators,
-                                type = ComponentEnum.Input, id = ""
+                                type = ComponentEnum.Input, id = "",
+                                isRequired = isRequired
                             )
                         )
                     )

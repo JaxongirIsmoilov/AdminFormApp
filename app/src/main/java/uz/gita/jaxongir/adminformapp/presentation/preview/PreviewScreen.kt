@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -123,6 +122,7 @@ fun PreviewScreenContent(
                             when (data.type) {
                                 ComponentEnum.Spinner -> {
                                     item {
+
                                         SampleSpinnerPreview(
                                             list = data.variants,
                                             preselected = data.variants[0],
@@ -137,6 +137,8 @@ fun PreviewScreenContent(
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(10.dp))
+
+
                                     }
                                 }
 
@@ -197,23 +199,35 @@ fun PreviewScreenContent(
                                 ComponentEnum.Input -> {
                                     myLog("Input type worked")
                                     item {
-                                        InputField(
-                                            textFieldType = data.textFieldType,
-                                            maxLines = data.maxLines,
-                                            maxLength = data.maxLength,
-                                            minLength = data.minLength,
-                                            maxValue = data.maxValue,
-                                            minValue = data.minValue,
-                                            question = data.content,
-                                            data
-                                        ) {
-                                            onEventDispatcher.invoke(
-                                                PreviewContract.Intent.DeleteComponent(
-                                                    data
+                                        Column(modifier = Modifier.fillMaxWidth()) {
+                                            if (data.isRequired) {
+                                                Text(
+                                                    text = "Required field!",
+                                                    modifier = Modifier.align(
+                                                        Alignment.CenterHorizontally
+                                                    )
                                                 )
-                                            )
+
+                                            }
+                                            InputField(
+                                                textFieldType = data.textFieldType,
+                                                maxLines = data.maxLines,
+                                                maxLength = data.maxLength,
+                                                minLength = data.minLength,
+                                                maxValue = data.maxValue,
+                                                minValue = data.minValue,
+                                                question = data.content,
+                                                data
+                                            ) {
+                                                onEventDispatcher.invoke(
+                                                    PreviewContract.Intent.DeleteComponent(
+                                                        data
+                                                    )
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(10.dp))
                                         }
-                                        Spacer(modifier = Modifier.height(10.dp))
+
                                     }
                                 }
 

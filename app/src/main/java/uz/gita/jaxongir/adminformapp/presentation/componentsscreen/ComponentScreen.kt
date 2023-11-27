@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -37,7 +38,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -78,6 +78,12 @@ fun MainContent(
 ) {
     var type by remember {
         mutableStateOf(ComponentEnum.SampleText)
+    }
+    var checkBoxState: Boolean by remember {
+        mutableStateOf(false)
+    }
+    var checkBoxState2: Boolean by remember {
+        mutableStateOf(false)
     }
 
     var id by remember {
@@ -244,15 +250,35 @@ fun MainContent(
                 ) {
                     when (type) {
                         ComponentEnum.Input -> {
-                            InputContent(
-                                onEventListener = onEventDispatcher::invoke,
-                                connectedIds = selectedIds,
-                                connectedValues = selectedValues,
-                                operators = selectedOperators,
-                                id = id,
-                                userId = userId,
-                                content = content
-                            )
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                InputContent(
+                                    onEventListener = onEventDispatcher::invoke,
+                                    connectedIds = selectedIds,
+                                    connectedValues = selectedValues,
+                                    operators = selectedOperators,
+                                    id = id,
+                                    userId = userId,
+                                    content = content,
+                                    isRequired = checkBoxState
+                                )
+
+                                Spacer(modifier = Modifier.size(10.dp))
+
+                                Row(modifier = Modifier.fillMaxWidth()) {
+                                    Checkbox(
+                                        checked = checkBoxState,
+                                        onCheckedChange = { checkBoxState = it })
+
+                                    Spacer(modifier = Modifier.size(20.dp))
+                                    Text(
+                                        text = "isRequired",
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.Black
+                                    )
+                                }
+                            }
+
+
                         }
 
                         ComponentEnum.SampleText -> {
@@ -339,8 +365,22 @@ fun MainContent(
                                 connectedValues = selectedValues,
                                 operators = selectedOperators,
                                 userId = userId,
-                                content = content
+                                content = content,
+                                isRequruired = checkBoxState2
                             )
+
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                Checkbox(
+                                    checked = checkBoxState2,
+                                    onCheckedChange = { checkBoxState2 = it })
+
+                                Spacer(modifier = Modifier.size(10.dp))
+                                Text(
+                                    text = "isRequired",
+                                    fontSize = 22.sp,
+                                    fontWeight = FontWeight.Black
+                                )
+                            }
                         }
 
                         ComponentEnum.Spinner -> {

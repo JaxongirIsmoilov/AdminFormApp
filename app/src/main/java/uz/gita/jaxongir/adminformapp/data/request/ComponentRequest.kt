@@ -20,4 +20,5 @@ data class ComponentRequest(
     val connectedIds: String,         //boglangan id lar
     val operators: String,
     val type: String,
+    val isRequired: Boolean
 )

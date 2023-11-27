@@ -1,7 +1,10 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
+import android.content.Context
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -25,6 +28,7 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val dao: Dao,
     private val firestore: FirebaseFirestore,
+    @ApplicationContext val context: Context
 ) : Repository {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> =
@@ -107,7 +111,7 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
+    private fun getComponents(): Flow<Result<Unit>> = callbackFlow<Result<Unit>> {
         val resultList = arrayListOf<ComponentData>()
         val converter = Gson()
         firestore.collection("Components")
@@ -177,7 +181,9 @@ class RepositoryImpl @Inject constructor(
                             type = converter.fromJson(
                                 it.data?.getOrDefault("type", "").toString(),
                                 ComponentEnum::class.java
-                            )
+                            ),
+                            isRequired = it.data?.getOrDefault("isRequired", false)
+                                .toString() == "true"
                         )
                     )
 
@@ -192,9 +198,11 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
 
+    }.flowOn(Dispatchers.IO).catch {
+        Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
     }
 
-    private fun getUser(): Flow<Unit> = callbackFlow {
+    private fun getUser(): Flow<Unit> = callbackFlow<Unit> {
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
             .get()
@@ -217,6 +225,8 @@ class RepositoryImpl @Inject constructor(
             }
 
         awaitClose()
+    }.flowOn(Dispatchers.IO).catch {
+        Toast.makeText(context, "Cannot be loaded", Toast.LENGTH_SHORT).show()
     }
 
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {

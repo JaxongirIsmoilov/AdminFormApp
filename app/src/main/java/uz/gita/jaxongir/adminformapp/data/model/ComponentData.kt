@@ -8,11 +8,11 @@ import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
 import java.io.Serializable
 
 data class ComponentData(
-    val id: String,                         //firebase id
-    val userId: String,                     //qaysi user qoshgani
-    val locId: Long,                        //Screendagi indexi
+    val id: String = "",                      //firebase id
+    val userId: String = "",                     //qaysi user qoshgani
+    val locId: Long = 0L,                        //Screendagi indexi
     val idEnteredByUser: String = "",       //operator qoshishlik uchun id
-    val content: String,                    //ekranda ko'rinadigan matn
+    val content: String = "",                    //ekranda ko'rinadigan matn
     val textFieldType: TextFieldType,       //input bosa uning tipi
     val maxLines: Int,                      //tipi text bogan input bosa maximal qatorla soni
     val maxLength: Int,                     //tipi text bogan input bosa maximal uzunligi
@@ -26,6 +26,7 @@ data class ComponentData(
     val connectedIds: List<String> = listOf(),         //boglangan id lar
     val operators: List<String> = listOf(),            //berilgan operatorlar
     val type: ComponentEnum,
+    val isRequired: Boolean = false
 ) : Serializable {
     private val converter = Gson()
 
@@ -48,6 +49,7 @@ data class ComponentData(
         connectedIds = converter.toJson(connectedIds),
         operators = converter.toJson(operators),
         type = converter.toJson(type),
+        isRequired = isRequired
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
@@ -68,6 +70,7 @@ data class ComponentData(
         connectedValues = connectedValues,
         connectedIds = connectedIds,
         operators = operators,
-        type = type
+        type = type,
+        isRequired = isRequired
     )
 }

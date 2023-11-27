@@ -27,6 +27,7 @@ data class ComponentEntity(
     val connectedIds: List<String>,         //boglangan id lar
     val operators: List<String>,
     val type: ComponentEnum,
+    val isRequired: Boolean
 ) {
     fun toData(): ComponentData = ComponentData(
         id = id,
@@ -46,6 +47,7 @@ data class ComponentEntity(
         connectedValues = connectedValues,
         connectedIds = connectedIds,
         operators = operators,
-        type = type
+        type = type,
+        isRequired = isRequired
     )
 }
