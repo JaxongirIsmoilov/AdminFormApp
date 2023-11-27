@@ -95,7 +95,7 @@ fun DatePickerPreview(
                     contentDescription = "",
                     tint = Color(0xFFFF3951),
                     modifier = Modifier.size(24.dp)
-                    )
+                )
             }
         }
 
@@ -138,6 +138,8 @@ fun DatePickerPreviewNew() {
             listOf(),
             listOf(),
             listOf(),
-            ComponentEnum.SampleText
+            listOf(),
+            listOf(),
+            ComponentEnum.SampleText,
         ), "Hello", {})
 }

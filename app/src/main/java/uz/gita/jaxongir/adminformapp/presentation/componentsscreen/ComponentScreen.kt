@@ -89,10 +89,13 @@ fun MainContent(
     var conditions by remember {
         mutableStateOf(arrayListOf<Conditions>())
     }
-    var selectedOperators by remember {
+    val selectedOperators by remember {
         mutableStateOf(arrayListOf<String>())
     }
-    val selecetdArrayList by remember {
+    val selectedIds by remember {
+        mutableStateOf(arrayListOf<String>())
+    }
+    val selectedValues by remember {
         mutableStateOf(arrayListOf<String>())
     }
     val showDialog = remember { mutableStateOf(false) }
@@ -100,9 +103,12 @@ fun MainContent(
         myLog("dialog")
         DialogSpinner(uiState.value.savedIds,
             { componentId, selectedOperator, value ->
-                selecetdArrayList.add(selectedOperator)
+                myLog("componentId2:$componentId")
+                selectedIds.add(componentId)
+                selectedOperators.add(selectedOperator)
+                selectedValues.add(value)
                 onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-                conditions.add(Conditions(id = componentId, value = value, operator = selectedOperator))
+
                 Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
             }) {
             showDialog.value = false
@@ -233,7 +239,9 @@ fun MainContent(
                         ComponentEnum.Input -> {
                             InputContent(
                                 onEventListener = onEventDispatcher::invoke,
-                                conditions = conditions,
+                                connectedIds = selectedIds,
+                                connectedValues = selectedValues,
+                                operators = selectedOperators,
                                 id = id,
                                 userId = userId,
                                 content = content
@@ -259,7 +267,9 @@ fun MainContent(
                                                 isMulti = false,
                                                 variants = listOf(),
                                                 selected = listOf(),
-                                                conditions = conditions,
+                                                connectedIds = selectedIds,
+                                                connectedValues = selectedValues,
+                                                operators = selectedOperators,
                                                 type = ComponentEnum.SampleText,
                                                 id = ""
                                             )
@@ -296,7 +306,9 @@ fun MainContent(
                                                 isMulti = false,
                                                 variants = listOf(),
                                                 selected = listOf(),
-                                                conditions = conditions,
+                                                connectedIds = selectedIds,
+                                                connectedValues = selectedValues,
+                                                operators = selectedOperators,
                                                 type = ComponentEnum.Dater,
                                                 id = ""
                                             )
@@ -315,8 +327,10 @@ fun MainContent(
                         ComponentEnum.Selector -> {
                             SelectorContent(
                                 onEventListener = onEventDispatcher::invoke,
-                                conditions,
                                 id = id,
+                                connectedIds=selectedIds,
+                                connectedValues=selectedValues,
+                                operators=selectedOperators,
                                 userId = userId,
                                 content = content
                             )
@@ -325,7 +339,9 @@ fun MainContent(
                         ComponentEnum.Spinner -> {
                             SpinnerContent(
                                 onEventListener = onEventDispatcher::invoke,
-                                conditions = conditions,
+                                connectedIds=selectedIds,
+                                connectedValues=selectedValues,
+                                operators=selectedOperators,
                                 id = id,
                                 userId = userId,
                                 content = content

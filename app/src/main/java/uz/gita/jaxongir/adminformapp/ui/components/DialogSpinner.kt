@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import uz.gita.jaxongir.adminformapp.utils.myLog
 
 @Composable
 @Preview(showBackground = true)
@@ -113,6 +112,9 @@ fun DialogSpinner(
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
+                        if (savedIdList.size == 1) {
+                            selectedId = savedIdList.first()
+                        }
                         onSaveClick.invoke(selectedId, selectesValue, value)
                         onClickCancel()
                     },
@@ -125,9 +127,7 @@ fun DialogSpinner(
                 ) {
                     Text(text = "Saqlash", color = Color(0xFFFFFFFF))
                 }
-
             }
-
         }
     }
 }

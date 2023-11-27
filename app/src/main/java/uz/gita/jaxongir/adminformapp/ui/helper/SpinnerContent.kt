@@ -21,14 +21,14 @@ import androidx.compose.ui.unit.dp
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
-import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 
 @Composable
 fun SpinnerContent(
     onEventListener: (Contracts.Intent) -> Unit,
-    conditions: List<Conditions>,
+    connectedIds: List<String>,
+    connectedValues: List<String>,
+    operators: List<String>,
     id: String,
     userId: String,
     content: String,
@@ -93,7 +93,9 @@ fun SpinnerContent(
                                 isMulti = false,
                                 variants = variants,
                                 selected = listOf(),
-                                conditions = conditions,
+                                connectedIds = connectedIds,
+                                connectedValues = connectedValues,
+                                operators = operators,
                                 type = ComponentEnum.Spinner,
                                 id = ""
                             )

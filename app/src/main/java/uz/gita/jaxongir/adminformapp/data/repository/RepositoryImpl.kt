@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
-import com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.data.model.UserData
 import uz.gita.jaxongir.adminformapp.data.request.UserRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.dao.Dao
@@ -45,6 +43,7 @@ class RepositoryImpl @Inject constructor(
 
             awaitClose()
         }
+
     override fun deleteComponent(componentData: ComponentData): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
@@ -58,6 +57,7 @@ class RepositoryImpl @Inject constructor(
                 }
             awaitClose()
         }
+
     override fun editComponent(componentData: ComponentData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Components")
             .document(componentData.id)
@@ -73,6 +73,7 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
     }
+
     override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .add(request)
@@ -88,6 +89,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .document(userData.userId)
@@ -104,6 +106,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
         val resultList = arrayListOf<ComponentData>()
         val converter = Gson()
@@ -116,8 +119,7 @@ class RepositoryImpl @Inject constructor(
                             id = it.id,
                             userId = it.data?.getOrDefault("userId", "null").toString(),
                             locId =
-                                it.data?.getOrDefault("locId", "0").toString().toLong()
-                            ,
+                            it.data?.getOrDefault("locId", "0").toString().toLong(),
                             idEnteredByUser = it.data?.getOrDefault("idEnteredByUser", "null")
                                 .toString(),
                             content = it.data?.getOrDefault("content", "null").toString(),
@@ -152,7 +154,26 @@ class RepositoryImpl @Inject constructor(
                                 it.data?.getOrDefault("selected", "[]").toString(),
                                 Array<Boolean>::class.java
                             ).asList(),
-                            conditions = converter.fromJson<List<Conditions>>(it.data?.getOrDefault("conditions", "[]").toString(), object : TypeToken<List<Conditions>>() {}.type),
+                            connectedIds = converter.fromJson(
+                                it.data?.getOrDefault(
+                                    "connectedIds",
+                                    ""
+                                ).toString(), Array<String>::class.java
+                            ).asList() ?: listOf(),
+                            connectedValues = converter.fromJson(
+                                it.data?.getOrDefault(
+                                    "connectedValues",
+                                    ""
+                                ).toString(), Array<String>::class.java
+                            ).asList() ?: listOf(),
+
+                            operators = converter.fromJson(
+                                it.data?.getOrDefault(
+                                    "operators",
+                                    ""
+                                ).toString(), Array<String>::class.java
+                            ).asList() ?: listOf(),
+
                             type = converter.fromJson(
                                 it.data?.getOrDefault("type", "").toString(),
                                 ComponentEnum::class.java
@@ -172,6 +193,7 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
 
     }
+
     private fun getUser(): Flow<Unit> = callbackFlow {
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
@@ -196,6 +218,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
         getComponents()
             .onEach {

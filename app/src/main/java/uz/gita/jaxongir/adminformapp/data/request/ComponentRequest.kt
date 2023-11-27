@@ -1,8 +1,7 @@
 package uz.gita.jaxongir.adminformapp.data.request
 
 
-
-data class ComponentRequest (
+data class ComponentRequest(
     val id: String,
     val userId: String,
     val locId: Long,
@@ -17,6 +16,8 @@ data class ComponentRequest (
     val isMulti: Boolean,
     val variants: String,
     val selected: String,
-    val conditions: String,
+    val connectedValues: String,      //visibitily boyicha berilgan qiymatlar
+    val connectedIds: String,         //boglangan id lar
+    val operators: String,
     val type: String,
 )

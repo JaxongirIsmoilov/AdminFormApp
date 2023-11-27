@@ -33,7 +33,9 @@ fun InputContent(
     id: String,
     userId: String,
     content: String,
-    conditions: List<Conditions>
+    connectedIds: List<String>,
+    connectedValues: List<String>,
+    operators: List<String>,
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -233,7 +235,9 @@ fun InputContent(
                                 isMulti = false,
                                 variants = listOf(),
                                 selected = listOf(),
-                                conditions = conditions,
+                                connectedIds = connectedIds,
+                                connectedValues = connectedValues,
+                                operators = operators,
                                 type = ComponentEnum.Input, id = ""
                             )
                         )
