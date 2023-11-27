@@ -50,6 +50,12 @@ fun SelectorItem(
                 fontSize = 22.sp,
             )
             Spacer(modifier = Modifier.weight(1f))
+            if (componentData.isRequired) {
+                Text(
+                    text = "Required field!"
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
             IconButton(onClick = {
                 deleteComp(componentData)
             }) {
@@ -61,7 +67,7 @@ fun SelectorItem(
                 )
             }
         }
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(8.dp))
         list.forEach {
             CheckBoxItem(title = it)
             Spacer(modifier = Modifier.height(8.dp))

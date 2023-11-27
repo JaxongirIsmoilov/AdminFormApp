@@ -79,7 +79,7 @@ fun MainContent(
     var type by remember {
         mutableStateOf(ComponentEnum.SampleText)
     }
-    var checkBoxState: Boolean by remember {
+    val checkBoxState: Boolean by remember {
         mutableStateOf(false)
     }
     var checkBoxState2: Boolean by remember {
@@ -109,17 +109,13 @@ fun MainContent(
     }
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
-        myLog("dialog")
-        DialogSpinner(uiState.value.savedIds,
-            { componentId, selectedOperator, value ->
-                myLog("componentId2:$componentId")
-                selectedIds.add(componentId)
-                selectedOperators.add(selectedOperator)
-                selectedValues.add(value)
-                onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-
-                Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
-            }) {
+        DialogSpinner(uiState.value.savedIds, { componentId, selectedOperator, value ->
+            selectedIds.add(componentId)
+            selectedOperators.add(selectedOperator)
+            selectedValues.add(value)
+            onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
+            Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
+        }) {
             showDialog.value = false
         }
     }
@@ -261,21 +257,6 @@ fun MainContent(
                                     content = content,
                                     isRequired = checkBoxState
                                 )
-
-                                Spacer(modifier = Modifier.size(10.dp))
-
-                                Row(modifier = Modifier.fillMaxWidth()) {
-                                    Checkbox(
-                                        checked = checkBoxState,
-                                        onCheckedChange = { checkBoxState = it })
-
-                                    Spacer(modifier = Modifier.size(20.dp))
-                                    Text(
-                                        text = "isRequired",
-                                        fontSize = 22.sp,
-                                        fontWeight = FontWeight.Black
-                                    )
-                                }
                             }
 
 
@@ -368,19 +349,6 @@ fun MainContent(
                                 content = content,
                                 isRequruired = checkBoxState2
                             )
-
-                            Row(modifier = Modifier.fillMaxWidth()) {
-                                Checkbox(
-                                    checked = checkBoxState2,
-                                    onCheckedChange = { checkBoxState2 = it })
-
-                                Spacer(modifier = Modifier.size(10.dp))
-                                Text(
-                                    text = "isRequired",
-                                    fontSize = 22.sp,
-                                    fontWeight = FontWeight.Black
-                                )
-                            }
                         }
 
                         ComponentEnum.Spinner -> {
@@ -422,9 +390,10 @@ fun MainContent(
                 ) {
                     LazyRow(verticalAlignment = Alignment.CenterVertically) {
                         item { Spacer(modifier = Modifier.size(10.dp)) }
-                        items(uiState.value.selectedIdsList) {
-                            InputChipExample(text = it) {
 
+                        item {
+                            uiState.value.selectedIdsList.forEachIndexed { index, s ->
+                                InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
                             }
                         }
                         item { Spacer(modifier = Modifier.size(10.dp)) }

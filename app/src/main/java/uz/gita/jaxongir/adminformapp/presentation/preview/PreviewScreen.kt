@@ -144,18 +144,20 @@ fun PreviewScreenContent(
 
                                 ComponentEnum.Selector -> {
                                     item {
-                                        SelectorItem(
-                                            question = data.content,
-                                            list = data.variants,
-                                            componentData = data
-                                        ) {
-                                            onEventDispatcher.invoke(
-                                                PreviewContract.Intent.DeleteComponent(
-                                                    data
+                                        Column {
+                                            SelectorItem(
+                                                question = data.content,
+                                                list = data.variants,
+                                                componentData = data
+                                            ) {
+                                                onEventDispatcher.invoke(
+                                                    PreviewContract.Intent.DeleteComponent(
+                                                        data
+                                                    )
                                                 )
-                                            )
+                                            }
+                                            Spacer(modifier = Modifier.height(10.dp))
                                         }
-                                        Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
 

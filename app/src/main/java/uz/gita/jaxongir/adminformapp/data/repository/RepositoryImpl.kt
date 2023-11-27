@@ -182,7 +182,7 @@ class RepositoryImpl @Inject constructor(
                                 it.data?.getOrDefault("type", "").toString(),
                                 ComponentEnum::class.java
                             ),
-                            isRequired = it.data?.getOrDefault("isRequired", false)
+                            isRequired = it.data?.getOrDefault("required", false)
                                 .toString() == "true"
                         )
                     )
