@@ -201,6 +201,7 @@ fun InputContent(
                             onValueChange = {
                                 maxValue = it
                             },
+                            singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Max Value ") },
                             modifier = Modifier.fillMaxWidth(),
@@ -231,7 +232,7 @@ fun InputContent(
         item {
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp), verticalAlignment = Alignment.CenterVertically) {
+                .height(50.dp), verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = checkBoxState,
                     onCheckedChange = { checkBoxState = it },

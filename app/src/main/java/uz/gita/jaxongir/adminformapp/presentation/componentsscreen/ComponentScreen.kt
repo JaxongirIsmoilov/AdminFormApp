@@ -364,6 +364,34 @@ fun MainContent(
                         }
                     }
                 }
+                Card(
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    if (uiState.value.selectedIdsList.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = Color(0xFFFFC1C8))
+                        ) {
+                            LazyRow(verticalAlignment = Alignment.CenterVertically) {
+                                item { Spacer(modifier = Modifier.size(10.dp)) }
+
+                                item {
+                                    uiState.value.selectedIdsList.forEachIndexed { index, s ->
+                                        InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
+                                    }
+                                }
+                                item { Spacer(modifier = Modifier.size(10.dp)) }
+                            }
+                        }
+                    }
+
+                }
             }
 
 
@@ -374,34 +402,6 @@ fun MainContent(
             list.add(it.value)
         }
         myLog("size list ${list.size}")
-        Card(
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 10.dp)
-                .fillMaxWidth()
-                .height(56.dp)
-                .align(Alignment.BottomCenter)
-                .clip(RoundedCornerShape(12.dp))
-        ) {
-            if (uiState.value.selectedIdsList.isNotEmpty()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = Color(0xFFFFC1C8))
-                ) {
-                    LazyRow(verticalAlignment = Alignment.CenterVertically) {
-                        item { Spacer(modifier = Modifier.size(10.dp)) }
-
-                        item {
-                            uiState.value.selectedIdsList.forEachIndexed { index, s ->
-                                InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
-                            }
-                        }
-                        item { Spacer(modifier = Modifier.size(10.dp)) }
-                    }
-                }
-            }
-
-        }
     }
 
 }

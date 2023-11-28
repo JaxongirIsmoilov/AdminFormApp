@@ -73,7 +73,7 @@ fun SelectorContent(
             }
         }
         item {
-            Row(modifier = Modifier.fillMaxWidth().height(80.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = checkBoxState,
                     onCheckedChange = { checkBoxState = it },
