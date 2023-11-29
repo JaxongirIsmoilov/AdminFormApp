@@ -30,6 +30,7 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
+import java.sql.RowId
 
 @Composable
 fun SelectorContent(
@@ -40,7 +41,7 @@ fun SelectorContent(
     id: String,
     content: String,
     userId: String,
-    isRequruired: Boolean
+    rowId: String
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -126,7 +127,9 @@ fun SelectorContent(
                                 connectedValues = connectedValues,
                                 operators = operators,
                                 type = ComponentEnum.Selector,
-                                id = "", isRequired = checkBoxState
+                                id = "",
+                                isRequired = checkBoxState,
+                                rowId = rowId
                             )
                         )
                     )

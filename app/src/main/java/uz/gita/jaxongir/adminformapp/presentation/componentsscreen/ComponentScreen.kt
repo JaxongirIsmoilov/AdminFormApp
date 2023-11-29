@@ -78,12 +78,6 @@ fun MainContent(
     var type by remember {
         mutableStateOf(ComponentEnum.SampleText)
     }
-    val checkBoxState: Boolean by remember {
-        mutableStateOf(false)
-    }
-    var checkBoxState2: Boolean by remember {
-        mutableStateOf(false)
-    }
 
     var id by remember {
         mutableStateOf("")
@@ -103,6 +97,12 @@ fun MainContent(
     val selectedValues by remember {
         mutableStateOf(arrayListOf<String>())
     }
+
+    var rowId by remember {
+        mutableStateOf("")
+    }
+
+
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         DialogSpinner(uiState.value.savedIds, { componentId, selectedOperator, value ->
@@ -110,7 +110,7 @@ fun MainContent(
             selectedOperators.add(selectedOperator)
             selectedValues.add(value)
             onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-            Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, componentId, Toast.LENGTH_SHORT).show()
         }) {
             showDialog.value = false
         }
@@ -164,6 +164,8 @@ fun MainContent(
                         ComponentEnum.SampleText.content,
                         ComponentEnum.Dater.content,
                         ComponentEnum.Input.content,
+                        ComponentEnum.LazyRow.content,
+                        ComponentEnum.Image.content,
                         ComponentEnum.Selector.content
                     ),
                     preselected = ComponentEnum.SampleText.content,
@@ -183,6 +185,14 @@ fun MainContent(
 
                             "SampleText" -> {
                                 type = ComponentEnum.SampleText
+                            }
+
+                            "LazyRow" -> {
+                                type = ComponentEnum.LazyRow
+                            }
+
+                            "Image" -> {
+                                type = ComponentEnum.Image
                             }
 
                             else -> {
@@ -232,6 +242,18 @@ fun MainContent(
                     )
                 )
 
+                Spacer(modifier = Modifier.size(12.dp))
+
+                if(uiState.value.rowId.isNotEmpty() && type != ComponentEnum.LazyRow) {
+                    SampleSpinner(
+                        list = uiState.value.rowId,
+                        preselected = rowId,
+                        onSelectionChanged = {
+                            rowId = it
+                        },
+                        content = "Yaratilgan rowga qoshmoqchimis"
+                    )
+                }
                 Spacer(modifier = Modifier.size(36.dp))
 
                 Box(
@@ -250,11 +272,9 @@ fun MainContent(
                                     id = id,
                                     userId = userId,
                                     content = content,
-                                    isRequired = checkBoxState
+                                    rowId = rowId
                                 )
                             }
-
-
                         }
 
                         ComponentEnum.SampleText -> {
@@ -286,7 +306,7 @@ fun MainContent(
                                                 ratioY = 0,
                                                 ratioX = 0,
                                                 customHeight = "W",
-                                                rowId = "",
+                                                rowId = rowId,
                                                 backgroundColor = Transparent.toArgb()
                                             )
                                         )
@@ -331,7 +351,7 @@ fun MainContent(
                                                 ratioY = 0,
                                                 ratioX = 0,
                                                 customHeight = "W",
-                                                rowId = "",
+                                                rowId = rowId,
                                                 backgroundColor = Transparent.toArgb()
                                             )
                                         )
@@ -355,7 +375,7 @@ fun MainContent(
                                 operators = selectedOperators,
                                 userId = userId,
                                 content = content,
-                                isRequruired = checkBoxState2
+                                rowId = rowId,
                             )
                         }
 
@@ -367,12 +387,52 @@ fun MainContent(
                                 operators = selectedOperators,
                                 id = id,
                                 userId = userId,
-                                content = content
+                                content = content,
+                                rowId = rowId
                             )
                         }
 
                         ComponentEnum.LazyRow -> {
-
+                            TextButton(
+                                onClick = {
+                                    onEventDispatcher.invoke(
+                                        Contracts.Intent.AddComponent(
+                                            ComponentData(
+                                                userId = userId,
+                                                locId = 0,
+                                                idEnteredByUser = id,
+                                                content = content,
+                                                textFieldType = TextFieldType.Text,
+                                                maxLines = 0,
+                                                maxLength = 0,
+                                                minLength = 0,
+                                                maxValue = 0,
+                                                minValue = 0,
+                                                isMulti = false,
+                                                variants = listOf(),
+                                                selected = listOf(),
+                                                connectedIds = selectedIds,
+                                                connectedValues = selectedValues,
+                                                operators = selectedOperators,
+                                                type = ComponentEnum.LazyRow,
+                                                id = "",
+                                                isRequired = false,
+                                                imgUri = "",
+                                                ratioY = 0,
+                                                ratioX = 0,
+                                                customHeight = "W",
+                                                rowId = rowId,
+                                                backgroundColor = Transparent.toArgb()
+                                            )
+                                        )
+                                    )
+                                },
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .align(Alignment.TopCenter)
+                            ) {
+                                Text(text = "Componentni qoshish")
+                            }
                         }
 
                         ComponentEnum.Image -> {
@@ -409,19 +469,9 @@ fun MainContent(
 
                 }
             }
-
-
         }
         val list by remember { mutableStateOf(arrayListOf<String>()) }
 
     }
-
-}
-
-@SuppressLint("UnrememberedMutableState")
-@Composable
-@Preview
-fun ComponentScreenPreview() {
-    MainContent("1", mutableStateOf(Contracts.UIState())) {}
 }
 

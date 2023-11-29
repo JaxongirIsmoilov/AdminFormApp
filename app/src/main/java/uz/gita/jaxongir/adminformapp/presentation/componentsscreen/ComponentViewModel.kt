@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
 import uz.gita.jaxongir.adminformapp.utils.myLog
 import java.util.Date
@@ -23,25 +25,48 @@ class ComponentViewModel @Inject constructor(
     override val uiState = MutableStateFlow(Contracts.UIState())
     private var userId: String = ""
     private var ids = arrayListOf<String>()
+    private var rowIds = arrayListOf<String>()
     private var selectedIds = arrayListOf<String>()
+
+    init {
+        ids = arrayListOf()
+        rowIds = arrayListOf()
+        uiState.value.components.forEach {
+            if (it.idEnteredByUser != "") {
+                ids.add(it.idEnteredByUser)
+                uiState.update {
+                    it.copy(savedIds = ids)
+                }
+            }
+            Log.d("TTT", "eventDispatcher: ${it.type}")
+            if (it.type == ComponentEnum.LazyRow) {
+                rowIds.add(it.idEnteredByUser)
+                uiState.update {
+                    it.copy(rowId = rowIds)
+                }
+            }
+        }
+    }
+
+
     override fun eventDispatcher(intent: Contracts.Intent) {
-//        ids.addAll(uiState.value.savedIds)
         when (intent) {
             Contracts.Intent.LoadComponentId -> {
-                myLog("Load compId : ${uiState.value.components.size}")
+                ids = arrayListOf()
+                rowIds = arrayListOf()
                 uiState.value.components.forEach {
                     if (it.idEnteredByUser != "") {
                         ids.add(it.idEnteredByUser)
                         uiState.update {
                             it.copy(savedIds = ids)
                         }
-                        myLog("Saved IDs if: ${uiState.value.savedIds}")
-                    } else {
+                    }
+                    Log.d("TTT", "eventDispatcher: ${it.type}")
+                    if (it.type == ComponentEnum.LazyRow) {
+                      rowIds.add(it.idEnteredByUser)
                         uiState.update {
-                            it.copy(savedIds = ids)
+                            it.copy(rowId = rowIds)
                         }
-
-                        myLog("Saved IDs else:${uiState.value.savedIds}")
                     }
                 }
             }

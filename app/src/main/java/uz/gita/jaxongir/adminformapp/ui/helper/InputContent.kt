@@ -44,7 +44,7 @@ fun InputContent(
     connectedIds: List<String>,
     connectedValues: List<String>,
     operators: List<String>,
-    isRequired: Boolean
+    rowId: String
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -272,7 +272,8 @@ fun InputContent(
                                 connectedValues = connectedValues,
                                 operators = operators,
                                 type = ComponentEnum.Input, id = "",
-                                isRequired = checkBoxState
+                                isRequired = checkBoxState,
+                                rowId = rowId,
                             )
                         )
 
