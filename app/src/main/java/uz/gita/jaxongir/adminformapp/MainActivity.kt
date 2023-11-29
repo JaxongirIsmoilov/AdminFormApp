@@ -15,6 +15,7 @@ import uz.gita.jaxongir.adminformapp.presentation.splash.SplashScreen
 import uz.gita.jaxongir.adminformapp.ui.theme.AdminFormAppTheme
 import uz.gita.jaxongir.adminformapp.utils.navigation.AppNavigationHandler
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             AdminFormAppTheme {
                 Navigator(screen = SplashScreen()) { navigate ->
                     handler.uiNavigator
@@ -31,11 +33,10 @@ class MainActivity : ComponentActivity() {
                         .launchIn(lifecycleScope)
                     CurrentScreen()
                 }
-
-
             }
-        }
 
+
+        }
     }
 }
 

@@ -47,7 +47,8 @@ import java.time.format.DateTimeFormatter
 fun DatePickerPreview(
     componentData: ComponentData,
     content: String,
-    deleteComp: (ComponentData) -> Unit = {}
+    deleteComp: (ComponentData) -> Unit = {},
+    modifier: Modifier=Modifier
 ) {
     var pickedDate by remember {
         mutableStateOf(LocalDate.now())
@@ -63,13 +64,13 @@ fun DatePickerPreview(
 
     val dateDialogState = rememberMaterialDialogState()
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(text = content, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(8.dp))
         Row {
 
             Row(
-                Modifier
+                modifier
                     .weight(1f)
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color(0xFFF6F2F7))

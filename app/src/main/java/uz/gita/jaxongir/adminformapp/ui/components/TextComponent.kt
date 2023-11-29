@@ -33,11 +33,11 @@ import uz.gita.jaxongir.adminformapp.R
 @Composable
 fun TextComponent(
     onClickDelete: () -> Unit,
-    text:String
+    text:String,modifier: Modifier=Modifier
 ) {
 
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(70.dp)
                 .clip(RoundedCornerShape(12.dp))
@@ -47,15 +47,15 @@ fun TextComponent(
         ) {
 
 
-            Spacer(modifier = Modifier.size(15.dp))
+            Spacer(modifier = modifier.size(15.dp))
 
 
             Box(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxHeight()
                     .wrapContentWidth()
             ) {
-                Column(modifier = Modifier.align(Alignment.Center)) {
+                Column(modifier = modifier.align(Alignment.Center)) {
                     Text(
                         text = text,
                         fontSize = 22.sp,
@@ -65,12 +65,12 @@ fun TextComponent(
                 }
 
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = modifier.weight(1f))
 
             Image(
                 painter = painterResource(id = R.drawable.cancel),
                 contentDescription = "",
-                modifier = Modifier
+                modifier = modifier
                     .size(34.dp)
                     .padding(end = 8.dp)
                     .align(Alignment.CenterVertically)
@@ -83,5 +83,5 @@ fun TextComponent(
 @Preview(showBackground = true)
 @Composable
 fun getTextCompPrev(){
-    TextComponent(onClickDelete = { /*TODO*/ }, text = "Quzimurod")
+    TextComponent(onClickDelete = { /*TODO*/ }, text = "Qo'zimurod")
 }
