@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -47,7 +45,6 @@ import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
@@ -96,9 +93,7 @@ fun MainContent(
     }
     val context = LocalContext.current
 
-    var conditions by remember {
-        mutableStateOf(arrayListOf<Conditions>())
-    }
+
     val selectedOperators by remember {
         mutableStateOf(arrayListOf<String>())
     }
@@ -120,7 +115,7 @@ fun MainContent(
             showDialog.value = false
         }
     }
-    myLog("conditiion size first:${conditions.size}")
+
 
 
 
@@ -190,6 +185,7 @@ fun MainContent(
                             "SampleText" -> {
                                 type = ComponentEnum.SampleText
                             }
+
                             "Image from remote" -> {
                                 type = ComponentEnum.ImageFromRemote
                             }
@@ -304,7 +300,6 @@ fun MainContent(
                                             )
                                         )
                                     )
-                                    myLog("conditions:$conditions")
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
@@ -384,6 +379,17 @@ fun MainContent(
                                 content = content
                             )
                         }
+
+                        ComponentEnum.ImageFromRemote ->{
+
+                        }
+                        ComponentEnum.ImageFromGallery ->{
+
+                        }
+
+                         else ->{
+
+                         }
                     }
                 }
                 Card(
@@ -405,7 +411,10 @@ fun MainContent(
 
                                 item {
                                     uiState.value.selectedIdsList.forEachIndexed { index, s ->
-                                        InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
+                                        InputChipExample(
+                                            text = s.toString(),
+                                            condition = selectedValues[index]
+                                        ) {}
                                     }
                                 }
                                 item { Spacer(modifier = Modifier.size(10.dp)) }
@@ -418,12 +427,7 @@ fun MainContent(
 
 
         }
-        val list by remember { mutableStateOf(arrayListOf<String>()) }
-        myLog("size condi ${conditions.size}")
-        conditions.forEach {
-            list.add(it.value)
-        }
-        myLog("size list ${list.size}")
+
     }
 
 }
