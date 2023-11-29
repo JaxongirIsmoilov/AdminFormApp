@@ -61,7 +61,8 @@ fun ImageComponent(
     var textUri by remember {
         mutableStateOf("")
     }
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             model = imageUri,
             contentDescription = null,
@@ -160,6 +161,8 @@ fun ImageComponent(
             },
             content = "Component o'lchamini kiriting:"
         )
+
+
         when (sizeType) {
             ImageSizeEnum.AUTO -> {
 
