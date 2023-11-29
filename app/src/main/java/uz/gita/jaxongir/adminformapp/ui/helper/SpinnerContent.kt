@@ -32,6 +32,7 @@ fun SpinnerContent(
     id: String,
     userId: String,
     content: String,
+    rowId: String
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -97,7 +98,8 @@ fun SpinnerContent(
                                 connectedValues = connectedValues,
                                 operators = operators,
                                 type = ComponentEnum.Spinner,
-                                id = ""
+                                id = "",
+                                rowId = rowId
                             )
                         )
                     )

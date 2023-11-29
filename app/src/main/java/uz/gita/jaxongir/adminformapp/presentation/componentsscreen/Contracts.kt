@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import kotlinx.coroutines.flow.StateFlow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import java.sql.RowId
 
 interface Contracts {
     interface ViewModel {
@@ -39,6 +40,7 @@ interface Contracts {
         var index: Int = 0,
         val savedIds: List<String> = listOf(),
         val selectedOperators: String = "",
-        val selectedIdsList: List<String> = listOf()
+        val selectedIdsList: List<String> = listOf(),
+        val rowId: List<String> = listOf()
     )
 }

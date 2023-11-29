@@ -61,7 +61,7 @@ fun DialogSpinner(
                 mutableStateOf(true)
             }
             var selectedId by remember {
-                mutableStateOf("")
+                mutableStateOf(savedIdList.firstOrNull() ?: "")
             }
             var selectesValue by remember {
                 mutableStateOf("More")
