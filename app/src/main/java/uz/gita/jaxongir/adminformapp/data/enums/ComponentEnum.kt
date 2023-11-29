@@ -6,6 +6,7 @@ enum class ComponentEnum(val content: String) {
     SampleText("SampleText"),
     Input("Input"),
     Dater("Dater"),
-    Image("Image"),
+    ImageFromRemote("Image from remote"),
+    ImageFromGallery("Image from gallery"),
     LazyRow("LazyRow")
 }

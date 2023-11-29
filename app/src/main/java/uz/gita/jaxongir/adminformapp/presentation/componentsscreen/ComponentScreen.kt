@@ -110,7 +110,6 @@ fun MainContent(
             selectedOperators.add(selectedOperator)
             selectedValues.add(value)
             onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-            Toast.makeText(context, componentId, Toast.LENGTH_SHORT).show()
         }) {
             showDialog.value = false
         }
@@ -275,6 +274,8 @@ fun MainContent(
                                     rowId = rowId
                                 )
                             }
+
+
                         }
 
                         ComponentEnum.SampleText -> {
@@ -469,9 +470,19 @@ fun MainContent(
 
                 }
             }
+
+
         }
         val list by remember { mutableStateOf(arrayListOf<String>()) }
 
     }
+
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+@Preview
+fun ComponentScreenPreview() {
+    MainContent("1", mutableStateOf(Contracts.UIState())) {}
 }
 

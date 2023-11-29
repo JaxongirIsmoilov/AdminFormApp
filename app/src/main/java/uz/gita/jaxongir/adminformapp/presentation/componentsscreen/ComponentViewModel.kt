@@ -77,7 +77,6 @@ class ComponentViewModel @Inject constructor(
                     uiState.update {
                         it.copy(savedIds = ids)
                     }
-
                 }
                 myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
