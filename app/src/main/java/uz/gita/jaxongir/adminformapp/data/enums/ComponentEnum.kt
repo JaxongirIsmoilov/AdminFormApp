@@ -5,5 +5,7 @@ enum class ComponentEnum(val content: String) {
     Selector("Selector"),
     SampleText("SampleText"),
     Input("Input"),
-    Dater("Dater")
+    Dater("Dater"),
+    ImageFromRemote("Image from remote"),
+    ImageFromGallery("Image from gallery")
 }

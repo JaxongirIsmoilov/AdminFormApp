@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -48,6 +46,8 @@ import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
+import uz.gita.jaxongir.adminformapp.ui.components.ImageComponentFromGallery
+import uz.gita.jaxongir.adminformapp.ui.components.ImageComponentFromRemote
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
@@ -114,7 +114,7 @@ fun MainContent(
             selectedOperators.add(selectedOperator)
             selectedValues.add(value)
             onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-            Toast.makeText(context, "$componentId", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, componentId, Toast.LENGTH_SHORT).show()
         }) {
             showDialog.value = false
         }
@@ -188,6 +188,14 @@ fun MainContent(
 
                             "SampleText" -> {
                                 type = ComponentEnum.SampleText
+                            }
+
+                            "Image from remote" -> {
+                                type = ComponentEnum.ImageFromRemote
+                            }
+
+                            "Image from gallery" -> {
+                                type = ComponentEnum.ImageFromGallery
                             }
 
                             else -> {
@@ -324,8 +332,7 @@ fun MainContent(
                                                 connectedValues = selectedValues,
                                                 operators = selectedOperators,
                                                 type = ComponentEnum.Dater,
-                                                id = ""
-                                            )
+                                                id = "")
                                         )
                                     )
                                 },
@@ -362,6 +369,15 @@ fun MainContent(
                                 content = content
                             )
                         }
+
+
+                        ComponentEnum.ImageFromGallery ->{
+                            ImageComponentFromGallery(onEventDispatcher::invoke, 1.dp)
+                        }
+                        ComponentEnum.ImageFromRemote ->{
+                            ImageComponentFromRemote(onEventDispatcher::invoke, 1.dp)
+                        }
+
                     }
                 }
                 Card(
@@ -383,7 +399,10 @@ fun MainContent(
 
                                 item {
                                     uiState.value.selectedIdsList.forEachIndexed { index, s ->
-                                        InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
+                                        InputChipExample(
+                                            text = s.toString(),
+                                            condition = selectedValues[index]
+                                        ) {}
                                     }
                                 }
                                 item { Spacer(modifier = Modifier.size(10.dp)) }

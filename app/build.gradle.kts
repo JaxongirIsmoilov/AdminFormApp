@@ -117,6 +117,8 @@ dependencies {
     // MVI orbit
     implementation ("org.orbit-mvi:orbit-viewmodel:4.6.1")
     implementation ("org.orbit-mvi:orbit-compose:4.6.1")
+
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
 
 kapt{
