@@ -13,10 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
@@ -129,7 +127,7 @@ fun MainContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFff7686))
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 16.dp, vertical = 5.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 androidx.compose.material3.Text(
@@ -156,7 +154,7 @@ fun MainContent(
 
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
 
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
                 SampleSpinner(
                     list = listOf(
@@ -204,7 +202,7 @@ fun MainContent(
                     content = "Qoshmoqchi bo'lgan component tipini kiriting"
                 )
 
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
                 OutlinedTextField(
                     value = id,
@@ -225,7 +223,7 @@ fun MainContent(
                     )
                 )
 
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
                 OutlinedTextField(
                     value = content,
@@ -242,7 +240,7 @@ fun MainContent(
                     )
                 )
 
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
                 if (uiState.value.rowId.isNotEmpty() && type != ComponentEnum.LazyRow) {
                     SampleSpinner(
@@ -251,10 +249,10 @@ fun MainContent(
                         onSelectionChanged = {
                             rowId = it
                         },
-                        content = "Yaratilgan rowga qoshmoqchimis"
+                        content = "Yaratilgan rowga qoshmoqchimisiz"
                     )
                 }
-                Spacer(modifier = Modifier.size(36.dp))
+                Spacer(modifier = Modifier.size(16.dp))
 
                 Column(
                     modifier = Modifier
