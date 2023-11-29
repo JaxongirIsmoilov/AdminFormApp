@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,20 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.ImageSizeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
+import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.utils.toDp
 
 @Composable
 fun ImageComponent(
     onEventDispatcher: (Contracts.Intent) -> Unit,
-    SaveParametrs: (Dp) -> Unit,
+    userId: String,
+    idEnteredByUser: String,
+    isRequired: Boolean
 ) {
     var imageUri: Uri? by remember { mutableStateOf(null) }
     var imageHeight: String by remember { mutableStateOf("") }
@@ -92,8 +97,7 @@ fun ImageComponent(
                 Button(
                     onClick = { launcher.launch("image/*") },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
+                        .wrapContentSize()
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Text(text = "Upload from gallery")
@@ -183,6 +187,36 @@ fun ImageComponent(
             launcher.launch("image/*")
         }) {
             Text(text = "Image gallery", modifier = Modifier.padding(horizontal = 10.dp))
+        }
+
+
+        Spacer(modifier = Modifier.size(10.dp))
+
+        Button(onClick = {
+            onEventDispatcher.invoke(
+                Contracts.Intent.AddComponent(
+                    ComponentData(
+                        "",
+                        userId,
+                        0,
+                        idEnteredByUser,
+                        "",
+                        TextFieldType.Text,
+                        0, 0, 0, 0, 0, false, listOf(),
+                        listOf(),
+                        listOf(),
+                        listOf(),
+                        listOf(),
+                        ComponentEnum.Image,
+                        isRequired,
+                        imageUri.toString(),
+
+
+                        )
+                )
+            )
+        }) {
+            Text(text = "Save Image", modifier = Modifier.padding(horizontal = 10.dp))
         }
     }
 
