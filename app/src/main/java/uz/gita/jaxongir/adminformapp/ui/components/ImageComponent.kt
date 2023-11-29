@@ -1,13 +1,22 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,13 +25,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import coil.compose.AsyncImage
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.ImageSizeEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
+import uz.gita.jaxongir.adminformapp.utils.toDp
 
 @Composable
 fun ImageComponent(
@@ -31,14 +47,14 @@ fun ImageComponent(
     idEnteredByUser: String,
     isRequired: Boolean
 ) {
-
+    var imageUri: Uri? by remember { mutableStateOf(null) }
     var imageHeight: String by remember { mutableStateOf("") }
     var imageRatioX: String by remember { mutableStateOf("") }
     var imageRatioY: String by remember { mutableStateOf("") }
     var sizeType by remember { mutableStateOf(ImageSizeEnum.AUTO) }
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 
 
-    Column(modifier = Modifier.fillMaxWidth()) {
         SampleSpinner(
             list = listOf(
                 ImageSizeEnum.RATIO.title,
@@ -46,7 +62,7 @@ fun ImageComponent(
                 ImageSizeEnum.CUSTOM.title
 
             ),
-            preselected = ComponentEnum.SampleText.content,
+            preselected = ImageSizeEnum.AUTO.title,
             onSelectionChanged = {
                 when (it) {
                     "Auto" -> {
@@ -84,8 +100,16 @@ fun ImageComponent(
                     value = imageRatioX,
                     onValueChange = { imageRatioX = it },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
+                        .width(120.dp)
+                    ,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    ),
+                    label = {
+                        Text(text = "ratio x")
+                    },
+                    singleLine = true,,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 Spacer(modifier = Modifier.size(10.dp))
@@ -93,13 +117,24 @@ fun ImageComponent(
                     value = imageRatioY,
                     onValueChange = { imageRatioY = it },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
+                        .width(120.dp),
+                    label = {
+                        Text(text = "ratio y")
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    ),
+                    singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
             }
         }
-
+        Button(onClick = {
+            launcher.launch("image/*")
+        }) {
+            Text(text = "Image gallery", modifier = Modifier.padding(horizontal = 10.dp))
+        }
 
 
         Spacer(modifier = Modifier.size(10.dp))
@@ -121,8 +156,10 @@ fun ImageComponent(
                         listOf(),
                         ComponentEnum.Image,
                         isRequired,
-                        "",
-                    )
+                        imageUri.toString(),
+
+
+                        )
                 )
             )
         }) {
@@ -131,5 +168,3 @@ fun ImageComponent(
     }
 
 }
-
-
