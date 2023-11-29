@@ -1,5 +1,7 @@
 package uz.gita.jaxongir.adminformapp.data.source.database.entity
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
@@ -9,11 +11,11 @@ import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 @Entity(tableName = "components")
 data class ComponentEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: String,
-    val userId: String,
-    val locId: Long,
+    val id: String = "",
+    val userId: String = "",
+    val locId: Long = 0L,
     val idEnteredByUser: String = "",
-    val content: String,
+    val content: String = "",
     val textFieldType: TextFieldType,
     val maxLines: Int,
     val maxLength: Int,
@@ -21,13 +23,19 @@ data class ComponentEntity(
     val maxValue: Int,
     val minValue: Int,
     val isMulti: Boolean,
-    val variants: List<String>,
-    val selected: List<Boolean>,
-    val connectedValues: List<String>,      //visibitily boyicha berilgan qiymatlar
-    val connectedIds: List<String>,         //boglangan id lar
-    val operators: List<String>,
+    val variants: List<String> = listOf(),
+    val selected: List<Boolean> = listOf(),
+    val connectedValues: List<String> = listOf(),
+    val connectedIds: List<String> = listOf(),
+    val operators: List<String> = listOf(),
     val type: ComponentEnum,
-    val isRequired: Boolean
+    val isRequired: Boolean = false,
+    val imgUri : String = "",
+    val ratioX : Int,
+    val ratioY : Int,
+    val customHeight : String,
+    val rowId: String = "",
+    val backgroundColor: Int = Color.Transparent.toArgb()
 ) {
     fun toData(): ComponentData = ComponentData(
         id = id,
@@ -48,6 +56,7 @@ data class ComponentEntity(
         connectedIds = connectedIds,
         operators = operators,
         type = type,
-        isRequired = isRequired
+        isRequired = isRequired,
+        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor
     )
 }

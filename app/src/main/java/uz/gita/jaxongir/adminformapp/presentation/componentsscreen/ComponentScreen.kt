@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -34,7 +32,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -46,7 +46,6 @@ import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.data.model.Conditions
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
@@ -95,9 +94,6 @@ fun MainContent(
     }
     val context = LocalContext.current
 
-    var conditions by remember {
-        mutableStateOf(arrayListOf<Conditions>())
-    }
     val selectedOperators by remember {
         mutableStateOf(arrayListOf<String>())
     }
@@ -119,7 +115,6 @@ fun MainContent(
             showDialog.value = false
         }
     }
-    myLog("conditiion size first:${conditions.size}")
 
 
 
@@ -285,11 +280,17 @@ fun MainContent(
                                                 connectedValues = selectedValues,
                                                 operators = selectedOperators,
                                                 type = ComponentEnum.SampleText,
-                                                id = ""
+                                                id = "",
+                                                isRequired = false,
+                                                imgUri = "",
+                                                ratioY = 0,
+                                                ratioX = 0,
+                                                customHeight = "W",
+                                                rowId = "",
+                                                backgroundColor = Transparent.toArgb()
                                             )
                                         )
                                     )
-                                    myLog("conditions:$conditions")
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
@@ -324,7 +325,14 @@ fun MainContent(
                                                 connectedValues = selectedValues,
                                                 operators = selectedOperators,
                                                 type = ComponentEnum.Dater,
-                                                id = ""
+                                                id = "",
+                                                isRequired = false,
+                                                imgUri = "",
+                                                ratioY = 0,
+                                                ratioX = 0,
+                                                customHeight = "W",
+                                                rowId = "",
+                                                backgroundColor = Transparent.toArgb()
                                             )
                                         )
                                     )
@@ -362,6 +370,14 @@ fun MainContent(
                                 content = content
                             )
                         }
+
+                        ComponentEnum.LazyRow -> {
+
+                        }
+
+                        ComponentEnum.Image -> {
+
+                        }
                     }
                 }
                 Card(
@@ -397,11 +413,7 @@ fun MainContent(
 
         }
         val list by remember { mutableStateOf(arrayListOf<String>()) }
-        myLog("size condi ${conditions.size}")
-        conditions.forEach {
-            list.add(it.value)
-        }
-        myLog("size list ${list.size}")
+
     }
 
 }

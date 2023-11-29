@@ -248,6 +248,14 @@ fun PreviewScreenContent(
                                         Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }
+
+                                ComponentEnum.Image -> {
+
+                                }
+
+                                ComponentEnum.LazyRow -> {
+
+                                }
                             }
                         }
 
