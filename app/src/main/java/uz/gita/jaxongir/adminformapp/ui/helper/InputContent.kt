@@ -44,7 +44,7 @@ fun InputContent(
     connectedIds: List<String>,
     connectedValues: List<String>,
     operators: List<String>,
-    rowId: String
+    rowId: String,
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -72,6 +72,10 @@ fun InputContent(
 
     var checkBoxState by remember {
         mutableStateOf(false)
+    }
+
+    var weight by remember {
+        mutableStateOf("0f")
     }
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -122,7 +126,8 @@ fun InputContent(
                             value = maxLines,
                             onValueChange = {
                                 maxLines = it
-                            }, singleLine = true,
+                            },
+                            singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             label = { Text(text = "Qatorla soni") },
                             modifier = Modifier.fillMaxWidth(),
@@ -229,17 +234,21 @@ fun InputContent(
                 }
             }
         }
+
         item {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp), verticalAlignment = Alignment.CenterVertically
+            ) {
                 Checkbox(
                     checked = checkBoxState,
                     onCheckedChange = { checkBoxState = it },
                     colors = CheckboxDefaults.colors(
                         checkedColor = Color(0xFFFF3159),
                         uncheckedColor = Color(0xFFFF7686),
-                    ))
+                    )
+                )
                 Spacer(modifier = Modifier.size(10.dp))
                 androidx.compose.material.Text(
                     text = "Is Required",
@@ -249,6 +258,26 @@ fun InputContent(
                 )
             }
         }
+
+        if (rowId != "") {
+            item {
+                OutlinedTextField(
+                    value = weight,
+                    onValueChange = {
+                        weight = it
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    label = { Text(text = "Weight") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
+                )
+            }
+        }
+
         item {
             TextButton(
                 onClick = {
@@ -274,6 +303,7 @@ fun InputContent(
                                 type = ComponentEnum.Input, id = "",
                                 isRequired = checkBoxState,
                                 rowId = rowId,
+                                weight = if(weight == "0f") "" else weight
                             )
                         )
 

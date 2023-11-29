@@ -117,29 +117,3 @@ fun DatePickerPreview(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun DatePickerPreviewNew() {
-    DatePickerPreview(
-        ComponentData(
-            "",
-            "",
-            0,
-            "",
-            "",
-            TextFieldType.Text,
-            0,
-            0,
-            0,
-            0,
-            0,
-            false,
-            listOf(),
-            listOf(),
-            listOf(),
-            listOf(),
-            listOf(),
-            ComponentEnum.SampleText,
-        ), "Hello", {})
-}

@@ -111,8 +111,3 @@ fun SampleSpinnerPreview(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewSimple() {
-//    SampleSpinner(listOf("Malle", "Isfan"), "Isfan", {}, Modifier,{})
-//}

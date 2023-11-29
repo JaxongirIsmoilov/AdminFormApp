@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -254,10 +255,11 @@ fun MainContent(
                 }
                 Spacer(modifier = Modifier.size(36.dp))
 
-                Box(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (type) {
                         ComponentEnum.Input -> {
@@ -278,6 +280,27 @@ fun MainContent(
                         }
 
                         ComponentEnum.SampleText -> {
+                            var weight by remember {
+                                mutableStateOf("0f")
+                            }
+
+                            if (rowId != "") {
+                                OutlinedTextField(
+                                    value = weight,
+                                    onValueChange = {
+                                        weight = it
+                                    },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    label = { Text(text = "Weight") },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedBorderColor = Color(0xFFFF3951),
+                                        unfocusedBorderColor = Color(0xFFFF7686)
+                                    )
+                                )
+                            }
+
                             TextButton(
                                 onClick = {
                                     onEventDispatcher.invoke(
@@ -307,14 +330,14 @@ fun MainContent(
                                                 ratioX = 0,
                                                 customHeight = "W",
                                                 rowId = rowId,
-                                                backgroundColor = Transparent.toArgb()
+                                                backgroundColor = Transparent.toArgb(),
+                                                weight = weight
                                             )
                                         )
                                     )
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
-                                    .align(Alignment.TopCenter)
                                     .padding(5.dp)
                                     .background(Color(0xffff7686))
                             ) {
@@ -323,6 +346,27 @@ fun MainContent(
                         }
 
                         ComponentEnum.Dater -> {
+                            var weight by remember {
+                                mutableStateOf("0f")
+                            }
+
+                            if (rowId != "") {
+                                    OutlinedTextField(
+                                        value = weight,
+                                        onValueChange = {
+                                            weight = it
+                                        },
+                                        singleLine = true,
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                        label = { Text(text = "Weight") },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = OutlinedTextFieldDefaults.colors(
+                                            focusedBorderColor = Color(0xFFFF3951),
+                                            unfocusedBorderColor = Color(0xFFFF7686)
+                                        )
+                                    )
+                            }
+
                             TextButton(
                                 onClick = {
                                     onEventDispatcher.invoke(
@@ -352,14 +396,14 @@ fun MainContent(
                                                 ratioX = 0,
                                                 customHeight = "W",
                                                 rowId = rowId,
-                                                backgroundColor = Transparent.toArgb()
+                                                backgroundColor = Transparent.toArgb(),
+                                                weight = weight
                                             )
                                         )
                                     )
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
-                                    .align(Alignment.TopCenter)
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
@@ -422,14 +466,14 @@ fun MainContent(
                                                 ratioX = 0,
                                                 customHeight = "W",
                                                 rowId = rowId,
-                                                backgroundColor = Transparent.toArgb()
+                                                backgroundColor = Transparent.toArgb(),
+                                                weight = ""
                                             )
                                         )
                                     )
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
-                                    .align(Alignment.TopCenter)
                             ) {
                                 Text(text = "Componentni qoshish")
                             }

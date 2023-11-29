@@ -191,7 +191,8 @@ class RepositoryImpl @Inject constructor(
                             ratioY = Integer.parseInt(it.data?.getOrDefault("ratioY", "0").toString()),
                             customHeight = it.data?.getOrDefault("customHeight", "0").toString(),
                             backgroundColor = it.data?.getOrDefault("backgroundColor", "${Color.Transparent.toArgb()}").toString().toInt(),
-                            rowId = it.data?.getOrDefault("rowId", "0").toString()
+                            rowId = it.data?.getOrDefault("rowId", "0").toString(),
+                            weight = it.data?.getOrDefault("weight", "0").toString()
                         )
                     )
 

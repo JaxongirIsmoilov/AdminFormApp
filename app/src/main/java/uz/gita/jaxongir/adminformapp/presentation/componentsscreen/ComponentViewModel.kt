@@ -28,25 +28,6 @@ class ComponentViewModel @Inject constructor(
     private var rowIds = arrayListOf<String>()
     private var selectedIds = arrayListOf<String>()
 
-    init {
-        ids = arrayListOf()
-        rowIds = arrayListOf()
-        uiState.value.components.forEach {
-            if (it.idEnteredByUser != "") {
-                ids.add(it.idEnteredByUser)
-                uiState.update {
-                    it.copy(savedIds = ids)
-                }
-            }
-            Log.d("TTT", "eventDispatcher: ${it.type}")
-            if (it.type == ComponentEnum.LazyRow) {
-                rowIds.add(it.idEnteredByUser)
-                uiState.update {
-                    it.copy(rowId = rowIds)
-                }
-            }
-        }
-    }
 
 
     override fun eventDispatcher(intent: Contracts.Intent) {
@@ -123,6 +104,24 @@ class ComponentViewModel @Inject constructor(
                             uiState.update { it.copy(components = ls) }
                         }
                     }.collect()
+                }
+
+                ids = arrayListOf()
+                rowIds = arrayListOf()
+                uiState.value.components.forEach {
+                    if (it.idEnteredByUser != "") {
+                        ids.add(it.idEnteredByUser)
+                        uiState.update {
+                            it.copy(savedIds = ids)
+                        }
+                    }
+                    Log.d("TTT", "eventDispatcher: ${it.type}")
+                    if (it.type == ComponentEnum.LazyRow) {
+                        rowIds.add(it.idEnteredByUser)
+                        uiState.update {
+                            it.copy(rowId = rowIds)
+                        }
+                    }
                 }
             }
 

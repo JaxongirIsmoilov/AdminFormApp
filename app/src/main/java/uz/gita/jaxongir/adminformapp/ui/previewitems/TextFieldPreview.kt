@@ -158,9 +158,3 @@ fun InputField(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun getTextFieldPreview() {
-//    InputField(TextFieldType.Text, 0, 0, 0, 0, 0, "")
-//}

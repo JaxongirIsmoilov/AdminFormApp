@@ -2,6 +2,7 @@ package uz.gita.jaxongir.adminformapp.data.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.font.FontWeight
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
@@ -35,7 +36,7 @@ data class ComponentData(
     val customHeight: String = "",
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
-
+    val weight: String
 
     ) : Serializable {
     private val converter = Gson()
@@ -65,7 +66,8 @@ data class ComponentData(
         ratioY = ratioY,
         customHeight = customHeight,
         rowId = rowId,
-        backgroundColor = backgroundColor
+        backgroundColor = backgroundColor,
+        weight = weight
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
@@ -94,5 +96,6 @@ data class ComponentData(
         customHeight = customHeight,
         rowId = rowId,
         backgroundColor = backgroundColor,
+        weight = weight
     )
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
@@ -41,7 +43,45 @@ fun SpinnerContent(
     val newVariants = arrayListOf<String>()
     newVariants.addAll(variants)
 
+    var weight by remember {
+        mutableStateOf("0")
+    }
+
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        if (rowId != "") {
+            item {
+                OutlinedTextField(
+                    value = weight,
+                    onValueChange = {
+                        if (it != "") {
+                            if (it.toFloat() > 1.1) {
+                                weight = "1"
+                                return@OutlinedTextField
+                            }
+
+                            if (it.toFloat() < 0) {
+                                weight = "0"
+                                return@OutlinedTextField
+                            }
+
+                            weight = it
+                        } else {
+                            weight = ""
+                        }
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    label = { Text(text = "Weight") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
+                )
+            }
+        }
+
         variants.forEachIndexed { index, s ->
             item {
                 OutlinedTextField(
@@ -99,7 +139,8 @@ fun SpinnerContent(
                                 operators = operators,
                                 type = ComponentEnum.Spinner,
                                 id = "",
-                                rowId = rowId
+                                rowId = rowId,
+                                weight = if(weight == "0f") "" else weight
                             )
                         )
                     )

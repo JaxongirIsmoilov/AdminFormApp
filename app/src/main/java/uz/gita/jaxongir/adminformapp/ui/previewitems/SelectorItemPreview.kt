@@ -74,8 +74,3 @@ fun SelectorItem(
         }
     }
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun getSelectorPreview() {
-//    SelectorItem("How are You", listOf("1234","1234","1234"), {})
-//}

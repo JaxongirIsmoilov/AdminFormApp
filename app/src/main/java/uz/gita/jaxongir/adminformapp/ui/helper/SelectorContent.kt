@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
@@ -51,11 +53,33 @@ fun SelectorContent(
         mutableStateOf(false)
     }
 
+    var weight by remember {
+        mutableStateOf("0f")
+    }
 
     val newVariants = arrayListOf<String>()
     newVariants.addAll(variants)
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+        if (rowId != "") {
+            item {
+                OutlinedTextField(
+                    value = weight,
+                    onValueChange = {
+                        weight = it
+                    },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    label = { Text(text = "Weight") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFFFF3951),
+                        unfocusedBorderColor = Color(0xFFFF7686)
+                    )
+                )
+            }
+        }
+
         variants.forEachIndexed { index, s ->
             item {
                 OutlinedTextField(
@@ -129,7 +153,8 @@ fun SelectorContent(
                                 type = ComponentEnum.Selector,
                                 id = "",
                                 isRequired = checkBoxState,
-                                rowId = rowId
+                                rowId = rowId,
+                                weight = if(weight == "0f") "" else weight
                             )
                         )
                     )
