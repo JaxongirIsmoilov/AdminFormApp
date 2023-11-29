@@ -2,6 +2,8 @@ package uz.gita.jaxongir.adminformapp.data.repository
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -116,8 +118,8 @@ class RepositoryImpl @Inject constructor(
         val converter = Gson()
         firestore.collection("Components")
             .get()
-            .addOnSuccessListener {
-                it.documents.forEach {
+            .addOnSuccessListener { data ->
+                data.documents.forEach {
                     val state = resultList.add(
                         ComponentData(
                             id = it.id,
@@ -185,10 +187,11 @@ class RepositoryImpl @Inject constructor(
                             isRequired = it.data?.getOrDefault("required", false)
                                 .toString() == "true",
                             imgUri = it.data?.getOrDefault("imgUri", "").toString(),
-                            ratioX = Integer.parseInt(it.data?.getOrDefault("ratioX", "").toString()),
-                            ratioY = Integer.parseInt(it.data?.getOrDefault("ratioY", "").toString()),
-                            customHeight = it.data?.getOrDefault("customHeight", "").toString(),
-                            emptySpaceColor = it.data?.getOrDefault("emptySpaceColor", "").toString()
+                            ratioX = Integer.parseInt(it.data?.getOrDefault("ratioX", "0").toString()),
+                            ratioY = Integer.parseInt(it.data?.getOrDefault("ratioY", "0").toString()),
+                            customHeight = it.data?.getOrDefault("customHeight", "0").toString(),
+                            backgroundColor = it.data?.getOrDefault("backgroundColor", "${Color.Transparent.toArgb()}").toString().toInt(),
+                            rowId = it.data?.getOrDefault("rowId", "0").toString()
                         )
                     )
 
