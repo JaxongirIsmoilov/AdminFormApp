@@ -1,7 +1,6 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,8 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
@@ -35,7 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,12 +48,12 @@ import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
+import uz.gita.jaxongir.adminformapp.ui.components.ImageComponent
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
 import uz.gita.jaxongir.adminformapp.ui.previewitems.InputChipExample
-import uz.gita.jaxongir.adminformapp.utils.myLog
 
 class ComponentScreen(private val userId: String) : AndroidScreen() {
     @Composable
@@ -121,7 +121,8 @@ fun MainContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(Color.White)
+            ,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
@@ -243,7 +244,7 @@ fun MainContent(
 
                 Spacer(modifier = Modifier.size(12.dp))
 
-                if(uiState.value.rowId.isNotEmpty() && type != ComponentEnum.LazyRow) {
+                if (uiState.value.rowId.isNotEmpty() && type != ComponentEnum.LazyRow) {
                     SampleSpinner(
                         list = uiState.value.rowId,
                         preselected = rowId,
@@ -480,7 +481,12 @@ fun MainContent(
                         }
 
                         ComponentEnum.Image -> {
-
+                            ImageComponent(
+                                onEventDispatcher = onEventDispatcher::invoke,
+                                userId = userId,
+                                idEnteredByUser = id,
+                                isRequired = false
+                            )
                         }
                     }
                 }
@@ -503,7 +509,10 @@ fun MainContent(
 
                                 item {
                                     uiState.value.selectedIdsList.forEachIndexed { index, s ->
-                                        InputChipExample(text = s.toString(), condition = selectedValues[index]) {}
+                                        InputChipExample(
+                                            text = s.toString(),
+                                            condition = selectedValues[index]
+                                        ) {}
                                     }
                                 }
                                 item { Spacer(modifier = Modifier.size(10.dp)) }

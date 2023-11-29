@@ -45,18 +45,19 @@ fun InputField(
     minValue: Int,
     question: String,
     componentData: ComponentData,
-    deleteComp: (ComponentData) -> Unit
+    deleteComp: (ComponentData) -> Unit,
+    modifier: Modifier=Modifier
 ) {
     var value by remember {
         mutableStateOf("")
     }
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .border(1.dp, Color(0xFFFF7686), RoundedCornerShape(12.dp))
             .background(Color(0x33C4C4C4))
-            .padding(horizontal = 16.dp, vertical = 5.dp),
+.padding(horizontal = 16.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         when (textFieldType) {
@@ -65,7 +66,7 @@ fun InputField(
                     value = value, onValueChange = {
                         value = it
                     },
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color(0xFF3951),
@@ -86,7 +87,7 @@ fun InputField(
                     value = value, onValueChange = {
                         value = it
                     },
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color(0xFF3951),
@@ -107,7 +108,7 @@ fun InputField(
                     value = value, onValueChange = {
                         value = it
                     },
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color(0xFF3951),
@@ -128,7 +129,7 @@ fun InputField(
                     value = value, onValueChange = {
                         value = it
                     },
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color(0xFF3951),
@@ -145,7 +146,7 @@ fun InputField(
                 )
             }
         }
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = modifier.width(16.dp))
         IconButton(onClick = {
             deleteComp(componentData)
         }) {
@@ -153,7 +154,7 @@ fun InputField(
                 painter = painterResource(id = R.drawable.cancel),
                 contentDescription = "",
                 tint = Color(0xFFFF3951),
-                modifier = Modifier.size(24.dp)
+                modifier = modifier.size(24.dp)
             )
         }
     }

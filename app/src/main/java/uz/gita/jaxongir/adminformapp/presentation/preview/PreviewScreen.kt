@@ -111,6 +111,8 @@ fun PreviewScreenContent(
                             fontWeight = FontWeight.Bold,
                         )
                     }
+
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -128,14 +130,17 @@ fun PreviewScreenContent(
                                             preselected = data.variants[0],
                                             onSelectionChanged = {},
                                             content = data.content,
-                                            componentData = data
-                                        ) {
-                                            onEventDispatcher.invoke(
-                                                PreviewContract.Intent.DeleteComponent(
-                                                    data
+                                            componentData = data,
+                                            modifier = Modifier,
+                                            deleteComp = {
+                                                onEventDispatcher.invoke(
+                                                    PreviewContract.Intent.DeleteComponent(
+                                                        data
+                                                    )
                                                 )
-                                            )
-                                        }
+
+                                            }
+                                        )
                                         Spacer(modifier = Modifier.height(10.dp))
 
 
@@ -148,14 +153,16 @@ fun PreviewScreenContent(
                                             SelectorItem(
                                                 question = data.content,
                                                 list = data.variants,
-                                                componentData = data
-                                            ) {
-                                                onEventDispatcher.invoke(
-                                                    PreviewContract.Intent.DeleteComponent(
-                                                        data
+                                                componentData = data,
+                                                modifier = Modifier,
+                                                deleteComp = {
+                                                    onEventDispatcher.invoke(
+                                                        PreviewContract.Intent.DeleteComponent(
+                                                            data
+                                                        )
                                                     )
-                                                )
-                                            }
+                                                }
+                                            )
                                             Spacer(modifier = Modifier.height(10.dp))
                                         }
                                     }
@@ -219,14 +226,15 @@ fun PreviewScreenContent(
                                                 maxValue = data.maxValue,
                                                 minValue = data.minValue,
                                                 question = data.content,
-                                                data
-                                            ) {
-                                                onEventDispatcher.invoke(
-                                                    PreviewContract.Intent.DeleteComponent(
-                                                        data
+                                                data, modifier = Modifier,
+                                                deleteComp = {
+                                                    onEventDispatcher.invoke(
+                                                        PreviewContract.Intent.DeleteComponent(
+                                                            data
+                                                        )
                                                     )
-                                                )
-                                            }
+                                                }
+                                            )
                                             Spacer(modifier = Modifier.height(10.dp))
                                         }
 
@@ -237,14 +245,16 @@ fun PreviewScreenContent(
                                     item {
                                         DatePickerPreview(
                                             componentData = data,
-                                            content = data.content
-                                        ) {
-                                            onEventDispatcher.invoke(
-                                                PreviewContract.Intent.DeleteComponent(
-                                                    data
+                                            content = data.content,
+                                            modifier = Modifier,
+                                            deleteComp = {
+                                                onEventDispatcher.invoke(
+                                                    PreviewContract.Intent.DeleteComponent(
+                                                        data
+                                                    )
                                                 )
-                                            )
-                                        }
+                                            }
+                                        )
                                         Spacer(modifier = Modifier.height(10.dp))
                                     }
                                 }

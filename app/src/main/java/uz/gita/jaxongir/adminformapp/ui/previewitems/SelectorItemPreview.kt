@@ -35,11 +35,12 @@ fun SelectorItem(
     question: String,
     list: List<String>,
     componentData: ComponentData,
-    deleteComp : (ComponentData) -> Unit
+    deleteComp: (ComponentData) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val selectedItem = remember { mutableStateOf<String?>(null) }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
