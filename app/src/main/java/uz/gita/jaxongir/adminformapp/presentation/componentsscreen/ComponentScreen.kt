@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
@@ -32,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -114,7 +117,6 @@ fun MainContent(
             selectedOperators.add(selectedOperator)
             selectedValues.add(value)
             onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-            Toast.makeText(context, componentId, Toast.LENGTH_SHORT).show()
         }) {
             showDialog.value = false
         }
@@ -282,8 +284,15 @@ fun MainContent(
                                                 connectedIds = selectedIds,
                                                 connectedValues = selectedValues,
                                                 operators = selectedOperators,
-                                                type = ComponentEnum.SampleText,
-                                                id = ""
+                                                type = ComponentEnum.Dater,
+                                                id = "",
+                                                isRequired = false,
+                                                imgUri = "",
+                                                ratioY = 0,
+                                                ratioX = 0,
+                                                customHeight = "W",
+                                                rowId = "",
+                                                backgroundColor = Transparent
                                             )
                                         )
                                     )
@@ -327,7 +336,8 @@ fun MainContent(
                                                 ratioY = 0,
                                                 ratioX = 0,
                                                 customHeight = "W",
-                                                rowId =
+                                                rowId = "",
+                                                backgroundColor = Transparent
 
                                             )
                                         )

@@ -117,8 +117,8 @@ class RepositoryImpl @Inject constructor(
         val converter = Gson()
         firestore.collection("Components")
             .get()
-            .addOnSuccessListener { data ->
-                data.documents.forEach {
+            .addOnSuccessListener { result ->
+                result.documents.forEach {
                     resultList.add(
                         ComponentData(
                             id = it.id,
@@ -213,8 +213,8 @@ class RepositoryImpl @Inject constructor(
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
             .get()
-            .addOnSuccessListener { data ->
-                data.documents.forEach {
+            .addOnSuccessListener { snapshot ->
+                snapshot.documents.forEach {
                     resultList.add(
                         UserData(
                             userId = it.id,
@@ -259,8 +259,8 @@ class RepositoryImpl @Inject constructor(
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
         dao.deleteUsers()
         getUser().onEach {
-            dao.getUsers().onEach { data ->
-                emit(Result.success(data.map { it.toData() }))
+            dao.getUsers().onEach { entities ->
+                emit(Result.success(entities.map { it.toData() }))
             }.collect()
         }.collect()
     }.flowOn(Dispatchers.IO)
