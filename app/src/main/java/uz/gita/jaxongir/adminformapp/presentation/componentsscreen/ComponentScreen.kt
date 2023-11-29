@@ -163,7 +163,8 @@ fun MainContent(
                         ComponentEnum.Input.content,
                         ComponentEnum.LazyRow.content,
                         ComponentEnum.Image.content,
-                        ComponentEnum.Selector.content
+                        ComponentEnum.Selector.content,
+                        ComponentEnum.ColorPicker.content
                     ),
                     preselected = ComponentEnum.SampleText.content,
                     onSelectionChanged = {
@@ -259,6 +260,11 @@ fun MainContent(
                         .weight(1f)
                 ) {
                     when (type) {
+
+                        ComponentEnum.ColorPicker -> {
+
+                        }
+
                         ComponentEnum.Input -> {
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 InputContent(
@@ -272,8 +278,6 @@ fun MainContent(
                                     rowId = rowId
                                 )
                             }
-
-
                         }
 
                         ComponentEnum.SampleText -> {

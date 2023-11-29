@@ -7,5 +7,6 @@ enum class ComponentEnum(val content: String) {
     Input("Input"),
     Dater("Dater"),
     Image("Image"),
-    LazyRow("LazyRow")
+    LazyRow("LazyRow"),
+    ColorPicker("ColorPicker")
 }
