@@ -38,6 +38,7 @@ import uz.gita.jaxongir.adminformapp.R
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import uz.gita.jaxongir.adminformapp.data.model.defaultData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -122,24 +123,5 @@ fun DatePickerPreview(
 @Composable
 fun DatePickerPreviewNew() {
     DatePickerPreview(
-        ComponentData(
-            "",
-            "",
-            0,
-            "",
-            "",
-            TextFieldType.Text,
-            0,
-            0,
-            0,
-            0,
-            0,
-            false,
-            listOf(),
-            listOf(),
-            listOf(),
-            listOf(),
-            listOf(),
-            ComponentEnum.SampleText,
-        ), "Hello", {})
+        componentData = defaultData, "Hello", {})
 }

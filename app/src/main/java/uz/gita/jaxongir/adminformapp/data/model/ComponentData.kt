@@ -95,4 +95,33 @@ data class ComponentData(
         rowId = rowId,
         backgroundColor = backgroundColor,
     )
+
+
+
 }
+
+val defaultData = ComponentData(
+    "1",
+    "userID",
+    1L,
+    "",
+    "Content",
+    TextFieldType.Text,
+    1,
+    122,
+    2,
+    11,
+    1,
+    true,
+    emptyList<String>(),
+    emptyList<Boolean>(),
+    emptyList<String>(),
+    emptyList<String>(),
+    emptyList<String>(),
+    ComponentEnum.Input,
+    true,
+    "",
+    1,
+    1,
+    "",
+    "")
