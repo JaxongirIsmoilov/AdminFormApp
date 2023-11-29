@@ -37,6 +37,8 @@ data class ComponentEntity(
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb()
 ) {
+
+
     fun toData(): ComponentData = ComponentData(
         id = id,
         userId = userId,
@@ -59,4 +61,6 @@ data class ComponentEntity(
         isRequired = isRequired,
         imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor
     )
+
+
 }

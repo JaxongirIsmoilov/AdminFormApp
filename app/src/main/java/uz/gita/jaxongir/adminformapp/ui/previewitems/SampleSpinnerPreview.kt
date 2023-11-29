@@ -41,7 +41,8 @@ fun SampleSpinnerPreview(
     onSelectionChanged: (selection: String) -> Unit,
     content: String,
     componentData: ComponentData,
-    deleteComp : (ComponentData)-> Unit
+    deleteComp : (ComponentData)-> Unit,
+    modifier: Modifier=Modifier
 ) {
 
     var selected by remember { mutableStateOf(preselected) }

@@ -26,86 +26,94 @@ import uz.gita.jaxongir.adminformapp.utils.myLog
 @Composable
 fun RowItem(
     components: List<ComponentData>,
-    onDeleteComponent:(ComponentData) -> Unit
+    onDeleteComponent: (ComponentData) -> Unit,
 ) {
     Row(Modifier.fillMaxWidth()) {
         myLog("${components.size}")
         components.forEach { data ->
             when (data.type) {
                 ComponentEnum.Spinner -> {
-                        SampleSpinnerPreview(
-                            list = data.variants,
-                            preselected = data.variants[0],
-                            onSelectionChanged = {},
-                            content = data.content,
-                            componentData = data
-                        ) {
-                            onDeleteComponent(data)
+                    SampleSpinnerPreview(
+                        list = data.variants,
+                        preselected = data.variants[0],
+                        onSelectionChanged = {},
+                        content = data.content,
+                        componentData = data,
+                        modifier = Modifier.weight(1f),
+                        deleteComp = {
+                            onDeleteComponent(it)
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
 
                 }
 
                 ComponentEnum.Selector -> {
-                        Column {
-                            SelectorItem(
-                                question = data.content,
-                                list = data.variants,
-                                componentData = data
-                            ) {
-                                onDeleteComponent(data)
+                    Column {
+                        SelectorItem(
+                            question = data.content,
+                            list = data.variants,
+                            componentData = data,
+                            modifier = Modifier.weight(1f),
+                            deleteComp = {
+                                onDeleteComponent(it)
                             }
-                            Spacer(modifier = Modifier.height(10.dp))
-                        }
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
 
                 ComponentEnum.SampleText -> {
                     myLog("Sample Text worked")
-                        TextComponent(
-                            onClickDelete = {
-                                            onDeleteComponent(data)
-                            },
-                            text = data.content
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
+                    TextComponent(
+                        onClickDelete = {
+                            onDeleteComponent(data)
+                        },
+                        text = data.content, modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
 
                 ComponentEnum.Input -> {
                     myLog("Input type worked")
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            if (data.isRequired) {
-                                Text(
-                                    text = "Required field!",
-                                    modifier = Modifier.align(
-                                        Alignment.CenterHorizontally
-                                    )
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        if (data.isRequired) {
+                            Text(
+                                text = "Required field!",
+                                modifier = Modifier.align(
+                                    Alignment.CenterHorizontally
                                 )
+                            )
 
-                            }
-                            InputField(
-                                textFieldType = data.textFieldType,
-                                maxLines = data.maxLines,
-                                maxLength = data.maxLength,
-                                minLength = data.minLength,
-                                maxValue = data.maxValue,
-                                minValue = data.minValue,
-                                question = data.content,
-                                data
-                            ) {
-                                onDeleteComponent(data)
-                            }
-                            Spacer(modifier = Modifier.height(10.dp))
                         }
+                        InputField(
+                            textFieldType = data.textFieldType,
+                            maxLines = data.maxLines,
+                            maxLength = data.maxLength,
+                            minLength = data.minLength,
+                            maxValue = data.maxValue,
+                            minValue = data.minValue,
+                            question = data.content,
+                            data,
+                            modifier = Modifier.weight(1f),
+                            deleteComp = {
+                                onDeleteComponent(it)
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
 
                 ComponentEnum.Dater -> {
-                        DatePickerPreview(
-                            componentData = data,
-                            content = data.content
-                        ) {
+                    DatePickerPreview(
+                        componentData = data,
+                        content = data.content,
+                        modifier = Modifier.weight(1f),
+                        deleteComp = {
                             onDeleteComponent(data)
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                    ) 
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
 
                 else -> {
