@@ -4,16 +4,17 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -51,90 +52,8 @@ fun ImageComponent(
     var imageRatioX: String by remember { mutableStateOf("") }
     var imageRatioY: String by remember { mutableStateOf("") }
     var sizeType by remember { mutableStateOf(ImageSizeEnum.AUTO) }
-    var imageType by remember { mutableStateOf(ImageTypeEnum.GALLERY) }
-    val launcher = rememberLauncherForActivityResult(
-        contract =
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        imageUri = uri
-    }
-    var textUri by remember {
-        mutableStateOf("")
-    }
-    Column(modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        AsyncImage(
-            model = imageUri,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .height(imageHeight.toDp())
-                .clip(RoundedCornerShape(12.dp)),
-            contentScale = ContentScale.Crop,
-        )
-        SampleSpinner(
-            list = listOf(
-                ImageTypeEnum.REMOTE.type,
-                ImageTypeEnum.GALLERY.type
-            ),
-            preselected = ComponentEnum.SampleText.content,
-            onSelectionChanged = {
-                when (it) {
-                    "From Ethernet" -> {
-                        imageType = ImageTypeEnum.REMOTE
-                    }
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    "From Gallery" -> {
-                        imageType = ImageTypeEnum.GALLERY
-                    }
-
-                }
-            },
-            content = "Image turini tanlang:"
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        when (imageType) {
-
-            ImageTypeEnum.GALLERY -> {
-                Button(
-                    onClick = { launcher.launch("image/*") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .padding(start = 12.dp, end = 12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-                ) {
-                    Text(text = "Upload from gallery")
-                }
-            }
-
-
-            ImageTypeEnum.REMOTE -> {
-                Spacer(modifier = Modifier.height(5.dp))
-                OutlinedTextField(
-                    value = textUri, onValueChange = { textUri = it }, modifier = Modifier
-                        .padding(horizontal = 12.dp)
-                        .fillMaxWidth(), label = { Text(text = "Input exist uri") },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
-                    )
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Button(
-                    onClick = { imageUri = textUri.toUri() },
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, end = 12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-                ) {
-                    Text(text = "Upload from Ethernet")
-                }
-
-            }
-        }
 
         SampleSpinner(
             list = listOf(
@@ -161,32 +80,22 @@ fun ImageComponent(
             },
             content = "Component o'lchamini kiriting:"
         )
-
-
         when (sizeType) {
             ImageSizeEnum.AUTO -> {
 
             }
 
             ImageSizeEnum.CUSTOM -> {
-                Spacer(modifier = Modifier.height(5.dp))
+
                 OutlinedTextField(
                     value = imageHeight,
                     onValueChange = { imageHeight = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686)
-                    )
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
             ImageSizeEnum.RATIO -> {
-
-
-                Spacer(modifier = Modifier.height(5.dp))
-                Row {
-
+                Spacer(modifier = Modifier.size(10.dp))
                 OutlinedTextField(
                     value = imageRatioX,
                     onValueChange = { imageRatioX = it },
@@ -200,10 +109,10 @@ fun ImageComponent(
                     label = {
                         Text(text = "ratio x")
                     },
-                    singleLine = true,
+                    singleLine = true,,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.size(10.dp))
                 OutlinedTextField(
                     value = imageRatioY,
                     onValueChange = { imageRatioY = it },
@@ -219,54 +128,42 @@ fun ImageComponent(
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
-                }
             }
         }
         Button(onClick = {
             launcher.launch("image/*")
-        },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 12.dp, end = 12.dp),) {
-            Text(text = "Image gallery")
+        }) {
+            Text(text = "Image gallery", modifier = Modifier.padding(horizontal = 10.dp))
         }
 
 
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.size(10.dp))
 
-        Button(
-            {
-                onEventDispatcher.invoke(
-                    Contracts.Intent.AddComponent(
-                        ComponentData(
-                            "",
-                            userId,
-                            0,
-                            idEnteredByUser,
-                            "",
-                            TextFieldType.Text,
-                            0, 0, 0, 0, 0, false, listOf(),
-                            listOf(),
-                            listOf(),
-                            listOf(),
-                            listOf(),
-                            ComponentEnum.Image,
-                            isRequired,
-                            imageUri.toString(),
+        Button(onClick = {
+            onEventDispatcher.invoke(
+                Contracts.Intent.AddComponent(
+                    ComponentData(
+                        "",
+                        userId,
+                        0,
+                        idEnteredByUser,
+                        "",
+                        TextFieldType.Text,
+                        0, 0, 0, 0, 0, false, listOf(),
+                        listOf(),
+                        listOf(),
+                        listOf(),
+                        listOf(),
+                        ComponentEnum.Image,
+                        isRequired,
+                        imageUri.toString(),
 
 
-                            )
-                    )
+                        )
                 )
-            }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 12.dp, end = 12.dp)
-               ) {
-            Text(text = "Save Image")
+            )
+        }) {
+            Text(text = "Save Image", modifier = Modifier.padding(horizontal = 10.dp))
         }
     }
 
