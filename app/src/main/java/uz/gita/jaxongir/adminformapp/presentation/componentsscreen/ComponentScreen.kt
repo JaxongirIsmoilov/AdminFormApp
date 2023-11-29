@@ -86,7 +86,6 @@ fun MainContent(
     var content by remember {
         mutableStateOf("")
     }
-    val context = LocalContext.current
 
     val selectedOperators by remember {
         mutableStateOf(arrayListOf<String>())
