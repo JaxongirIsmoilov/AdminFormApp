@@ -1,10 +1,12 @@
 package uz.gita.jaxongir.adminformapp.data.source.database.entity
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+import java.io.Serializable
 
 @Entity(tableName = "components")
 data class ComponentEntity(
@@ -23,11 +25,17 @@ data class ComponentEntity(
     val isMulti: Boolean,
     val variants: List<String>,
     val selected: List<Boolean>,
-    val connectedValues: List<String>,      //visibitily boyicha berilgan qiymatlar
-    val connectedIds: List<String>,         //boglangan id lar
+    val connectedValues: List<String>,
+    val connectedIds: List<String>,
     val operators: List<String>,
     val type: ComponentEnum,
-    val isRequired: Boolean
+    val isRequired: Boolean,
+    val imgUri : String = "",
+    val ratioX : Int,
+    val ratioY : Int,
+    val customHeight : String,
+    val rowId: String = "",
+    val backgroundColor: Color = Color.Transparent
 ) {
     fun toData(): ComponentData = ComponentData(
         id = id,
@@ -48,6 +56,12 @@ data class ComponentEntity(
         connectedIds = connectedIds,
         operators = operators,
         type = type,
-        isRequired = isRequired
+        isRequired = isRequired,
+        imgUri = imgUri,
+        ratioX = ratioX,
+        ratioY = ratioY,
+        customHeight = customHeight,
+        rowId = rowId,
+        backgroundColor = backgroundColor,
     )
 }

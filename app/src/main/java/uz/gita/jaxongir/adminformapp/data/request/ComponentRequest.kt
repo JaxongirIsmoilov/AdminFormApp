@@ -1,5 +1,8 @@
 package uz.gita.jaxongir.adminformapp.data.request
 
+import androidx.compose.ui.graphics.Color
+import java.io.Serializable
+
 
 data class ComponentRequest(
     val id: String,
@@ -16,9 +19,15 @@ data class ComponentRequest(
     val isMulti: Boolean,
     val variants: String,
     val selected: String,
-    val connectedValues: String,      //visibitily boyicha berilgan qiymatlar
-    val connectedIds: String,         //boglangan id lar
+    val connectedValues: String,
+    val connectedIds: String,
     val operators: String,
     val type: String,
-    val isRequired: Boolean
+    val isRequired: Boolean,
+    val imgUri : String = "",
+    val ratioX : Int,
+    val ratioY : Int,
+    val customHeight : String,
+    val rowId: String = "",
+    val backgroundColor: Color = Color.Transparent
 )

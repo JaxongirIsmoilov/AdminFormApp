@@ -249,6 +249,7 @@ fun InputContent(
                 )
             }
         }
+
         item {
             TextButton(
                 onClick = {
@@ -272,7 +273,12 @@ fun InputContent(
                                 connectedValues = connectedValues,
                                 operators = operators,
                                 type = ComponentEnum.Input, id = "",
-                                isRequired = checkBoxState
+                                isRequired = checkBoxState,
+                                imgUri = "",
+                                ratioX = 0,
+                                ratioY = 0,
+                                customHeight = "W",
+                                rowId = ""
                             )
                         )
 
@@ -282,6 +288,10 @@ fun InputContent(
             ) {
                 Text(text = "Componentni qoshish")
             }
+        }
+
+        item {
+            Spacer(modifier = Modifier.size(56.dp))
         }
     }
 }

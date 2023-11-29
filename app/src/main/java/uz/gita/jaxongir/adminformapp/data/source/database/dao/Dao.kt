@@ -37,5 +37,4 @@ interface Dao {
 
     @Query("delete from users")
     suspend fun deleteUsers()
-
 }

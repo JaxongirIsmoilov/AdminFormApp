@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.data.model
 
+import androidx.compose.ui.graphics.Color
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
@@ -8,31 +9,31 @@ import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
 import java.io.Serializable
 
 data class ComponentData(
-    val id: String = "",                      //firebase id
-    val userId: String = "",                     //qaysi user qoshgani
-    val locId: Long = 0L,                        //Screendagi indexi
-    val idEnteredByUser: String = "",       //operator qoshishlik uchun id
-    val content: String = "",                    //ekranda ko'rinadigan matn
-    val textFieldType: TextFieldType,       //input bosa uning tipi
-    val maxLines: Int,                      //tipi text bogan input bosa maximal qatorla soni
-    val maxLength: Int,                     //tipi text bogan input bosa maximal uzunligi
-    val minLength: Int,                     //tipi text bogan input bosa minimal uzunligi
-    val maxValue: Int,                      //tipi number bogan inputga qiymatni maximal chegarasi
-    val minValue: Int,                      //tipi number bogan inputga qiymatni minimal chegarasi,
-    val isMulti: Boolean,                   //selelctor kop qiymat qabul qilish qimasligi
-    val variants: List<String> = listOf(),             //spinner bilan selectordagi variantla
-    val selected: List<Boolean> = listOf(),            //selectorda tanlangala listi
-    val connectedValues: List<String> = listOf(),      //visibitily boyicha berilgan qiymatlar
-    val connectedIds: List<String> = listOf(),         //boglangan id lar
-    val operators: List<String> = listOf(),            //berilgan operatorlar
+    val id: String = "",
+    val userId: String = "",
+    val locId: Long = 0L,
+    val idEnteredByUser: String = "",
+    val content: String = "",
+    val textFieldType: TextFieldType,
+    val maxLines: Int,
+    val maxLength: Int,
+    val minLength: Int,
+    val maxValue: Int,
+    val minValue: Int,
+    val isMulti: Boolean,
+    val variants: List<String> = listOf(),
+    val selected: List<Boolean> = listOf(),
+    val connectedValues: List<String> = listOf(),
+    val connectedIds: List<String> = listOf(),
+    val operators: List<String> = listOf(),
     val type: ComponentEnum,
     val isRequired: Boolean = false,
-    val imgUri : String,
+    val imgUri : String = "",
     val ratioX : Int,
     val ratioY : Int,
     val customHeight : String,
-    val emptySpaceColor : String,
-
+    val rowId: String = "",
+    val backgroundColor: Color = Color.Transparent
 ) : Serializable {
     private val converter = Gson()
 
@@ -55,7 +56,13 @@ data class ComponentData(
         connectedIds = converter.toJson(connectedIds),
         operators = converter.toJson(operators),
         type = converter.toJson(type),
-        isRequired = isRequired
+        isRequired = isRequired,
+        imgUri = imgUri,
+        ratioX = ratioX,
+        ratioY = ratioY,
+        customHeight = customHeight,
+        backgroundColor = backgroundColor,
+        rowId = rowId,
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
@@ -77,6 +84,12 @@ data class ComponentData(
         connectedIds = connectedIds,
         operators = operators,
         type = type,
-        isRequired = isRequired
+        isRequired = isRequired,
+        imgUri = imgUri,
+        ratioX = ratioX,
+        ratioY = ratioY,
+        customHeight = customHeight,
+        rowId = rowId,
+        backgroundColor = backgroundColor,
     )
 }
