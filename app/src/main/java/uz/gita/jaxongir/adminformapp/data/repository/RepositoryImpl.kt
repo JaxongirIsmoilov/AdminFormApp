@@ -183,7 +183,12 @@ class RepositoryImpl @Inject constructor(
                                 ComponentEnum::class.java
                             ),
                             isRequired = it.data?.getOrDefault("required", false)
-                                .toString() == "true"
+                                .toString() == "true",
+                            imgUri = it.data?.getOrDefault("imgUri", "").toString(),
+                            ratioX = Integer.parseInt(it.data?.getOrDefault("ratioX", "").toString()),
+                            ratioY = Integer.parseInt(it.data?.getOrDefault("ratioY", "").toString()),
+                            customHeight = it.data?.getOrDefault("customHeight", "").toString(),
+                            emptySpaceColor = it.data?.getOrDefault("emptySpaceColor", "").toString()
                         )
                     )
 

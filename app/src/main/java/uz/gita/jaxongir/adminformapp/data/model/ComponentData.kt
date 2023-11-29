@@ -26,7 +26,13 @@ data class ComponentData(
     val connectedIds: List<String> = listOf(),         //boglangan id lar
     val operators: List<String> = listOf(),            //berilgan operatorlar
     val type: ComponentEnum,
-    val isRequired: Boolean = false
+    val isRequired: Boolean = false,
+    val imgUri : String,
+    val ratioX : Int,
+    val ratioY : Int,
+    val customHeight : String,
+    val emptySpaceColor : String,
+
 ) : Serializable {
     private val converter = Gson()
 
