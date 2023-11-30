@@ -312,6 +312,18 @@ fun ImageComponent(
                 Text(text = "Image qo'shish")
             }
         }
+        item {
+            Button(onClick = {
+
+            }, modifier = Modifier
+                .height(50.dp)
+                .width(50.dp)) {
+                ColorPickerItem {
+
+                }
+
+            }
+        }
     })
 
 
