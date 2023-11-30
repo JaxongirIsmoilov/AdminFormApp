@@ -102,15 +102,16 @@ fun MainContent(
 
 
     val showDialog = remember { mutableStateOf(false) }
+
     if (showDialog.value) {
-        DialogSpinner(uiState.value.savedIds, { componentId, selectedOperator, value ->
+       /* DialogSpinner(uiState.value.savedIds, { componentId, selectedOperator, value ->
             selectedIds.add(componentId)
             selectedOperators.add(selectedOperator)
-            selectedValues.add(value)
+            selectedValues.addAll(value)
             onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
         }) {
             showDialog.value = false
-        }
+        }*/
     }
 
 
@@ -501,8 +502,6 @@ fun MainContent(
                                 onEventDispatcher = onEventDispatcher::invoke,
                                 userId = userId,
                                 idEnteredByUser = id,
-                                isRequired = false,
-                                rowId = rowId,
                                 typeEnum = imageTypeEnum
                             )
                         }
