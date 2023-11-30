@@ -143,6 +143,7 @@ fun ImageComponent(
             }
         }
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             SampleSpinner(
                 list = listOf(
                     ImageSizeEnum.RATIO.title,
@@ -170,6 +171,7 @@ fun ImageComponent(
             )
         }
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             when (sizeType) {
                 ImageSizeEnum.AUTO -> {
 
@@ -178,14 +180,33 @@ fun ImageComponent(
                 ImageSizeEnum.CUSTOM -> {
                     Spacer(modifier = Modifier.size(12.dp))
 
-                    OutlinedTextField(
-                        value = customHeight,
-                        onValueChange = { customHeight = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFFFF3951),
-                            unfocusedBorderColor = Color(0xFFFF7686)
-                        )
+                    SampleSpinner(
+                        list = listOf(
+                            "w/3", "w/2","w","2w"
+                        ),
+                        preselected = ComponentEnum.SampleText.content,
+                        onSelectionChanged = {
+                            when (it) {
+                                "w/3" -> {
+                                   customHeight = it
+                                }
+
+                                "w/2" -> {
+                                    customHeight = it
+
+                                }
+                                "w" -> {
+                                    customHeight = it
+
+                                }
+                                "2w" -> {
+                                    customHeight = it
+
+                                }
+
+                            }
+                        },
+                        content = "Image turini tanlang:"
                     )
                 }
 
@@ -231,6 +252,7 @@ fun ImageComponent(
 
 
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             Button(onClick = {
                 onEventDispatcher.invoke(
                     Contracts.Intent.UploadPhoto(
@@ -267,6 +289,18 @@ fun ImageComponent(
                     .padding(start = 12.dp, end = 12.dp)
                 ) {
                 Text(text = "Image qo'shish")
+            }
+        }
+        item {
+            Button(onClick = {
+
+            }, modifier = Modifier
+                .height(50.dp)
+                .width(50.dp)) {
+                ColorPickerItem {
+
+                }
+
             }
         }
     })
