@@ -74,18 +74,7 @@ fun DialogSpinner(
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SampleSpinner(
-                    list = savedIdList,
-                    preselected = savedIdList.firstOrNull() ?: "",
-                    onSelectionChanged = {
-                        Log.d("TTT", "DialogSpinner1: $it")
-                        selectedId = it
-                        Log.d("TTT", "DialogSpinner2: $it")
-                    },
-                    content = "Id tanlang"
-                )
-
-                SampleSpinner(
-                    list = listOf("More", "Less", "Equal", "Not"),
+                    list = listOf("More", "Less", "Equal", "Not", "In", "!In"),
                     preselected = "More",
                     onSelectionChanged = { selection ->
                         selectesValue = selection
@@ -93,6 +82,15 @@ fun DialogSpinner(
                     content = "Tanlang!"
                 )
                 Spacer(modifier = Modifier.size(10.dp))
+
+                SampleSpinner(
+                    list = savedIdList,
+                    preselected = savedIdList.firstOrNull() ?: "",
+                    onSelectionChanged = {
+                        selectedId = it
+                    },
+                    content = "Id tanlang"
+                )
 
                 OutlinedTextField(
                     value = value, onValueChange = {

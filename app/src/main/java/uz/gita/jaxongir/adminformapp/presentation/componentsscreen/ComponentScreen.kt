@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
@@ -47,7 +46,6 @@ import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
-import uz.gita.jaxongir.adminformapp.ui.components.ImageComponent
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
 import uz.gita.jaxongir.adminformapp.ui.helper.ImageComponent
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
@@ -262,7 +260,6 @@ fun MainContent(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (type) {
-
                         ComponentEnum.Input -> {
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 InputContent(
@@ -479,21 +476,21 @@ fun MainContent(
                         }
 
                         ComponentEnum.Image -> {
-                            var type by remember {
-                                mutableStateOf(ImageTypeEnum.GALLERY)
+                            var imageTypeEnum by remember {
+                                mutableStateOf(ImageTypeEnum.LOCAL)
                             }
 
                             SampleSpinner(
-                                list = listOf(ImageTypeEnum.GALLERY.type, ImageTypeEnum.REMOTE.type),
+                                list = listOf(ImageTypeEnum.LOCAL.type, ImageTypeEnum.REMOTE.type),
                                 preselected = "Rasmni qay tarzda joylashni tanlang",
                                 onSelectionChanged = {
                                     when (it) {
-                                        ImageTypeEnum.GALLERY.type -> {
-                                            type = ImageTypeEnum.GALLERY
+                                        ImageTypeEnum.LOCAL.type -> {
+                                            imageTypeEnum = ImageTypeEnum.LOCAL
                                         }
 
                                         ImageTypeEnum.REMOTE.type -> {
-                                            type = ImageTypeEnum.REMOTE
+                                            imageTypeEnum = ImageTypeEnum.REMOTE
                                         }
                                     }
                                 },
@@ -506,7 +503,7 @@ fun MainContent(
                                 idEnteredByUser = id,
                                 isRequired = false,
                                 rowId = rowId,
-                                typeEnum = type
+                                typeEnum = imageTypeEnum
                             )
                         }
                     }

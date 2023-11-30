@@ -38,7 +38,7 @@ fun ImagePreview(
     onClickDelete: () -> Unit
 ) {
     var imageUri: Uri? by remember { mutableStateOf(null) }
-    var imageType by remember { mutableStateOf(ImageTypeEnum.GALLERY) }
+    var imageType by remember { mutableStateOf(ImageTypeEnum.LOCAL) }
     val launcher = rememberLauncherForActivityResult(
         contract =
         ActivityResultContracts.GetContent()
@@ -63,7 +63,7 @@ fun ImagePreview(
         SampleSpinner(
             list = listOf(
                 ImageTypeEnum.REMOTE.type,
-                ImageTypeEnum.GALLERY.type
+                ImageTypeEnum.LOCAL.type
             ),
             preselected = ComponentEnum.SampleText.content,
             onSelectionChanged = {
@@ -72,8 +72,8 @@ fun ImagePreview(
                         imageType = ImageTypeEnum.REMOTE
                     }
 
-                    ImageTypeEnum.GALLERY.type -> {
-                        imageType = ImageTypeEnum.GALLERY
+                    ImageTypeEnum.LOCAL.type -> {
+                        imageType = ImageTypeEnum.LOCAL
                     }
 
                 }
@@ -82,7 +82,7 @@ fun ImagePreview(
         )
         Spacer(modifier = Modifier.size(10.dp))
         when (imageType) {
-            ImageTypeEnum.GALLERY -> {
+            ImageTypeEnum.LOCAL -> {
                 Button(
                     onClick = { launcher.launch("image/*") },
                     modifier = Modifier
