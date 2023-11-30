@@ -35,7 +35,7 @@ fun SpinnerContent(
     userId: String,
     content: String,
     rowId: String,
-    inValues: List<String>
+    inValues: List<String>,
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -141,12 +141,14 @@ fun SpinnerContent(
                                 type = ComponentEnum.Spinner,
                                 id = "",
                                 rowId = rowId,
-                                weight = if(weight == "0f") "" else weight,
+                                weight = if (weight == "0f") "" else weight,
                                 inValues = inValues
                             )
                         )
                     )
-                }, modifier = Modifier.wrapContentWidth()
+                },
+                modifier = Modifier.wrapContentWidth(),
+                enabled = weight != "0" || rowId == ""
             ) {
                 Text(text = "Componentni qoshish")
             }

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
@@ -188,7 +189,8 @@ class RepositoryImpl @Inject constructor(
                             customHeight = it.data?.getOrDefault("customHeight", "0").toString(),
                             backgroundColor = it.data?.getOrDefault("backgroundColor", "${Color.Transparent.toArgb()}").toString().toInt(),
                             rowId = it.data?.getOrDefault("rowId", "0").toString(),
-                            weight = it.data?.getOrDefault("weight", "0").toString()
+                            weight = it.data?.getOrDefault("weight", "0").toString(),
+                            imageType = converter.fromJson(it.data?.getOrDefault("imageType", ImageTypeEnum.NONE.toString()).toString(), ImageTypeEnum::class.java)
                         )
                     )
 

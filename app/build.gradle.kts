@@ -123,6 +123,9 @@ dependencies {
 
     //colorpicker
     implementation("io.mhssn:colorpicker:1.0.0")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
 
 kapt {

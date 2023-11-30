@@ -291,14 +291,28 @@ fun MainContent(
 
                         ComponentEnum.SampleText -> {
                             var weight by remember {
-                                mutableStateOf("0f")
+                                mutableStateOf("0")
                             }
 
                             if (rowId != "") {
                                 OutlinedTextField(
                                     value = weight,
                                     onValueChange = {
-                                        weight = it
+                                        if (it != "") {
+                                            if (it.toFloat() > 1.1) {
+                                                weight = "1"
+                                                return@OutlinedTextField
+                                            }
+
+                                            if (it.toFloat() < 0) {
+                                                weight = "0"
+                                                return@OutlinedTextField
+                                            }
+
+                                            weight = it
+                                        } else {
+                                            weight = ""
+                                        }
                                     },
                                     singleLine = true,
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -348,7 +362,8 @@ fun MainContent(
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
-                                    .padding(5.dp)
+                                    .padding(5.dp),
+                                enabled = weight != "0" || rowId == ""
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
@@ -363,7 +378,21 @@ fun MainContent(
                                 OutlinedTextField(
                                     value = weight,
                                     onValueChange = {
-                                        weight = it
+                                        if (it != "") {
+                                            if (it.toFloat() > 1.1) {
+                                                weight = "1"
+                                                return@OutlinedTextField
+                                            }
+
+                                            if (it.toFloat() < 0) {
+                                                weight = "0"
+                                                return@OutlinedTextField
+                                            }
+
+                                            weight = it
+                                        } else {
+                                            weight = ""
+                                        }
                                     },
                                     singleLine = true,
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -413,7 +442,8 @@ fun MainContent(
                                     )
                                 },
                                 modifier = Modifier
-                                    .wrapContentSize()
+                                    .wrapContentSize(),
+                                enabled = weight != "0" || rowId == ""
                             ) {
                                 Text(text = "Componentni qoshish")
                             }

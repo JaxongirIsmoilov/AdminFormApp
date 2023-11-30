@@ -43,7 +43,7 @@ fun SelectorContent(
     id: String,
     content: String,
     userId: String,
-    rowId: String
+    rowId: String,
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -54,7 +54,7 @@ fun SelectorContent(
     }
 
     var weight by remember {
-        mutableStateOf("0f")
+        mutableStateOf("0")
     }
 
     val newVariants = arrayListOf<String>()
@@ -112,14 +112,18 @@ fun SelectorContent(
             }
         }
         item {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Checkbox(
                     checked = checkBoxState,
                     onCheckedChange = { checkBoxState = it },
                     colors = CheckboxDefaults.colors(
                         checkedColor = Color(0xFFFF3159),
                         uncheckedColor = Color(0xFFFF7686),
-                    ))
+                    )
+                )
                 Spacer(modifier = Modifier.size(10.dp))
                 androidx.compose.material.Text(
                     text = "Is Required",
@@ -168,11 +172,13 @@ fun SelectorContent(
                                 id = "",
                                 isRequired = checkBoxState,
                                 rowId = rowId,
-                                weight = if(weight == "0f") "" else weight
+                                weight = if (weight == "0f") "" else weight
                             )
                         )
                     )
-                }, modifier = Modifier.wrapContentWidth()
+                },
+                modifier = Modifier.wrapContentWidth(),
+                enabled = weight != "0" || rowId == ""
             ) {
                 Text(text = "Componentni qoshish")
             }

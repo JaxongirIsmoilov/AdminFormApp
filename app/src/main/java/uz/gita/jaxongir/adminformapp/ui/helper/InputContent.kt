@@ -76,7 +76,7 @@ fun InputContent(
     }
 
     var weight by remember {
-        mutableStateOf("0f")
+        mutableStateOf("0")
     }
 
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -325,7 +325,8 @@ fun InputContent(
 
                     )
                 },
-                modifier = Modifier
+                modifier = Modifier,
+                enabled = weight != "0" || rowId == ""
             ) {
                 Text(text = "Componentni qoshish")
             }
