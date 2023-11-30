@@ -31,5 +31,6 @@ data class ComponentRequest(
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
     val weight: String,
-    val imageType: String
+    val imageType: String,
+    val inValues: String
 )

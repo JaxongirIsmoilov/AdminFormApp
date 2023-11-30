@@ -45,6 +45,7 @@ fun InputContent(
     connectedValues: List<String>,
     operators: List<String>,
     rowId: String,
+    inValues: List<String>,
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -317,7 +318,8 @@ fun InputContent(
                                 type = ComponentEnum.Input, id = "",
                                 isRequired = checkBoxState,
                                 rowId = rowId,
-                                weight = if(weight == "0f") "" else weight
+                                weight = if (weight == "0f") "" else weight,
+                                inValues = inValues
                             )
                         )
 

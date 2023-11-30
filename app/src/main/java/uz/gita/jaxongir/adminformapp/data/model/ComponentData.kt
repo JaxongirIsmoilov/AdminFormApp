@@ -39,6 +39,7 @@ data class ComponentData(
     val backgroundColor: Int = Color.Transparent.toArgb(),
     val weight: String,
     val imageType: ImageTypeEnum = ImageTypeEnum.NONE,
+    val inValues: List<String> = listOf()
 ) : Serializable {
     private val converter = Gson()
 
@@ -69,7 +70,8 @@ data class ComponentData(
         rowId = rowId,
         backgroundColor = backgroundColor,
         weight = weight,
-        imageType = converter.toJson(imageType)
+        imageType = converter.toJson(imageType),
+        inValues = converter.toJson(inValues)
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(

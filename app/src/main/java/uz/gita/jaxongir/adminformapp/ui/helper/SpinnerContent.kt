@@ -34,7 +34,8 @@ fun SpinnerContent(
     id: String,
     userId: String,
     content: String,
-    rowId: String
+    rowId: String,
+    inValues: List<String>
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -140,7 +141,8 @@ fun SpinnerContent(
                                 type = ComponentEnum.Spinner,
                                 id = "",
                                 rowId = rowId,
-                                weight = if(weight == "0f") "" else weight
+                                weight = if(weight == "0f") "" else weight,
+                                inValues = inValues
                             )
                         )
                     )
