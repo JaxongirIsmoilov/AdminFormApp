@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +46,7 @@ fun ImageComponent(
     onEventDispatcher: (Contracts.Intent) -> Unit,
     userId: String,
     idEnteredByUser: String,
+    typeEnum: ImageTypeEnum
 ) {
     var imageUri: Uri? by remember {
         mutableStateOf(null)
@@ -53,8 +55,6 @@ fun ImageComponent(
     var ratioX: String by remember {
         mutableStateOf("")
     }
-
-    var imageType by remember { mutableStateOf(ImageTypeEnum.LOCAL) }
 
 
     var ratioY: String by remember {
@@ -97,32 +97,10 @@ fun ImageComponent(
     )
 
     LazyColumn(content = {
-        item {
-            SampleSpinner(
-                list = listOf(
-                    ImageTypeEnum.REMOTE.type,
-                    ImageTypeEnum.LOCAL.type
-                ),
-                preselected = ComponentEnum.SampleText.content,
-                onSelectionChanged = {
-                    when (it) {
-                        "From Ethernet" -> {
-                            imageType = ImageTypeEnum.REMOTE
-                        }
-
-                        "From Gallery" -> {
-                            imageType = ImageTypeEnum.LOCAL
-                        }
-
-                    }
-                },
-                content = "Image turini tanlang:"
-            )
-        }
 
         item {
             Spacer(modifier = Modifier.height(5.dp))
-            when (imageType) {
+            when (typeEnum) {
                 ImageTypeEnum.LOCAL -> {
                     Button(
                         onClick = { launcher.launch("image/*") },
@@ -198,6 +176,7 @@ fun ImageComponent(
                 }
 
                 ImageSizeEnum.CUSTOM -> {
+                    Spacer(modifier = Modifier.size(12.dp))
 
                     OutlinedTextField(
                         value = customHeight,

@@ -38,7 +38,8 @@ data class ComponentEntity(
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
     val weight: String,
-    val imageType: ImageTypeEnum
+    val imageType: ImageTypeEnum,
+    val inValues: List<String> = listOf()
 ) {
 
 
@@ -62,7 +63,7 @@ data class ComponentEntity(
         operators = operators,
         type = type,
         isRequired = isRequired,
-        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor, weight, imageType
+        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor, weight, imageType, inValues
     )
 
 

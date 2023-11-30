@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
 import java.util.Date
 import javax.inject.Inject
@@ -26,8 +27,7 @@ class ComponentViewModel @Inject constructor(
     private var ids = arrayListOf<String>()
     private var rowIds = arrayListOf<String>()
     private var selectedIds = arrayListOf<String>()
-
-
+    private var multiSelectors = arrayListOf<ComponentData>()
 
     override fun eventDispatcher(intent: Contracts.Intent) {
         when (intent) {
@@ -75,6 +75,8 @@ class ComponentViewModel @Inject constructor(
                         result.onSuccess { ls ->
                             uiState.update { it.copy(components = ls) }
 
+
+                            multiSelectors = arrayListOf()
                             ids = arrayListOf()
                             rowIds = arrayListOf()
                             ls.forEach {
@@ -84,11 +86,17 @@ class ComponentViewModel @Inject constructor(
                                         it.copy(savedIds = ids)
                                     }
                                 }
-                                Log.d("TTT", "eventDispatcher: ${it.type}")
                                 if (it.type == ComponentEnum.LazyRow) {
                                     rowIds.add(it.idEnteredByUser)
                                     uiState.update {
                                         it.copy(rowId = rowIds)
+                                    }
+                                }
+
+                                if (it.type == ComponentEnum.Selector) {
+                                    multiSelectors.add(it)
+                                    uiState.update {
+                                        it.copy(multiSelectors = multiSelectors)
                                     }
                                 }
                             }

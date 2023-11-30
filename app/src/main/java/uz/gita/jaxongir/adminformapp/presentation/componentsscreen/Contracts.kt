@@ -45,6 +45,7 @@ interface Contracts {
         val savedIds: List<String> = listOf(),
         val selectedOperators: String = "",
         val selectedIdsList: List<String> = listOf(),
-        val rowId: List<String> = listOf()
+        val rowId: List<String> = listOf(),
+        val multiSelectors: List<ComponentData> = listOf()
     )
 }

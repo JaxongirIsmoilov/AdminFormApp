@@ -100,18 +100,31 @@ fun MainContent(
         mutableStateOf("")
     }
 
+    var inValues by remember {
+        mutableStateOf(arrayListOf<String>())
+    }
+
 
     val showDialog = remember { mutableStateOf(false) }
 
     if (showDialog.value) {
-       /* DialogSpinner(uiState.value.savedIds, { componentId, selectedOperator, value ->
-            selectedIds.add(componentId)
-            selectedOperators.add(selectedOperator)
-            selectedValues.addAll(value)
-            onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
-        }) {
-            showDialog.value = false
-        }*/
+        DialogSpinner(
+            savedIdList = uiState.value.savedIds,
+            onSaveClick = { componentId, selectedOperator, value ->
+                selectedIds.add(componentId)
+                selectedOperators.add(selectedOperator)
+                selectedValues.add(value)
+                onEventDispatcher.invoke(Contracts.Intent.SaveSelectedIds(selectedOperator))
+            },
+            onClickCancel = {
+                showDialog.value = false
+            },
+            multiSelectors = uiState.value.multiSelectors
+        ) {id1, operator, values ->
+            selectedIds.add(id1)
+            selectedOperators.add(operator)
+            inValues.addAll(values)
+        }
     }
 
 
@@ -120,8 +133,7 @@ fun MainContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
-            ,
+                .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
@@ -271,7 +283,8 @@ fun MainContent(
                                     id = id,
                                     userId = userId,
                                     content = content,
-                                    rowId = rowId
+                                    rowId = rowId,
+                                    inValues = inValues
                                 )
                             }
                         }
@@ -328,8 +341,8 @@ fun MainContent(
                                                 customHeight = "W",
                                                 rowId = rowId,
                                                 backgroundColor = Transparent.toArgb(),
-                                                weight = weight
-                                            )
+                                                weight = weight,
+                                                inValues = inValues                                            )
                                         )
                                     )
                                 },
@@ -347,20 +360,20 @@ fun MainContent(
                             }
 
                             if (rowId != "") {
-                                    OutlinedTextField(
-                                        value = weight,
-                                        onValueChange = {
-                                            weight = it
-                                        },
-                                        singleLine = true,
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                        label = { Text(text = "Weight") },
-                                        modifier = Modifier.fillMaxWidth(),
-                                        colors = OutlinedTextFieldDefaults.colors(
-                                            focusedBorderColor = Color(0xFFFF3951),
-                                            unfocusedBorderColor = Color(0xFFFF7686)
-                                        )
+                                OutlinedTextField(
+                                    value = weight,
+                                    onValueChange = {
+                                        weight = it
+                                    },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    label = { Text(text = "Weight") },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedBorderColor = Color(0xFFFF3951),
+                                        unfocusedBorderColor = Color(0xFFFF7686)
                                     )
+                                )
                             }
 
                             TextButton(
@@ -393,7 +406,8 @@ fun MainContent(
                                                 customHeight = "W",
                                                 rowId = rowId,
                                                 backgroundColor = Transparent.toArgb(),
-                                                weight = weight
+                                                weight = weight,
+                                                inValues = inValues
                                             )
                                         )
                                     )
@@ -428,7 +442,8 @@ fun MainContent(
                                 id = id,
                                 userId = userId,
                                 content = content,
-                                rowId = rowId
+                                rowId = rowId,
+                                inValues = inValues
                             )
                         }
 

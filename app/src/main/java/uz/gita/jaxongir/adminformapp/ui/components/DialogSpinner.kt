@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,16 +28,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 
+@SuppressLint("MutableCollectionMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogSpinner(
     savedIdList: List<String>,
     onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
-    multiSelectors: List<String>,
+    multiSelectors: List<ComponentData>,
+    onInClick:(String, String, List<String>) -> Unit,
 ) {
     androidx.compose.material3.AlertDialog(
         onDismissRequest = {
@@ -46,16 +54,7 @@ fun DialogSpinner(
                 .wrapContentHeight()
                 .border(1.dp, Color(0xFFFF3951), RoundedCornerShape(12.dp))
         ) {
-            var value by remember {
-                mutableStateOf("")
-            }
 
-            var expanded by remember {
-                mutableStateOf(true)
-            }
-            var selectedId by remember {
-                mutableStateOf(savedIdList.firstOrNull() ?: "")
-            }
             var selectesValue by remember {
                 mutableStateOf("More")
             }
@@ -77,6 +76,12 @@ fun DialogSpinner(
                 Spacer(modifier = Modifier.size(10.dp))
 
                 if (selectesValue != "In" && selectesValue != "!In") {
+                    var value by remember {
+                        mutableStateOf("")
+                    }
+                    var selectedId by remember {
+                        mutableStateOf(savedIdList.firstOrNull() ?: "")
+                    }
                     SampleSpinner(
                         list = savedIdList,
                         preselected = savedIdList.firstOrNull() ?: "",
@@ -102,24 +107,115 @@ fun DialogSpinner(
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
+
+                    Button(
+                        onClick = {
+                            if (savedIdList.size == 1) {
+                                selectedId = savedIdList.first()
+                            }
+                            onSaveClick.invoke(selectedId, selectesValue, value)
+                            onClickCancel()
+                        },
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .height(56.dp)
+                            .width(120.dp)
+                            .align(Alignment.CenterHorizontally),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466))
+                    ) {
+                        Text(text = "Saqlash", color = Color(0xFFFFFFFF))
+                    }
                 }
-                Button(
-                    onClick = {
-                        if (savedIdList.size == 1) {
-                            selectedId = savedIdList.first()
+                else{
+                    if (multiSelectors.isNotEmpty()) {
+                        var value by remember {
+                            mutableStateOf(listOf<String>())
                         }
-                        onSaveClick.invoke(selectedId, selectesValue, value)
-                        onClickCancel()
-                    },
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .height(56.dp)
-                        .width(120.dp)
-                        .align(Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466))
-                ) {
-                    Text(text = "Saqlash", color = Color(0xFFFFFFFF))
+                        var selectedId by remember {
+                            mutableStateOf("")
+                        }
+                        SampleSpinner(
+                            list = multiSelectors.map { it.idEnteredByUser },
+                            preselected = "",
+                            onSelectionChanged = { string ->
+                                selectedId = string
+                                val selected =
+                                    multiSelectors.filter { it.idEnteredByUser == string }.first()
+                                value = selected.variants
+                            },
+                            content = "MultiSelector tanlang"
+                        )
+
+
+                        Button(
+                            onClick = {
+                                if (savedIdList.size == 1) {
+                                    selectedId = savedIdList.first()
+                                }
+                                onInClick.invoke(selectedId, selectesValue, value)
+                                onClickCancel()
+                            },
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .height(56.dp)
+                                .width(120.dp)
+                                .align(Alignment.CenterHorizontally),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466))
+                        ) {
+                            Text(text = "Saqlash", color = Color(0xFFFFFFFF))
+                        }
+                    }
+                    else {
+                        var variants by remember {
+                            mutableStateOf(listOf<String>())
+                        }
+                        val newVariants = arrayListOf<String>()
+                        newVariants.addAll(variants)
+
+                        var selectedId by remember {
+                            mutableStateOf("")
+                        }
+
+                        LazyColumn() {
+                            variants.forEachIndexed { index, s ->
+                                item {
+                                    OutlinedTextField(
+                                        value = newVariants[index],
+                                        onValueChange = {
+                                            newVariants[index] = it
+                                            variants = newVariants
+                                        },
+                                        label = { Text(text = "${index + 1} - variant") },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = OutlinedTextFieldDefaults.colors(
+                                            focusedBorderColor = Color(0xFFFF3951),
+                                            unfocusedBorderColor = Color(0xFFFF7686)
+                                        )
+                                    )
+                                }
+                            }
+
+
+                            item {
+                                TextButton(
+                                    onClick = {
+                                        newVariants.add("")
+                                        variants = newVariants
+                                    },
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .clip(RoundedCornerShape(12.dp))
+                                ) {
+                                    Text(text = "Variant qo'shish")
+
+                                }
+                            }
+                        }
+
+
+                    }
                 }
+
             }
         }
     }
