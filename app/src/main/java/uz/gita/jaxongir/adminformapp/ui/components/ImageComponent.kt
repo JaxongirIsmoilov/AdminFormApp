@@ -38,15 +38,13 @@ import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
 import uz.gita.jaxongir.adminformapp.utils.toDp
-import java.sql.RowId
 
 @Composable
 fun ImageComponent(
     onEventDispatcher: (Contracts.Intent) -> Unit,
     userId: String,
     idEnteredByUser: String,
-    isRequired: Boolean,
-    rowId: String,
+    isRequired: Boolean
 ) {
     var imageUri: Uri? by remember { mutableStateOf(null) }
     var imageHeight: String by remember { mutableStateOf("") }
@@ -173,7 +171,7 @@ fun ImageComponent(
             }
 
             ImageSizeEnum.CUSTOM -> {
-                Spacer(modifier = Modifier.height(5.dp))
+
                 OutlinedTextField(
                     value = imageHeight,
                     onValueChange = { imageHeight = it },

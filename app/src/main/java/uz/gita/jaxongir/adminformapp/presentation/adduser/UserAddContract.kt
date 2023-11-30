@@ -20,6 +20,4 @@ interface UserAddContract {
         data class ProgressState(val state: Boolean) : SideEffect
         data class ShowToast(val message: String) : SideEffect
     }
-
-
 }
