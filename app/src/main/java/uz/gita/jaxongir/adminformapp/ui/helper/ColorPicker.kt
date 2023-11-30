@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,12 +31,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import io.mhssn.colorpicker.ColorPicker
 import io.mhssn.colorpicker.ColorPickerDialog
 import io.mhssn.colorpicker.ColorPickerType
 import io.mhssn.colorpicker.ext.toHex
@@ -73,11 +70,7 @@ fun ColorPickerItem(
                 .padding(horizontal = 16.dp)
                 .background(color = Color(0x33D1D1D1))
         ) {
-
-
             Spacer(modifier = Modifier.size(15.dp))
-
-
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -126,7 +119,6 @@ fun ColorPickerItem(
 //            color = it
 //        },
 //    )
-
 @Preview
 @Composable
 fun ColorPreview() {
