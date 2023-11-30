@@ -165,6 +165,7 @@ fun ImageComponent(
             }
         }
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             SampleSpinner(
                 list = listOf(
                     ImageSizeEnum.RATIO.title,
@@ -192,6 +193,7 @@ fun ImageComponent(
             )
         }
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             when (sizeType) {
                 ImageSizeEnum.AUTO -> {
 
@@ -252,6 +254,7 @@ fun ImageComponent(
 
 
         item {
+            Spacer(modifier = Modifier.height(5.dp))
             Button(onClick = {
                 onEventDispatcher.invoke(
                     Contracts.Intent.UploadPhoto(
