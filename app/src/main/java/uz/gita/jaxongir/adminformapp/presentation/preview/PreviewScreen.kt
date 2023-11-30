@@ -42,6 +42,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.alpha
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.AsyncImage
@@ -134,6 +138,8 @@ fun PreviewScreenContent(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .padding(top = 10.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         uiState.value.compList.forEach { data ->
                             when (data.type) {
@@ -306,25 +312,48 @@ fun PreviewScreenContent(
                                         }
                                         item {
                                             if (data.imageType == ImageTypeEnum.LOCAL) {
-                                                AsyncImage(
-                                                    model = data.imgUri,
-                                                    contentDescription = null,
+                                                Box(
                                                     modifier = Modifier
-                                                        .then(
-                                                            if (data.ratioX != 0) {
-                                                                Modifier.aspectRatio(data.ratioX.toFloat() / data.ratioY.toFloat())
-                                                            } else if (data.customHeight != "") {
-                                                                Modifier.height(height = height)
-                                                            } else {
-                                                                Modifier
-                                                            }
+                                                        .fillMaxWidth()
+                                                        .background(
+                                                            color = Color(
+                                                                data.backgroundColor.red,
+                                                                data.backgroundColor.green,
+                                                                data.backgroundColor.blue
+
+                                                            )
                                                         )
                                                 )
+                                                {
+                                                    AsyncImage(
+                                                        model = data.imgUri,
+                                                        contentDescription = null,
+                                                        modifier = Modifier
+                                                            .then(
+                                                                if (data.ratioX != 0) {
+                                                                    Modifier.aspectRatio(data.ratioX.toFloat() / data.ratioY.toFloat())
+                                                                } else if (data.customHeight != "") {
+                                                                    Modifier.height(height = height)
+                                                                } else {
+                                                                    Modifier
+                                                                }
+                                                            )
+                                                    )
+                                                }
                                             } else {
                                                 var uri by remember {
                                                     mutableStateOf("")
                                                 }
-                                                Column(Modifier.fillMaxWidth()) {
+                                                Column(
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .background(
+                                                            color = Color(
+                                                                data.backgroundColor.red,
+                                                                data.backgroundColor.green,
+                                                                data.backgroundColor.blue
+                                                            )
+                                                        )) {
                                                     OutlinedTextField(
                                                         value = "",
                                                         onValueChange = {

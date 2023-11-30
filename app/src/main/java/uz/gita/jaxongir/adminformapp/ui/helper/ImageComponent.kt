@@ -145,25 +145,36 @@ fun ImageComponent(
 
                 ImageTypeEnum.REMOTE -> {
                     Spacer(modifier = Modifier.height(5.dp))
-                    OutlinedTextField(
-                        value = textUri, onValueChange = { textUri = it }, modifier = Modifier
-                            .padding(horizontal = 12.dp)
-                            .fillMaxWidth(), label = { Text(text = "Input exist uri") },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFFFF3951),
-                            unfocusedBorderColor = Color(0xFFFF7686)
-                        )
-                    )
+
                     Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { imageUri = textUri.toUri() },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-                    ) {
-                        Text(text = "Upload from Ethernet")
-                    }
+
+                    onEventDispatcher.invoke(Contracts.Intent.AddComponent(
+                        ComponentData(
+                            id = "",
+                            userId = userId,
+                            locId = 0L,
+                            idEnteredByUser = idEnteredByUser,
+                            content = "",
+                            textFieldType = TextFieldType.Text,
+                            maxLines = 0,
+                            maxLength = 0,
+                            maxValue = 0,
+                            minValue = 0,
+                            minLength = 0,
+                            isRequired = true,
+                            isMulti = false,
+                            variants = listOf(),
+                            type = ComponentEnum.Image,
+                            imgUri = "",
+                            ratioX = ratioX.toInt(),
+                            ratioY = ratioY.toInt(),
+                            customHeight = customHeight,
+                            rowId = "",
+                            backgroundColor = backgroundColor.toArgb(),
+                            weight = weight,
+                            imageType = typeEnum
+                        )
+                    ))
 
                 }
 
@@ -350,7 +361,7 @@ fun ImageComponent(
         },
         onPickedColor = {
             showDialog = false
-            color = it
+            backgroundColor = it
         },
     )
 

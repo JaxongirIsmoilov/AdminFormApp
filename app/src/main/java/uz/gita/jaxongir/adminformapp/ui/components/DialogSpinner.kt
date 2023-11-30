@@ -269,6 +269,26 @@ fun DialogSpinner(
 
                                 }
                             }
+
+                            item {
+                                Button(
+                                    onClick = {
+                                        if (savedIdList.size == 1) {
+                                            selectedId = savedIdList.first()
+                                        }
+                                        onInClick.invoke(selectedId, selectesValue, variants)
+                                        onClickCancel()
+                                    },
+                                    modifier = Modifier
+                                        .padding(top = 10.dp)
+                                        .height(56.dp)
+                                        .width(120.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466))
+                                ) {
+                                    Text(text = "Saqlash", color = Color(0xFFFFFFFF))
+                                }
+                            }
                         }
 
 
