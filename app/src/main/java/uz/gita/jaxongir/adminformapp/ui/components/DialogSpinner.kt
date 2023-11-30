@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,21 +25,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-@Composable
-@Preview(showBackground = true)
-fun DialogSpinnerPreview() {
-
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogSpinner(
-    savedIdList: List<String> ,
-    onSaveClick: (String, String, String) -> Unit ,
+    savedIdList: List<String>,
+    onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
+    multiSelectors: List<String>,
 ) {
     androidx.compose.material3.AlertDialog(
         onDismissRequest = {
@@ -83,31 +76,33 @@ fun DialogSpinner(
                 )
                 Spacer(modifier = Modifier.size(10.dp))
 
-                SampleSpinner(
-                    list = savedIdList,
-                    preselected = savedIdList.firstOrNull() ?: "",
-                    onSelectionChanged = {
-                        selectedId = it
-                    },
-                    content = "Id tanlang"
-                )
+                if (selectesValue != "In" && selectesValue != "!In") {
+                    SampleSpinner(
+                        list = savedIdList,
+                        preselected = savedIdList.firstOrNull() ?: "",
+                        onSelectionChanged = {
+                            selectedId = it
+                        },
+                        content = "Id tanlang"
+                    )
 
-                OutlinedTextField(
-                    value = value, onValueChange = {
-                        value = it
-                    }, singleLine = true,
-                    modifier = Modifier
-                        .padding(top = 10.dp, start = 12.dp, end = 12.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFFFF3951),
-                        unfocusedBorderColor = Color(0xFFFF7686),
-                    ), label = { Text(text = "value") },
-                    maxLines = 1
-                )
+                    OutlinedTextField(
+                        value = value, onValueChange = {
+                            value = it
+                        }, singleLine = true,
+                        modifier = Modifier
+                            .padding(top = 10.dp, start = 12.dp, end = 12.dp)
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color(0xFFFF3951),
+                            unfocusedBorderColor = Color(0xFFFF7686),
+                        ), label = { Text(text = "value") },
+                        maxLines = 1
+                    )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
                 Button(
                     onClick = {
                         if (savedIdList.size == 1) {
