@@ -1,43 +1,36 @@
-package uz.gita.jaxongir.adminformapp.ui.components
-
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
-import coil.compose.AsyncImage
-import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
-import uz.gita.jaxongir.adminformapp.data.enums.ImageSizeEnum
-import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
-import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
-import uz.gita.jaxongir.adminformapp.data.model.ComponentData
-import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
-import uz.gita.jaxongir.adminformapp.utils.toDp
+//package uz.gita.jaxongir.adminformapp.ui.components
+//
+//import android.net.Uri
+//import androidx.activity.compose.rememberLauncherForActivityResult
+//import androidx.activity.result.contract.ActivityResultContracts
+//import androidx.compose.foundation.layout.Spacer
+//import androidx.compose.foundation.layout.fillMaxWidth
+//import androidx.compose.foundation.layout.height
+//import androidx.compose.foundation.layout.padding
+//import androidx.compose.foundation.layout.width
+//import androidx.compose.foundation.shape.RoundedCornerShape
+//import androidx.compose.foundation.text.KeyboardOptions
+//import androidx.compose.material3.OutlinedTextFieldDefaults
+//import androidx.compose.runtime.Composable
+//import androidx.compose.runtime.getValue
+//import androidx.compose.runtime.mutableStateOf
+//import androidx.compose.runtime.remember
+//import androidx.compose.runtime.setValue
+//import androidx.compose.ui.Modifier
+//import androidx.compose.ui.draw.clip
+//import androidx.compose.ui.layout.ContentScale
+//import androidx.compose.ui.text.input.KeyboardType
+//import androidx.compose.ui.unit.dp
+//import androidx.core.net.toUri
+//import coil.compose.AsyncImage
+//import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+//import uz.gita.jaxongir.adminformapp.data.enums.ImageSizeEnum
+//import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
+//import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
+//import uz.gita.jaxongir.adminformapp.data.model.ComponentData
+//import uz.gita.jaxongir.adminformapp.presentation.componentsscreen.Contracts
+//import uz.gita.jaxongir.adminformapp.utils.toDp
+//
 //
 //@Composable
 //fun ImageComponent(
@@ -48,16 +41,13 @@ import uz.gita.jaxongir.adminformapp.utils.toDp
 //    rowId:String
 //){
 //
-//}
 //
-//
-//{
 //    var imageUri: Uri? by remember { mutableStateOf(null) }
 //    var imageHeight: String by remember { mutableStateOf("") }
 //    var imageRatioX: String by remember { mutableStateOf("") }
 //    var imageRatioY: String by remember { mutableStateOf("") }
 //    var sizeType by remember { mutableStateOf(ImageSizeEnum.AUTO) }
-//    var imageType by remember { mutableStateOf(ImageTypeEnum.GALLERY) }
+//    var imageType by remember { mutableStateOf(ImageTypeEnum.LOCAL) }
 //    val launcher = rememberLauncherForActivityResult(
 //        contract =
 //        ActivityResultContracts.GetContent()
@@ -84,7 +74,7 @@ import uz.gita.jaxongir.adminformapp.utils.toDp
 //        SampleSpinner(
 //            list = listOf(
 //                ImageTypeEnum.REMOTE.type,
-//                ImageTypeEnum.GALLERY.type
+//                ImageTypeEnum.LOCAL.type
 //            ),
 //            preselected = ComponentEnum.SampleText.content,
 //            onSelectionChanged = {
@@ -94,7 +84,7 @@ import uz.gita.jaxongir.adminformapp.utils.toDp
 //                    }
 //
 //                    "From Gallery" -> {
-//                        imageType = ImageTypeEnum.GALLERY
+//                        imageType = ImageTypeEnum.LOCAL
 //                    }
 //
 //                }
@@ -104,7 +94,7 @@ import uz.gita.jaxongir.adminformapp.utils.toDp
 //        Spacer(modifier = Modifier.height(5.dp))
 //        when (imageType) {
 //
-//            ImageTypeEnum.GALLERY -> {
+//            ImageTypeEnum.LOCAL -> {
 //                Button(
 //                    onClick = { launcher.launch("image/*") },
 //                    modifier = Modifier
