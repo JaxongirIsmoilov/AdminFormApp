@@ -35,7 +35,6 @@ interface Contracts {
 
         object Save : Intent
 
-        object LoadComponentId : Intent
         data class SaveSelectedIds(val selectedValues: String) : Intent
     }
 

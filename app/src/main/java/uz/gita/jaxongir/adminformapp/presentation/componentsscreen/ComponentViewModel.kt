@@ -31,26 +31,6 @@ class ComponentViewModel @Inject constructor(
 
     override fun eventDispatcher(intent: Contracts.Intent) {
         when (intent) {
-            Contracts.Intent.LoadComponentId -> {
-                ids = arrayListOf()
-                rowIds = arrayListOf()
-                uiState.value.components.forEach {
-                    if (it.idEnteredByUser != "") {
-                        ids.add(it.idEnteredByUser)
-                        uiState.update {
-                            it.copy(savedIds = ids)
-                        }
-                    }
-                    Log.d("TTT", "eventDispatcher: ${it.type}")
-                    if (it.type == ComponentEnum.LazyRow) {
-                        rowIds.add(it.idEnteredByUser)
-                        uiState.update {
-                            it.copy(rowId = rowIds)
-                        }
-                    }
-                }
-            }
-
             is Contracts.Intent.AddComponent -> {
                 viewModelScope.launch {
                     repository.addComponent(
@@ -91,30 +71,32 @@ class ComponentViewModel @Inject constructor(
             is Contracts.Intent.Load -> {
                 userId = intent.userId
                 viewModelScope.launch {
-                    repository.getComponentsByUserId(intent.userId).onEach {
-                        it.onSuccess { ls ->
+                    repository.getComponentsByUserId(intent.userId).onEach { result ->
+                        result.onSuccess { ls ->
                             uiState.update { it.copy(components = ls) }
+
+                            ids = arrayListOf()
+                            rowIds = arrayListOf()
+                            ls.forEach {
+                                if (it.idEnteredByUser != "") {
+                                    ids.add(it.idEnteredByUser)
+                                    uiState.update {
+                                        it.copy(savedIds = ids)
+                                    }
+                                }
+                                Log.d("TTT", "eventDispatcher: ${it.type}")
+                                if (it.type == ComponentEnum.LazyRow) {
+                                    rowIds.add(it.idEnteredByUser)
+                                    uiState.update {
+                                        it.copy(rowId = rowIds)
+                                    }
+                                }
+                            }
                         }
                     }.collect()
                 }
 
-                ids = arrayListOf()
-                rowIds = arrayListOf()
-                uiState.value.components.forEach {
-                    if (it.idEnteredByUser != "") {
-                        ids.add(it.idEnteredByUser)
-                        uiState.update {
-                            it.copy(savedIds = ids)
-                        }
-                    }
-                    Log.d("TTT", "eventDispatcher: ${it.type}")
-                    if (it.type == ComponentEnum.LazyRow) {
-                        rowIds.add(it.idEnteredByUser)
-                        uiState.update {
-                            it.copy(rowId = rowIds)
-                        }
-                    }
-                }
+
             }
 
             is Contracts.Intent.DeleteComponent -> {

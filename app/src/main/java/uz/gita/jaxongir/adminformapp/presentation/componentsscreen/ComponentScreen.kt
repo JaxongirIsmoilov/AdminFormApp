@@ -141,7 +141,6 @@ fun MainContent(
 
                 TextButton(
                     onClick = {
-                        onEventDispatcher.invoke(Contracts.Intent.LoadComponentId)
                         showDialog.value = true
                     },
                     modifier = Modifier
@@ -165,7 +164,6 @@ fun MainContent(
                         ComponentEnum.LazyRow.content,
                         ComponentEnum.Image.content,
                         ComponentEnum.Selector.content,
-                        ComponentEnum.ColorPicker.content
                     ),
                     preselected = ComponentEnum.SampleText.content,
                     onSelectionChanged = {
@@ -262,10 +260,6 @@ fun MainContent(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (type) {
-
-                        ComponentEnum.ColorPicker -> {
-
-                        }
 
                         ComponentEnum.Input -> {
                             Column(modifier = Modifier.fillMaxWidth()) {
