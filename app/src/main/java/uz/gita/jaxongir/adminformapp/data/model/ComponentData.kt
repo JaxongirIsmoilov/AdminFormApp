@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.request.ComponentRequest
 import uz.gita.jaxongir.adminformapp.data.source.database.entity.ComponentEntity
@@ -36,9 +37,9 @@ data class ComponentData(
     val customHeight: String = "",
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
-    val weight: String
-
-    ) : Serializable {
+    val weight: String,
+    val imageType: ImageTypeEnum = ImageTypeEnum.NONE,
+) : Serializable {
     private val converter = Gson()
 
     fun toRequest(): ComponentRequest = ComponentRequest(
@@ -67,7 +68,8 @@ data class ComponentData(
         customHeight = customHeight,
         rowId = rowId,
         backgroundColor = backgroundColor,
-        weight = weight
+        weight = weight,
+        imageType = converter.toJson(imageType)
     )
 
     fun toEntity(): ComponentEntity = ComponentEntity(
@@ -96,6 +98,7 @@ data class ComponentData(
         customHeight = customHeight,
         rowId = rowId,
         backgroundColor = backgroundColor,
-        weight = weight
+        weight = weight,
+        imageType = imageType
     )
 }

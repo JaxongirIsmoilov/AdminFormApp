@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 
 class Converter {
     private val converter = Gson()
@@ -18,7 +19,7 @@ class Converter {
     fun typeConverter(data: ComponentEnum): String = converter.toJson(data)
 
     @TypeConverter
-    fun colorConverter(data: Color): String = converter.toJson(data)
+    fun imageConverter(data: ImageTypeEnum): String = converter.toJson(data)
 
     @TypeConverter
     fun stringConverter(data: String): List<String> =
@@ -33,6 +34,7 @@ class Converter {
         converter.fromJson(data, ComponentEnum::class.java)
 
     @TypeConverter
-    fun colorConverter(data: String): Color = converter.fromJson(data, Color::class.java)
+    fun imageConverter(data: String): ImageTypeEnum = converter.fromJson(data, ImageTypeEnum::class.java)
+
 
 }

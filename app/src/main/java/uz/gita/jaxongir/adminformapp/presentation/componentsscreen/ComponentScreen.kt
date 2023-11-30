@@ -43,11 +43,13 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.ui.components.DialogSpinner
 import uz.gita.jaxongir.adminformapp.ui.components.ImageComponent
 import uz.gita.jaxongir.adminformapp.ui.components.SampleSpinner
+import uz.gita.jaxongir.adminformapp.ui.helper.ImageComponent
 import uz.gita.jaxongir.adminformapp.ui.helper.InputContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SelectorContent
 import uz.gita.jaxongir.adminformapp.ui.helper.SpinnerContent
@@ -218,7 +220,7 @@ fun MainContent(
                         unfocusedBorderColor = Color(0xFFFF7686)
                     ), maxLines = 1,
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.None // "Enter" tugmasini ishlamay qo'yish
+                        imeAction = ImeAction.None
                     )
                 )
 
@@ -248,7 +250,7 @@ fun MainContent(
                         onSelectionChanged = {
                             rowId = it
                         },
-                        content = "Yaratilgan rowga qoshmoqchimisiz"
+                        content = "Gorizontal qatorga qoshish uchun id tanlang"
                     )
                 }
                 Spacer(modifier = Modifier.size(16.dp))
@@ -336,7 +338,6 @@ fun MainContent(
                                 modifier = Modifier
                                     .wrapContentSize()
                                     .padding(5.dp)
-                                    .background(Color(0xffff7686))
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
@@ -470,19 +471,42 @@ fun MainContent(
                                     )
                                 },
                                 modifier = Modifier
-                                    .wrapContentSize()
+                                    .wrapContentSize(),
+                                enabled = id.isNotEmpty()
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
                         }
 
                         ComponentEnum.Image -> {
+                            var type by remember {
+                                mutableStateOf(ImageTypeEnum.GALLERY)
+                            }
+
+                            SampleSpinner(
+                                list = listOf(ImageTypeEnum.GALLERY.type, ImageTypeEnum.REMOTE.type),
+                                preselected = "Rasmni qay tarzda joylashni tanlang",
+                                onSelectionChanged = {
+                                    when (it) {
+                                        ImageTypeEnum.GALLERY.type -> {
+                                            type = ImageTypeEnum.GALLERY
+                                        }
+
+                                        ImageTypeEnum.REMOTE.type -> {
+                                            type = ImageTypeEnum.REMOTE
+                                        }
+                                    }
+                                },
+                                content = "Rasmni qay tarzda joylashni tanlang"
+                            )
+
                             ImageComponent(
                                 onEventDispatcher = onEventDispatcher::invoke,
                                 userId = userId,
                                 idEnteredByUser = id,
                                 isRequired = false,
                                 rowId = rowId,
+                                typeEnum = type
                             )
                         }
                     }
@@ -519,19 +543,6 @@ fun MainContent(
 
                 }
             }
-
-
         }
-        val list by remember { mutableStateOf(arrayListOf<String>()) }
-
     }
-
 }
-
-@SuppressLint("UnrememberedMutableState")
-@Composable
-@Preview
-fun ComponentScreenPreview() {
-    MainContent("1", mutableStateOf(Contracts.UIState())) {}
-}
-

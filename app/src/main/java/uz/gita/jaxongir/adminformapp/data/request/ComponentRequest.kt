@@ -30,5 +30,6 @@ data class ComponentRequest(
     val customHeight: String,
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
-    val weight: String
+    val weight: String,
+    val imageType: String
 )

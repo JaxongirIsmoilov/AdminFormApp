@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
+import uz.gita.jaxongir.adminformapp.data.enums.ImageTypeEnum
 import uz.gita.jaxongir.adminformapp.data.enums.TextFieldType
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 
@@ -36,7 +37,8 @@ data class ComponentEntity(
     val customHeight : String,
     val rowId: String = "",
     val backgroundColor: Int = Color.Transparent.toArgb(),
-    val weight: String
+    val weight: String,
+    val imageType: ImageTypeEnum
 ) {
 
 
@@ -60,7 +62,7 @@ data class ComponentEntity(
         operators = operators,
         type = type,
         isRequired = isRequired,
-        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor, weight
+        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor, weight, imageType
     )
 
 

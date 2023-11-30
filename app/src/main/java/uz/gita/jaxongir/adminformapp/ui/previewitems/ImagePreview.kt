@@ -82,7 +82,6 @@ fun ImagePreview(
         )
         Spacer(modifier = Modifier.size(10.dp))
         when (imageType) {
-
             ImageTypeEnum.GALLERY -> {
                 Button(
                     onClick = { launcher.launch("image/*") },
@@ -109,6 +108,10 @@ fun ImagePreview(
                 ) {
                     Text(text = "Upload from Ethernet")
                 }
+
+            }
+
+            ImageTypeEnum.NONE -> {
 
             }
         }
