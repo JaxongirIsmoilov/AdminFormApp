@@ -44,7 +44,8 @@ fun ImageComponent(
     onEventDispatcher: (Contracts.Intent) -> Unit,
     userId: String,
     idEnteredByUser: String,
-    isRequired: Boolean
+    isRequired: Boolean,
+    rowId:String
 ) {
     var imageUri: Uri? by remember { mutableStateOf(null) }
     var imageHeight: String by remember { mutableStateOf("") }
