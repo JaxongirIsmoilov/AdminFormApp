@@ -201,14 +201,33 @@ fun ImageComponent(
 
                 ImageSizeEnum.CUSTOM -> {
 
-                    OutlinedTextField(
-                        value = customHeight,
-                        onValueChange = { customHeight = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFFFF3951),
-                            unfocusedBorderColor = Color(0xFFFF7686)
-                        )
+                    SampleSpinner(
+                        list = listOf(
+                            "w/3", "w/2","w","2w"
+                        ),
+                        preselected = ComponentEnum.SampleText.content,
+                        onSelectionChanged = {
+                            when (it) {
+                                "w/3" -> {
+                                   customHeight = it
+                                }
+
+                                "w/2" -> {
+                                    customHeight = it
+
+                                }
+                                "w" -> {
+                                    customHeight = it
+
+                                }
+                                "2w" -> {
+                                    customHeight = it
+
+                                }
+
+                            }
+                        },
+                        content = "Image turini tanlang:"
                     )
                 }
 
