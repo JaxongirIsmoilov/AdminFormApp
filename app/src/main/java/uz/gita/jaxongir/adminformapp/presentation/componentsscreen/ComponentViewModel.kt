@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.domain.repository.Repository
-import uz.gita.jaxongir.adminformapp.utils.myLog
 import java.util.Date
 import javax.inject.Inject
 
@@ -44,7 +43,7 @@ class ComponentViewModel @Inject constructor(
                     }
                     Log.d("TTT", "eventDispatcher: ${it.type}")
                     if (it.type == ComponentEnum.LazyRow) {
-                      rowIds.add(it.idEnteredByUser)
+                        rowIds.add(it.idEnteredByUser)
                         uiState.update {
                             it.copy(rowId = rowIds)
                         }
@@ -53,13 +52,6 @@ class ComponentViewModel @Inject constructor(
             }
 
             is Contracts.Intent.AddComponent -> {
-                if (intent.componentData.idEnteredByUser != "") {
-                    ids.add(intent.componentData.idEnteredByUser)
-                    uiState.update {
-                        it.copy(savedIds = ids)
-                    }
-                }
-                myLog("${uiState.value.components.size}")
                 viewModelScope.launch {
                     repository.addComponent(
                         intent.componentData.copy(locId = Date().time),
@@ -186,16 +178,47 @@ class ComponentViewModel @Inject constructor(
                 }
             }
 
-            Contracts.Intent.Save -> {
-                viewModelScope.launch {
-
-                }
-            }
-
             is Contracts.Intent.SaveSelectedIds -> {
                 selectedIds.add(intent.selectedValues)
                 uiState.update { it.copy(selectedOperators = intent.selectedValues) }
                 uiState.update { it.copy(selectedIdsList = selectedIds) }
+            }
+
+            is Contracts.Intent.UploadPhoto -> {
+                viewModelScope.launch {
+                    repository.uploadPhoto(
+                        intent.componentData.copy(locId = Date().time),
+                        0
+                    )
+                        .onStart {
+                            uiState.update { it.copy(isLoading = true) }
+                        }
+                        .onEach {
+                            it.onSuccess {
+                                uiState.update {
+                                    it.copy(components = it.components)
+                                }
+                                direction.moveToPreviewScreenFromMain("adsfdsaf")
+                            }
+                                .onFailure {
+                                }
+                        }
+                        .onCompletion {
+                            uiState.update { it.copy(isLoading = false) }
+                        }
+                        .collect()
+
+                    repository.getComponentsByUserId(userId).onEach {
+                        it.onSuccess {
+                            uiState.update { uiState ->
+                                uiState.copy(components = it)
+                            }
+                        }
+                            .onFailure {
+                            }
+                    }.collect()
+                }
+
             }
         }
     }

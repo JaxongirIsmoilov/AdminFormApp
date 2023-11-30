@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.domain.repository
 
+import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 import uz.gita.jaxongir.adminformapp.data.model.UserData
@@ -13,4 +14,5 @@ interface Repository {
     fun deleteUser(userData: UserData): Flow<Result<String>>
     fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>>
     fun getUsers(): Flow<Result<List<UserData>>>
+    fun uploadPhoto(componentData: ComponentData, id: Int): Flow<Result<Unit>>
 }

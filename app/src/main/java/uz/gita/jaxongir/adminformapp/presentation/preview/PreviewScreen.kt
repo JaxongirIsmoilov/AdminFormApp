@@ -246,7 +246,6 @@ fun PreviewScreenContent(
                                         DatePickerPreview(
                                             componentData = data,
                                             content = data.content,
-                                            modifier = Modifier,
                                             deleteComp = {
                                                 onEventDispatcher.invoke(
                                                     PreviewContract.Intent.DeleteComponent(

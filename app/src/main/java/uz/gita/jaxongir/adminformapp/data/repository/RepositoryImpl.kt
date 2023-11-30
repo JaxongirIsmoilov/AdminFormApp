@@ -1,10 +1,11 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
 import android.content.Context
-import android.widget.Toast
+import android.net.Uri
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +31,7 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val dao: Dao,
     private val firestore: FirebaseFirestore,
-    @ApplicationContext val context: Context
+    private val storageReference: StorageReference
 ) : Repository {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     override fun addComponent(componentData: ComponentData, id: Int): Flow<Result<String>> =
@@ -49,7 +50,6 @@ class RepositoryImpl @Inject constructor(
 
             awaitClose()
         }
-
     override fun deleteComponent(componentData: ComponentData): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
@@ -63,7 +63,6 @@ class RepositoryImpl @Inject constructor(
                 }
             awaitClose()
         }
-
     override fun editComponent(componentData: ComponentData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Components")
             .document(componentData.id)
@@ -79,7 +78,6 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
     }
-
     override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .add(request)
@@ -95,7 +93,6 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
-
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .document(userData.userId)
@@ -112,15 +109,14 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
-
-    private fun getComponents(): Flow<Result<Unit>> = callbackFlow<Result<Unit>> {
+    private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
         val resultList = arrayListOf<ComponentData>()
         val converter = Gson()
         firestore.collection("Components")
             .get()
             .addOnSuccessListener { data ->
                 data.documents.forEach {
-                    val state = resultList.add(
+                    resultList.add(
                         ComponentData(
                             id = it.id,
                             userId = it.data?.getOrDefault("userId", "null").toString(),
@@ -165,20 +161,20 @@ class RepositoryImpl @Inject constructor(
                                     "connectedIds",
                                     ""
                                 ).toString(), Array<String>::class.java
-                            ).asList() ?: listOf(),
+                            ).asList(),
                             connectedValues = converter.fromJson(
                                 it.data?.getOrDefault(
                                     "connectedValues",
                                     ""
                                 ).toString(), Array<String>::class.java
-                            ).asList() ?: listOf(),
+                            ).asList(),
 
                             operators = converter.fromJson(
                                 it.data?.getOrDefault(
                                     "operators",
                                     ""
                                 ).toString(), Array<String>::class.java
-                            ).asList() ?: listOf(),
+                            ).asList(),
 
                             type = converter.fromJson(
                                 it.data?.getOrDefault("type", "").toString(),
@@ -207,16 +203,13 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
 
-    }.flowOn(Dispatchers.IO).catch {
-        Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
     }
-
-    private fun getUser(): Flow<Unit> = callbackFlow<Unit> {
+    private fun getUser(): Flow<Unit> = callbackFlow {
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
             .get()
-            .addOnSuccessListener {
-                it.documents.forEach {
+            .addOnSuccessListener { data ->
+                data.documents.forEach {
                     resultList.add(
                         UserData(
                             userId = it.id,
@@ -234,17 +227,14 @@ class RepositoryImpl @Inject constructor(
             }
 
         awaitClose()
-    }.flowOn(Dispatchers.IO).catch {
-        Toast.makeText(context, "Cannot be loaded", Toast.LENGTH_SHORT).show()
     }
-
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
         getComponents()
-            .onEach {
-                it.onSuccess {
+            .onEach { result ->
+                result.onSuccess {
                     dao.getByUser(userID)
-                        .onEach {
-                            emit(Result.success(it.map {
+                        .onEach { entities ->
+                            emit(Result.success(entities.map {
                                 it.toData()
                             }))
                         }
@@ -253,17 +243,33 @@ class RepositoryImpl @Inject constructor(
                     .onFailure { }
             }
             .collect()
-
-
     }.flowOn(Dispatchers.IO)
         .catch { emit(Result.failure(Exception("adsf"))) }
 
     override fun getUsers(): Flow<Result<List<UserData>>> = flow {
         dao.deleteUsers()
         getUser().onEach {
-            dao.getUsers().onEach {
-                emit(Result.success(it.map { it.toData() }))
+            dao.getUsers().onEach { entities ->
+                emit(Result.success(entities.map { it.toData() }))
             }.collect()
         }.collect()
     }.flowOn(Dispatchers.IO)
+
+    override fun uploadPhoto(componentData: ComponentData, id: Int): Flow<Result<Unit>> = callbackFlow{
+        storageReference.child(componentData.imgUri)
+            .putFile(Uri.parse(componentData.imgUri))
+            .addOnSuccessListener {
+                it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                    coroutineScope.launch{ addComponent(componentData.copy(imgUri = it.toString()), id)
+                        .onEach {
+                            trySend(Result.success(Unit))
+                        }
+                        .collect() }
+                }
+            }
+            .addOnFailureListener {
+                trySend(Result.failure(it))
+            }
+        awaitClose()
+    }
 }

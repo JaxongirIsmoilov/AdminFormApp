@@ -28,6 +28,11 @@ interface Contracts {
             val userId: String
         ) : Intent
 
+        data class UploadPhoto(
+            val componentData: ComponentData
+        ): Intent
+
+
         object Save : Intent
 
         object LoadComponentId : Intent

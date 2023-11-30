@@ -483,7 +483,8 @@ fun MainContent(
                                 onEventDispatcher = onEventDispatcher::invoke,
                                 userId = userId,
                                 idEnteredByUser = id,
-                                isRequired = false
+                                isRequired = false,
+                                rowId = rowId,
                             )
                         }
                     }

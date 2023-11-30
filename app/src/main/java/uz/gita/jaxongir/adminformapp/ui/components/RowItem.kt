@@ -108,7 +108,6 @@ fun RowItem(
                     DatePickerPreview(
                         componentData = data,
                         content = data.content,
-                        modifier = Modifier.weight(1f),
                         deleteComp = {
                             onDeleteComponent(data)
                         }
