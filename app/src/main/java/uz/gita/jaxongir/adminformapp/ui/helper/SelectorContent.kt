@@ -66,7 +66,21 @@ fun SelectorContent(
                 OutlinedTextField(
                     value = weight,
                     onValueChange = {
-                        weight = it
+                        if (it != "") {
+                            if (it.toFloat() > 1.1) {
+                                weight = "1"
+                                return@OutlinedTextField
+                            }
+
+                            if (it.toFloat() < 0) {
+                                weight = "0"
+                                return@OutlinedTextField
+                            }
+
+                            weight = it
+                        } else {
+                            weight = ""
+                        }
                     },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
