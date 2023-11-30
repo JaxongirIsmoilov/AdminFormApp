@@ -130,6 +130,17 @@ fun ImageComponent(
                     ) {
                         Text(text = "Upload from gallery")
                     }
+                    AsyncImage(
+                        model = imageUri,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(60.dp)
+                            .width(60.dp)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Crop,
+                    )
+
+
                 }
 
                 ImageTypeEnum.REMOTE -> {
