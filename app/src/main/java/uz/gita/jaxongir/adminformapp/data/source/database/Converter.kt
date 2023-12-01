@@ -1,6 +1,5 @@
 package uz.gita.jaxongir.adminformapp.data.source.database
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum

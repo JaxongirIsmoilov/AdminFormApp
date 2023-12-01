@@ -135,7 +135,6 @@ fun PreviewScreenContent(
 
                     LazyColumn(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .wrapContentHeight()
                             .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
@@ -146,8 +145,6 @@ fun PreviewScreenContent(
                                 ComponentEnum.Spinner -> {
                                     if (data.rowId == "") {
                                         item {
-
-
                                             SampleSpinnerPreview(
                                                 list = data.variants,
                                                 preselected = data.variants[0],
@@ -196,28 +193,7 @@ fun PreviewScreenContent(
                                 ComponentEnum.SampleText -> {
                                     if (data.rowId == "") {
                                         item {
-                                            /*Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clip(RoundedCornerShape(12.dp))
-                                                .border(
-                                                    1.dp,
-                                                    Color(0xFFFF7686),
-                                                    RoundedCornerShape(12.dp)
-                                                )
-                                                .background(Color(0x33C4C4C4))
-                                                .padding(horizontal = 16.dp, vertical = 5.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Text(
-                                                text = data.content,
-                                                fontSize = 22.sp,
-                                                modifier = Modifier
-                                                    .padding(bottom = 10.dp)
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.height(16.dp))
-*/
+
                                             TextComponent(
                                                 onClickDelete = {
                                                     onEventDispatcher.invoke(
@@ -453,41 +429,42 @@ fun PreviewScreenContent(
                                                     }
 
                                                     ComponentEnum.Input -> {
-                                                        Box(modifier = Modifier.weight(it.weight.toFloat())) {
-                                                            InputField(
-                                                                textFieldType = data.textFieldType,
-                                                                maxLines = data.maxLines,
-                                                                maxLength = data.maxLength,
-                                                                minLength = data.minLength,
-                                                                maxValue = data.maxValue,
-                                                                minValue = data.minValue,
-                                                                question = data.content,
-                                                                data, modifier = Modifier,
-                                                                deleteComp = {
-                                                                    onEventDispatcher.invoke(
-                                                                        PreviewContract.Intent.DeleteComponent(
-                                                                            data
+                                                            Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                                InputField(
+                                                                    textFieldType = data.textFieldType,
+                                                                    maxLines = data.maxLines,
+                                                                    maxLength = data.maxLength,
+                                                                    minLength = data.minLength,
+                                                                    maxValue = data.maxValue,
+                                                                    minValue = data.minValue,
+                                                                    question = data.content,
+                                                                    data, modifier = Modifier,
+                                                                    deleteComp = {
+                                                                        onEventDispatcher.invoke(
+                                                                            PreviewContract.Intent.DeleteComponent(
+                                                                                data
+                                                                            )
                                                                         )
-                                                                    )
-                                                                }
-                                                            )
+                                                                    }
+                                                                )
+                                                            }
+
                                                         }
-                                                    }
 
                                                     ComponentEnum.Dater -> {
-                                                        Box(modifier = Modifier.weight(it.weight.toFloat())) {
-                                                            DatePickerPreview(
-                                                                componentData = data,
-                                                                content = data.content,
-                                                                deleteComp = {
-                                                                    onEventDispatcher.invoke(
-                                                                        PreviewContract.Intent.DeleteComponent(
-                                                                            data
+                                                            Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                                DatePickerPreview(
+                                                                    componentData = data,
+                                                                    content = data.content,
+                                                                    deleteComp = {
+                                                                        onEventDispatcher.invoke(
+                                                                            PreviewContract.Intent.DeleteComponent(
+                                                                                data
+                                                                            )
                                                                         )
-                                                                    )
-                                                                }
-                                                            )
-                                                        }
+                                                                    }
+                                                                )
+                                                            }
                                                     }
 
                                                     else -> {
