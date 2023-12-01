@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import uz.gita.jaxongir.adminformapp.data.enums.ComponentEnum
 import uz.gita.jaxongir.adminformapp.data.model.ComponentData
 
 @SuppressLint("MutableCollectionMutableState")
@@ -40,8 +41,8 @@ fun DialogSpinner(
     savedIdList: List<String>,
     onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
-    multiSelectors: List<ComponentData>,
-    boolean: Boolean,
+    components: List<ComponentData>,
+    type: ComponentEnum,
     onInClick:(String, String, List<String>) -> Unit,
 ) {
     androidx.compose.material3.AlertDialog(
@@ -60,7 +61,7 @@ fun DialogSpinner(
                 mutableStateOf("More")
             }
 
-            val list = if(boolean) listOf("More", "Less", "Equal", "Not", "In", "!In") else listOf("More", "Less", "Equal", "Not",)
+            val list = if(type == ComponentEnum.Selector) listOf("More", "Less", "Equal", "Not", "In", "!In") else listOf("More", "Less", "Equal", "Not",)
 
             Spacer(modifier = Modifier.height(8.dp))
             Column(
@@ -130,7 +131,7 @@ fun DialogSpinner(
                     }
                 }
                 else{
-                    if (multiSelectors.isNotEmpty()) {
+                    if (components.filter { it.type == ComponentEnum.Selector }.isNotEmpty()) {
                         var value by remember {
                             mutableStateOf(listOf<String>())
                         }
@@ -148,12 +149,12 @@ fun DialogSpinner(
                         newVariants.addAll(variants)
 
                         SampleSpinner(
-                            list = multiSelectors.map { it.idEnteredByUser },
+                            list = components.filter { it.type == ComponentEnum.Selector }.map { it.idEnteredByUser },
                             preselected = "",
                             onSelectionChanged = { string ->
                                 selectedId = string
                                 val selected =
-                                    multiSelectors.filter { it.idEnteredByUser == string }.first()
+                                    components.filter { it.type == ComponentEnum.Selector }.filter { it.idEnteredByUser == string }.first()
                                 value = selected.variants
                             },
                             content = "MultiSelector tanlang"

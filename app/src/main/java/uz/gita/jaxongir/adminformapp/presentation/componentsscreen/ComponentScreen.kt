@@ -119,8 +119,8 @@ fun MainContent(
             onClickCancel = {
                 showDialog.value = false
             },
-            multiSelectors = uiState.value.multiSelectors,
-            type != ComponentEnum.Image && type != ComponentEnum.LazyRow
+            components = uiState.value.components,
+            type = type
         ) {id1, operator, values ->
             selectedIds.add(id1)
             selectedOperators.add(operator)

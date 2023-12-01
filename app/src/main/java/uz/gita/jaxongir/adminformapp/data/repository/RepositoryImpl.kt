@@ -79,18 +79,45 @@ class RepositoryImpl @Inject constructor(
             }
         awaitClose()
     }
-    override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
+
+    private fun checkUser(request: UserRequest): Flow<Result<Boolean>> = callbackFlow {
         firestore.collection("Users")
-            .add(request)
+            .whereEqualTo("userName", request.userName)
+            .get()
             .addOnSuccessListener {
-                coroutineScope.launch {
-                    dao.insertUser(request.fromRequestToEntity().copy(id = it.id))
+                if (it.size() >= 1) {
+                    trySend(Result.success(false))
+                } else {
+                    trySend(Result.success(true))
                 }
-                trySend(Result.success(it.id))
             }
             .addOnFailureListener {
                 trySend(Result.failure(it))
             }
+
+        awaitClose()
+    }
+
+    override fun addUser(request: UserRequest): Flow<Result<String>> = callbackFlow {
+        checkUser(request).onEach {
+            it.onSuccess {
+                if (it) {
+                    firestore.collection("Users")
+                        .add(request)
+                        .addOnSuccessListener {
+                            coroutineScope.launch {
+                                dao.insertUser(request.fromRequestToEntity().copy(id = it.id))
+                            }
+                            trySend(Result.success(it.id))
+                        }
+                        .addOnFailureListener {
+                            trySend(Result.failure(it))
+                        }
+                } else {
+                    trySend(Result.failure(Exception("Ushbu user Mavjud")))
+                }
+            }
+        }.collect()
 
         awaitClose()
     }

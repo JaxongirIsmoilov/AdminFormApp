@@ -39,10 +39,7 @@ data class ComponentData(
     val backgroundColor: Int = Color.Transparent.toArgb(),
     val weight: String,
     val imageType: ImageTypeEnum = ImageTypeEnum.NONE,
-    val inValues: List<String> = listOf(),
-    val enteredValue: String = "",
-    val isVisible: Boolean = true,
-    val selectedSpinnerText: String = ""
+    val inValues: List<String> = listOf()
 ) : Serializable {
     private val converter = Gson()
 
