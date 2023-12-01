@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
@@ -38,7 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import io.mhssn.colorpicker.ColorPickerDialog
 import io.mhssn.colorpicker.ColorPickerType
@@ -101,6 +99,7 @@ fun ImageComponent(
     ) { uri: Uri? ->
         imageUri = uri
     }
+
     AsyncImage(
         model = imageUri,
         contentDescription = null,
