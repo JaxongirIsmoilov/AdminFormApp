@@ -135,7 +135,6 @@ fun PreviewScreenContent(
 
                     LazyColumn(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .wrapContentHeight()
                             .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
@@ -146,8 +145,6 @@ fun PreviewScreenContent(
                                 ComponentEnum.Spinner -> {
                                     if (data.rowId == "") {
                                         item {
-
-
                                             SampleSpinnerPreview(
                                                 list = data.variants,
                                                 preselected = data.variants[0],
@@ -196,6 +193,7 @@ fun PreviewScreenContent(
                                 ComponentEnum.SampleText -> {
                                     if (data.rowId == "") {
                                         item {
+
                                             TextComponent(
                                                 onClickDelete = {
                                                     onEventDispatcher.invoke(
@@ -370,7 +368,114 @@ fun PreviewScreenContent(
                                     }
                                 }
 
-                                else -> {}
+                                ComponentEnum.LazyRow -> {
+                                    item {
+                                        Row(modifier = Modifier.fillMaxWidth()) {
+                                            uiState.value.compList.filter { 
+                                                it.rowId == data.idEnteredByUser
+                                            }.forEach {
+                                                when (it.type) {
+                                                    ComponentEnum.Selector -> {
+                                                        Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                            SelectorItem(
+                                                                question = data.content,
+                                                                list = data.variants,
+                                                                componentData = data,
+                                                                modifier = Modifier,
+                                                                deleteComp = {
+                                                                    onEventDispatcher.invoke(
+                                                                        PreviewContract.Intent.DeleteComponent(
+                                                                            data
+                                                                        )
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+
+                                                    ComponentEnum.SampleText -> {
+                                                        Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                            TextComponent(
+                                                                onClickDelete = {
+                                                                    onEventDispatcher.invoke(
+                                                                        PreviewContract.Intent.DeleteComponent(data)
+                                                                    )
+                                                                },
+                                                                componentData = data
+                                                            )
+                                                            Spacer(modifier = Modifier.height(10.dp))
+                                                        }
+                                                    }
+
+                                                    ComponentEnum.Spinner -> {
+                                                        Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                            SampleSpinnerPreview(
+                                                                list = data.variants,
+                                                                preselected = data.variants[0],
+                                                                onSelectionChanged = {},
+                                                                content = data.content,
+                                                                componentData = data,
+                                                                modifier = Modifier,
+                                                                deleteComp = {
+                                                                    onEventDispatcher.invoke(
+                                                                        PreviewContract.Intent.DeleteComponent(
+                                                                            data
+                                                                        )
+                                                                    )
+
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+
+                                                    ComponentEnum.Input -> {
+                                                            Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                                InputField(
+                                                                    textFieldType = data.textFieldType,
+                                                                    maxLines = data.maxLines,
+                                                                    maxLength = data.maxLength,
+                                                                    minLength = data.minLength,
+                                                                    maxValue = data.maxValue,
+                                                                    minValue = data.minValue,
+                                                                    question = data.content,
+                                                                    data, modifier = Modifier,
+                                                                    deleteComp = {
+                                                                        onEventDispatcher.invoke(
+                                                                            PreviewContract.Intent.DeleteComponent(
+                                                                                data
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                )
+                                                            }
+
+                                                        }
+
+                                                    ComponentEnum.Dater -> {
+                                                            Box(modifier = Modifier.weight(it.weight.toFloat())) {
+                                                                DatePickerPreview(
+                                                                    componentData = data,
+                                                                    content = data.content,
+                                                                    deleteComp = {
+                                                                        onEventDispatcher.invoke(
+                                                                            PreviewContract.Intent.DeleteComponent(
+                                                                                data
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                )
+                                                            }
+                                                    }
+
+                                                    else -> {
+
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
 
