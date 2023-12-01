@@ -63,7 +63,15 @@ data class ComponentEntity(
         operators = operators,
         type = type,
         isRequired = isRequired,
-        imgUri, ratioX, ratioY, customHeight, rowId, backgroundColor, weight, imageType, inValues
+        imgUri,
+        ratioX,
+        ratioY,
+        customHeight,
+        rowId,
+        backgroundColor,
+        weight,
+        imageType,
+        inValues,
     )
 
 

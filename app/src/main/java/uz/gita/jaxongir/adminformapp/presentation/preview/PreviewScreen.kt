@@ -331,7 +331,7 @@ fun PreviewScreenContent(
                                                             )
                                                         )) {
                                                     OutlinedTextField(
-                                                        value = "",
+                                                        value = uri,
                                                         onValueChange = {
                                                             uri = it
                                                         },
