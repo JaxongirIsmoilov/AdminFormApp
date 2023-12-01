@@ -91,7 +91,7 @@ fun TextComponent(
 @Preview(showBackground = true)
 @Composable
 fun getTextCompPrev(){
-    uz.gita.jaxongir.adminformapp.ui.components.TextComponent(
+    uz.gita.jaxongir.adminformapp.presentation.splash.TextComponent(
         onClickDelete = { /*TODO*/ },
         text = "John Doe"
     )
