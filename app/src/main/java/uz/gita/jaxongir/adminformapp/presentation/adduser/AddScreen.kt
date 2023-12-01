@@ -74,7 +74,7 @@ fun UserAddScreenContent(
     onEventDispatcher: (UserAddContract.Event) -> Unit,
     isVisibleProgress: Boolean
 ) {
-    val context= LocalContext.current
+    val context = LocalContext.current
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
 
@@ -145,17 +145,26 @@ fun UserAddScreenContent(
                 )
             )
         }
+        var enable by remember {
+            mutableStateOf(true)
+        }
         Button(
+            enabled = enable,
             onClick = {
-                if (username.length>3 && password.length>3){
+                if (username.length > 3 && password.length > 3) {
                     onEventDispatcher.invoke(
                         UserAddContract.Event.AddUser(
                             username.trim(),
                             password.trim()
                         )
                     )
-                } else{
-                    Toast.makeText(context, "Username and password should be bigger than 3", Toast.LENGTH_SHORT).show()
+                    enable = false
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Username and password should be bigger than 3",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }, modifier = Modifier
