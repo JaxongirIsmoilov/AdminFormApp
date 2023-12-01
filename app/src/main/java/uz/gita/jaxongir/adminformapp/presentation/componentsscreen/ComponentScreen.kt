@@ -119,11 +119,13 @@ fun MainContent(
             onClickCancel = {
                 showDialog.value = false
             },
-            multiSelectors = uiState.value.multiSelectors
+            multiSelectors = uiState.value.multiSelectors,
+            type != ComponentEnum.Image && type != ComponentEnum.LazyRow
         ) {id1, operator, values ->
             selectedIds.add(id1)
             selectedOperators.add(operator)
             inValues.addAll(values)
+
         }
     }
 

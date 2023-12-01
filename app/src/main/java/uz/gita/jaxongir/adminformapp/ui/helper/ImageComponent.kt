@@ -92,9 +92,6 @@ fun ImageComponent(
         mutableStateOf("0")
     }
 
-    var color by remember {
-        mutableStateOf(Color.White)
-    }
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -117,72 +114,6 @@ fun ImageComponent(
 
     LazyColumn(content = {
 
-        item {
-            Spacer(modifier = Modifier.height(5.dp))
-            when (typeEnum) {
-                ImageTypeEnum.LOCAL -> {
-                    Button(
-                        onClick = { launcher.launch("image/*") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-                    ) {
-                        Text(text = "Upload from gallery")
-                    }
-                    AsyncImage(
-                        model = imageUri,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(60.dp)
-                            .width(60.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        contentScale = ContentScale.Crop,
-                    )
-
-
-                }
-
-                ImageTypeEnum.REMOTE -> {
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    onEventDispatcher.invoke(Contracts.Intent.AddComponent(
-                        ComponentData(
-                            id = "",
-                            userId = userId,
-                            locId = 0L,
-                            idEnteredByUser = idEnteredByUser,
-                            content = "",
-                            textFieldType = TextFieldType.Text,
-                            maxLines = 0,
-                            maxLength = 0,
-                            maxValue = 0,
-                            minValue = 0,
-                            minLength = 0,
-                            isRequired = true,
-                            isMulti = false,
-                            variants = listOf(),
-                            type = ComponentEnum.Image,
-                            imgUri = "",
-                            ratioX = ratioX.toInt(),
-                            ratioY = ratioY.toInt(),
-                            customHeight = customHeight,
-                            rowId = "",
-                            backgroundColor = backgroundColor.toArgb(),
-                            weight = weight,
-                            imageType = typeEnum
-                        )
-                    ))
-
-                }
-
-                ImageTypeEnum.NONE -> {
-
-                }
-            }
-        }
         item {
             Spacer(modifier = Modifier.height(5.dp))
             SampleSpinner(
@@ -292,9 +223,7 @@ fun ImageComponent(
                 }
             }
         }
-
-
-        item {
+        /*item {
             Spacer(modifier = Modifier.height(5.dp))
             Button(
                 onClick = {
@@ -336,7 +265,7 @@ fun ImageComponent(
             ) {
                 Text(text = "Image qo'shish")
             }
-        }
+        }*/
         item {
             IconButton(onClick = { showDialog = true }) {
                 Image(
@@ -347,8 +276,123 @@ fun ImageComponent(
             }
         }
         item {
-            Spacer(modifier = Modifier.size(25.dp).background(color))
+            Spacer(modifier = Modifier.size(25.dp).background(backgroundColor))
         }
+
+        item {
+            Spacer(modifier = Modifier.height(5.dp))
+            when (typeEnum) {
+                ImageTypeEnum.LOCAL -> {
+                    Button(
+                        onClick = { launcher.launch("image/*") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp, end = 12.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
+                    ) {
+                        Text(text = "Upload from gallery")
+                    }
+                    AsyncImage(
+                        model = imageUri,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(60.dp)
+                            .width(60.dp)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Crop,
+                    )
+
+
+                    Button(
+                        onClick = {
+                            Log.d("TTT", "ImageComponent: $imageUri")
+                            onEventDispatcher.invoke(
+                                Contracts.Intent.UploadPhoto(
+                                    componentData = ComponentData(
+                                        id = "",
+                                        userId = userId,
+                                        locId = 0L,
+                                        idEnteredByUser = idEnteredByUser,
+                                        content = "",
+                                        textFieldType = TextFieldType.Text,
+                                        maxLines = 0,
+                                        maxLength = 0,
+                                        maxValue = 0,
+                                        minValue = 0,
+                                        minLength = 0,
+                                        isRequired = true,
+                                        isMulti = false,
+                                        variants = listOf(),
+                                        type = ComponentEnum.Image,
+                                        imgUri = imageUri.toString(),
+                                        ratioX = ratioX.toInt(),
+                                        ratioY = ratioY.toInt(),
+                                        customHeight = customHeight,
+                                        rowId = "",
+                                        backgroundColor = backgroundColor.toArgb(),
+                                        weight = weight,
+                                        imageType = typeEnum
+                                    )
+                                )
+                            )
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp, end = 12.dp)
+                    ) {
+                        Text(text = "Image qo'shish")
+                    }
+                }
+
+                ImageTypeEnum.REMOTE -> {
+                    Spacer(modifier = Modifier.height(5.dp))
+
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Button(
+                        onClick = {
+                            onEventDispatcher.invoke(
+                                Contracts.Intent.AddComponent(
+                                    ComponentData(
+                                        id = "",
+                                        userId = userId,
+                                        locId = 0L,
+                                        idEnteredByUser = idEnteredByUser,
+                                        content = "",
+                                        textFieldType = TextFieldType.Text,
+                                        maxLines = 0,
+                                        maxLength = 0,
+                                        maxValue = 0,
+                                        minValue = 0,
+                                        minLength = 0,
+                                        isRequired = true,
+                                        isMulti = false,
+                                        variants = listOf(),
+                                        type = ComponentEnum.Image,
+                                        imgUri = "",
+                                        ratioX = ratioX.toInt(),
+                                        ratioY = ratioY.toInt(),
+                                        customHeight = customHeight,
+                                        rowId = "",
+                                        backgroundColor = backgroundColor.toArgb(),
+                                        weight = weight,
+                                        imageType = typeEnum
+                                    )
+                                )
+                            )
+                        }
+                    ){
+                        Text(text = "Image qo'shish")
+                    }
+
+                }
+
+                ImageTypeEnum.NONE -> {
+
+                }
+            }
+        }
+
 
     })
 

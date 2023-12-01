@@ -41,6 +41,7 @@ fun DialogSpinner(
     onSaveClick: (String, String, String) -> Unit,
     onClickCancel: () -> Unit,
     multiSelectors: List<ComponentData>,
+    boolean: Boolean,
     onInClick:(String, String, List<String>) -> Unit,
 ) {
     androidx.compose.material3.AlertDialog(
@@ -59,6 +60,8 @@ fun DialogSpinner(
                 mutableStateOf("More")
             }
 
+            val list = if(boolean) listOf("More", "Less", "Equal", "Not", "In", "!In") else listOf("More", "Less", "Equal", "Not",)
+
             Spacer(modifier = Modifier.height(8.dp))
             Column(
                 modifier = Modifier
@@ -66,7 +69,7 @@ fun DialogSpinner(
                     .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SampleSpinner(
-                    list = listOf("More", "Less", "Equal", "Not", "In", "!In"),
+                    list = list,
                     preselected = "More",
                     onSelectionChanged = { selection ->
                         selectesValue = selection
