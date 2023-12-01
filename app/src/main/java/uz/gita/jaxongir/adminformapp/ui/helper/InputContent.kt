@@ -296,34 +296,36 @@ fun InputContent(
         item {
             TextButton(
                 onClick = {
-                    onEventListener.invoke(
-                        Contracts.Intent.AddComponent(
-                            ComponentData(
-                                userId = userId,
-                                locId = 0,
-                                idEnteredByUser = id,
-                                content = content,
-                                textFieldType = type,
-                                maxLines = Integer.parseInt(maxLines),
-                                maxLength = Integer.parseInt(maxLength),
-                                minLength = Integer.parseInt(minLength),
-                                maxValue = Integer.parseInt(maxValue),
-                                minValue = Integer.parseInt(minValue),
-                                isMulti = false,
-                                variants = listOf(),
-                                selected = listOf(),
-                                connectedIds = connectedIds,
-                                connectedValues = connectedValues,
-                                operators = operators,
-                                type = ComponentEnum.Input, id = "",
-                                isRequired = checkBoxState,
-                                rowId = rowId,
-                                weight = if (weight == "0f") "" else weight,
-                                inValues = inValues
+                    if (minValue.toInt() < maxValue.toInt()) {
+                        onEventListener.invoke(
+                            Contracts.Intent.AddComponent(
+                                ComponentData(
+                                    userId = userId,
+                                    locId = 0,
+                                    idEnteredByUser = id,
+                                    content = content,
+                                    textFieldType = type,
+                                    maxLines = Integer.parseInt(maxLines),
+                                    maxLength = Integer.parseInt(maxLength),
+                                    minLength = Integer.parseInt(minLength),
+                                    maxValue = Integer.parseInt(maxValue),
+                                    minValue = Integer.parseInt(minValue),
+                                    isMulti = false,
+                                    variants = listOf(),
+                                    selected = listOf(),
+                                    connectedIds = connectedIds,
+                                    connectedValues = connectedValues,
+                                    operators = operators,
+                                    type = ComponentEnum.Input, id = "",
+                                    isRequired = checkBoxState,
+                                    rowId = rowId,
+                                    weight = if (weight == "0f") "" else weight,
+                                    inValues = inValues
+                                )
                             )
-                        )
 
-                    )
+                        )
+                    }
                 },
                 modifier = Modifier,
                 enabled = weight != "0" || rowId == ""
