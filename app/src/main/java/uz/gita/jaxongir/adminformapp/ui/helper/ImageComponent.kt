@@ -189,7 +189,11 @@ fun ImageComponent(
 
                         OutlinedTextField(
                             value = ratioX,
-                            onValueChange = { ratioX = it },
+                            onValueChange = {
+                                if (it.length <= 2) {
+                                    ratioX = it
+                                }
+                            },
                             modifier = Modifier
                                 .width(120.dp),
                             colors = OutlinedTextFieldDefaults.colors(
@@ -205,7 +209,11 @@ fun ImageComponent(
                         Spacer(modifier = Modifier.weight(1f))
                         OutlinedTextField(
                             value = ratioY,
-                            onValueChange = { ratioY = it },
+                            onValueChange = {
+                                if(it.length <= 2 ) {
+                                    ratioY = it
+                                }
+                            },
                             modifier = Modifier
                                 .width(120.dp),
                             label = {
@@ -222,60 +230,22 @@ fun ImageComponent(
                 }
             }
         }
-        /*item {
-            Spacer(modifier = Modifier.height(5.dp))
-            Button(
-                onClick = {
-                    Log.d("TTT", "ImageComponent: $imageUri")
-                    onEventDispatcher.invoke(
-                        Contracts.Intent.UploadPhoto(
-                            componentData = ComponentData(
-                                id = "",
-                                userId = userId,
-                                locId = 0L,
-                                idEnteredByUser = idEnteredByUser,
-                                content = "",
-                                textFieldType = TextFieldType.Text,
-                                maxLines = 0,
-                                maxLength = 0,
-                                maxValue = 0,
-                                minValue = 0,
-                                minLength = 0,
-                                isRequired = true,
-                                isMulti = false,
-                                variants = listOf(),
-                                type = ComponentEnum.Image,
-                                imgUri = imageUri.toString(),
-                                ratioX = ratioX.toInt(),
-                                ratioY = ratioY.toInt(),
-                                customHeight = customHeight,
-                                rowId = "",
-                                backgroundColor = backgroundColor.toArgb(),
-                                weight = weight,
-                                imageType = typeEnum
-                            )
-                        )
-                    )
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp)
-            ) {
-                Text(text = "Image qo'shish")
-            }
-        }*/
+
         item {
             IconButton(onClick = { showDialog = true }) {
                 Image(
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(64.dp),
                     painter = painterResource(id = R.drawable.image),
                     contentDescription = "color picker"
                 )
             }
         }
         item {
-            Spacer(modifier = Modifier.size(25.dp).background(backgroundColor))
+            Spacer(
+                modifier = Modifier
+                    .size(25.dp)
+                    .background(backgroundColor)
+            )
         }
 
         item {
@@ -338,7 +308,8 @@ fun ImageComponent(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFA1466)),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp)
+                            .padding(start = 12.dp, end = 12.dp),
+                        enabled = (sizeType == ImageSizeEnum.RATIO && ratioX != "0" && ratioY != "0" && ratioX.isNotEmpty() && ratioY.isNotEmpty()) || sizeType == ImageSizeEnum.CUSTOM || sizeType == ImageSizeEnum.AUTO
                     ) {
                         Text(text = "Image qo'shish")
                     }
@@ -380,7 +351,7 @@ fun ImageComponent(
                                 )
                             )
                         }
-                    ){
+                    ) {
                         Text(text = "Image qo'shish")
                     }
 
