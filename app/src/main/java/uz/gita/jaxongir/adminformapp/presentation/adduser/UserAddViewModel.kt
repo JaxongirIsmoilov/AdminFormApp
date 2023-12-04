@@ -38,6 +38,12 @@ class UserAddViewModel @Inject constructor(
                                 )
                             )
                         }
+
+                        it.onFailure {
+                            postSideEffect(UserAddContract.SideEffect.ShowToast(it.message?:"Something wrong"))
+                            postSideEffect(UserAddContract.SideEffect.ProgressState(false))
+                        }
+                        postSideEffect(UserAddContract.SideEffect.ProgressState(false))
                     }
                     .launchIn(viewModelScope)
             }

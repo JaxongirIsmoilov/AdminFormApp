@@ -162,6 +162,7 @@ fun UserAddScreenContent(
                         )
                     )
                     enable = false
+                    username = ""
                 } else {
                     Toast.makeText(
                         context,
@@ -191,6 +192,7 @@ fun UserAddScreenContent(
                 )
             } else {
                 Text(text = "Add User", fontSize = 22.sp)
+                enable = true
             }
         }
 

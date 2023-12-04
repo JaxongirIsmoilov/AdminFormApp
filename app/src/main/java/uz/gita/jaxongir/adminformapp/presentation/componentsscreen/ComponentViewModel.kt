@@ -184,8 +184,10 @@ class ComponentViewModel @Inject constructor(
                         }
                         .onEach {
                             it.onSuccess {
+
                                 uiState.update {
                                     it.copy(components = it.components)
+
                                 }
                                 direction.moveToPreviewScreenFromMain("adsfdsaf")
                             }
@@ -195,6 +197,7 @@ class ComponentViewModel @Inject constructor(
                         .onCompletion {
                             uiState.update { it.copy(isLoading = false) }
                         }
+
                         .collect()
 
                     repository.getComponentsByUserId(userId).onEach {

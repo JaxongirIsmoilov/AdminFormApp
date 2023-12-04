@@ -19,7 +19,6 @@ import uz.gita.jaxongir.adminformapp.R
 
 @Composable
 fun Priority() {
-
     var text: String by remember { mutableStateOf("savolga javob") }
 
     OutlinedTextField(value = text,
