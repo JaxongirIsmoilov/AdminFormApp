@@ -38,4 +38,7 @@ interface Dao {
     @Query("delete from users")
     suspend fun deleteUsers()
 
+    @Query("delete from components")
+    suspend fun deleteComponents()
+
 }

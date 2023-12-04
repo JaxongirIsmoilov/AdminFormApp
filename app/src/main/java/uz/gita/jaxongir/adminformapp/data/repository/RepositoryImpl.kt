@@ -138,6 +138,7 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
     }
     private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
+        dao.deleteComponents()
         val resultList = arrayListOf<ComponentData>()
         val converter = Gson()
         firestore.collection("Components")
