@@ -77,6 +77,9 @@ fun UserAddScreenContent(
     val context = LocalContext.current
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
+    var isEnable: Boolean by remember {
+        mutableStateOf(true)
+    }
 
     Box(
         modifier = Modifier
@@ -151,7 +154,7 @@ fun UserAddScreenContent(
         Button(
             enabled = enable,
             onClick = {
-                if (username.length > 3 && password.length > 3) {
+                if (username.length > 3 && password.length > 3 && !isVisibleProgress) {
                     onEventDispatcher.invoke(
                         UserAddContract.Event.AddUser(
                             username.trim(),

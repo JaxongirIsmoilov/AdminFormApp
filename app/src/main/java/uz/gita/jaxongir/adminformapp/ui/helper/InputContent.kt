@@ -46,6 +46,7 @@ fun InputContent(
     operators: List<String>,
     rowId: String,
     inValues: List<String>,
+    isTrue: Boolean
 ) {
     var type by remember {
         mutableStateOf(TextFieldType.Text)
@@ -328,7 +329,7 @@ fun InputContent(
                     }
                 },
                 modifier = Modifier,
-                enabled = weight != "0" || rowId == ""
+                enabled = (weight != "0" || rowId == "") && isTrue
             ) {
                 Text(text = "Componentni qoshish")
             }

@@ -44,6 +44,7 @@ fun SelectorContent(
     content: String,
     userId: String,
     rowId: String,
+    isTrue: Boolean
 ) {
     var variants by remember {
         mutableStateOf(listOf<String>())
@@ -178,7 +179,7 @@ fun SelectorContent(
                     )
                 },
                 modifier = Modifier.wrapContentWidth(),
-                enabled = weight != "0" || rowId == ""
+                enabled = (weight != "0" || rowId == "") && isTrue
             ) {
                 Text(text = "Componentni qoshish")
             }

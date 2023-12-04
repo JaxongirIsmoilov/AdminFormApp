@@ -121,7 +121,7 @@ fun MainContent(
             },
             components = uiState.value.components,
             type = type
-        ) {id1, operator, values ->
+        ) { id1, operator, values ->
             selectedIds.add(id1)
             selectedOperators.add(operator)
             inValues.addAll(values)
@@ -286,7 +286,8 @@ fun MainContent(
                                     userId = userId,
                                     content = content,
                                     rowId = rowId,
-                                    inValues = inValues
+                                    inValues = inValues,
+                                    isTrue = !uiState.value.isLoading
                                 )
                             }
                         }
@@ -358,14 +359,15 @@ fun MainContent(
                                                 rowId = rowId,
                                                 backgroundColor = Transparent.toArgb(),
                                                 weight = weight,
-                                                inValues = inValues                                            )
+                                                inValues = inValues
+                                            )
                                         )
                                     )
                                 },
                                 modifier = Modifier
                                     .wrapContentSize()
                                     .padding(5.dp),
-                                enabled = weight != "0" || rowId == ""
+                                enabled = (weight != "0" || rowId == "") && !uiState.value.isLoading
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
@@ -445,7 +447,7 @@ fun MainContent(
                                 },
                                 modifier = Modifier
                                     .wrapContentSize(),
-                                enabled = weight != "0" || rowId == ""
+                                enabled = (weight != "0" || rowId == "") && !uiState.value.isLoading
                             ) {
                                 Text(text = "Componentni qoshish")
                             }
@@ -462,6 +464,7 @@ fun MainContent(
                                 userId = userId,
                                 content = content,
                                 rowId = rowId,
+                                isTrue = !uiState.value.isLoading
                             )
                         }
 
@@ -475,7 +478,8 @@ fun MainContent(
                                 userId = userId,
                                 content = content,
                                 rowId = rowId,
-                                inValues = inValues
+                                inValues = inValues,
+                                isTrue = !uiState.value.isLoading
                             )
                         }
 
@@ -517,7 +521,7 @@ fun MainContent(
                                 },
                                 modifier = Modifier
                                     .wrapContentSize(),
-                                enabled = id.isNotEmpty()
+                                enabled = id.isNotEmpty() && !uiState.value.isLoading
                             ) {
                                 Text(text = "Componentni qoshish")
                             }

@@ -146,7 +146,7 @@ fun PreviewScreenContent(
                                         item {
                                             SampleSpinnerPreview(
                                                 list = data.variants,
-                                                preselected = data.variants[0],
+                                                preselected = data.variants.firstOrNull()?:"",
                                                 onSelectionChanged = {},
                                                 content = data.content,
                                                 componentData = data,
