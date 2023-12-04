@@ -1,5 +1,6 @@
 package uz.gita.jaxongir.adminformapp.ui.helper
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -297,7 +298,7 @@ fun InputContent(
         item {
             TextButton(
                 onClick = {
-                    if (minValue.toInt() < maxValue.toInt()) {
+                    Log.d("TTT", "InputContent: ${minValue.toInt() < maxValue.toInt()}")
                         onEventListener.invoke(
                             Contracts.Intent.AddComponent(
                                 ComponentData(
@@ -326,10 +327,9 @@ fun InputContent(
                             )
 
                         )
-                    }
                 },
                 modifier = Modifier,
-                enabled = (weight != "0" || rowId == "") && isTrue
+                enabled = (weight != "0" || rowId == "" || rowId.isEmpty()) && isTrue
             ) {
                 Text(text = "Componentni qoshish")
             }
