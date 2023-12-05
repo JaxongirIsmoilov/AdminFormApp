@@ -554,7 +554,8 @@ fun MainContent(
                                     onEventDispatcher = onEventDispatcher::invoke,
                                     userId = userId,
                                     idEnteredByUser = id,
-                                    typeEnum = imageTypeEnum
+                                    typeEnum = imageTypeEnum,
+                                    isloading = uiState.value.isLoading
                                 )
                             }
                         }

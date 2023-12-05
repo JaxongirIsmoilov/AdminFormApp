@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.firebase.firestore.FirebaseFirestore
@@ -147,6 +148,10 @@ class RepositoryImpl @Inject constructor(
             .get()
             .addOnSuccessListener { data ->
                 data.documents.forEach {
+                    Log.d("TTT", "getComponents: ${it.data?.getOrDefault(
+                        "imageType",
+                        ImageTypeEnum.NONE.toString()
+                    ).toString()}")
                     resultList.add(
                         ComponentData(
                             id = it.id,
