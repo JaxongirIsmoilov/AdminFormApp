@@ -1,6 +1,7 @@
 package uz.gita.jaxongir.adminformapp.presentation.componentsscreen
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -529,7 +530,7 @@ fun MainContent(
 
                         ComponentEnum.Image -> {
                             var imageTypeEnum by remember {
-                                mutableStateOf(ImageTypeEnum.LOCAL)
+                                mutableStateOf(ImageTypeEnum.NONE)
                             }
 
                             SampleSpinner(
@@ -548,13 +549,14 @@ fun MainContent(
                                 },
                                 content = "Rasmni qay tarzda joylashni tanlang"
                             )
-
-                            ImageComponent(
-                                onEventDispatcher = onEventDispatcher::invoke,
-                                userId = userId,
-                                idEnteredByUser = id,
-                                typeEnum = imageTypeEnum
-                            )
+                            AnimatedVisibility(visible = imageTypeEnum != ImageTypeEnum.NONE) {
+                                ImageComponent(
+                                    onEventDispatcher = onEventDispatcher::invoke,
+                                    userId = userId,
+                                    idEnteredByUser = id,
+                                    typeEnum = imageTypeEnum
+                                )
+                            }
                         }
                     }
                 }

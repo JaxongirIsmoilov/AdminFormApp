@@ -309,7 +309,7 @@ fun ImageComponent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 12.dp, end = 12.dp),
-                        enabled = (sizeType == ImageSizeEnum.RATIO && ratioX != "0" && ratioY != "0" && ratioX.isNotEmpty() && ratioY.isNotEmpty()) || sizeType == ImageSizeEnum.CUSTOM || sizeType == ImageSizeEnum.AUTO
+                        enabled = ((sizeType == ImageSizeEnum.RATIO && ratioX != "0" && ratioY != "0" && ratioX.isNotEmpty() && ratioY.isNotEmpty()) || sizeType == ImageSizeEnum.CUSTOM || sizeType == ImageSizeEnum.AUTO) && imageUri != null
                     ) {
                         Text(text = "Image qo'shish")
                     }
