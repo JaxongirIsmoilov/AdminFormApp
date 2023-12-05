@@ -429,21 +429,13 @@ fun PreviewScreenContent(
 
                                                     ComponentEnum.Input -> {
                                                             Box(modifier = Modifier.weight(it.weight.toFloat())) {
-                                                                InputField(
-                                                                    textFieldType = data.textFieldType,
-                                                                    maxLines = data.maxLines,
-                                                                    maxLength = data.maxLength,
-                                                                    minLength = data.minLength,
-                                                                    maxValue = data.maxValue,
-                                                                    minValue = data.minValue,
-                                                                    question = data.content,
-                                                                    data, modifier = Modifier,
-                                                                    deleteComp = {
-                                                                        onEventDispatcher.invoke(
-                                                                            PreviewContract.Intent.DeleteComponent(
-                                                                                data
-                                                                            )
-                                                                        )
+                                                                var txtField by remember {
+                                                                    mutableStateOf("")
+                                                                }
+                                                                OutlinedTextField(
+                                                                    value = txtField,
+                                                                    onValueChange = {
+                                                                        txtField = it
                                                                     }
                                                                 )
                                                             }
