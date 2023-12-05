@@ -1,13 +1,11 @@
 package uz.gita.jaxongir.adminformapp.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -51,6 +49,7 @@ class RepositoryImpl @Inject constructor(
 
             awaitClose()
         }
+
     override fun deleteComponent(componentData: ComponentData): Flow<Result<String>> =
         callbackFlow {
             firestore.collection("Components")
@@ -64,6 +63,7 @@ class RepositoryImpl @Inject constructor(
                 }
             awaitClose()
         }
+
     override fun editComponent(componentData: ComponentData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Components")
             .document(componentData.id)
@@ -121,6 +121,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     override fun deleteUser(userData: UserData): Flow<Result<String>> = callbackFlow {
         firestore.collection("Users")
             .document(userData.userId)
@@ -137,6 +138,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     private fun getComponents(): Flow<Result<Unit>> = callbackFlow {
         dao.deleteComponents()
         val resultList = arrayListOf<ComponentData>()
@@ -212,13 +214,25 @@ class RepositoryImpl @Inject constructor(
                             isRequired = it.data?.getOrDefault("required", false)
                                 .toString() == "true",
                             imgUri = it.data?.getOrDefault("imgUri", "").toString(),
-                            ratioX = Integer.parseInt(it.data?.getOrDefault("ratioX", "0").toString()),
-                            ratioY = Integer.parseInt(it.data?.getOrDefault("ratioY", "0").toString()),
+                            ratioX = Integer.parseInt(
+                                it.data?.getOrDefault("ratioX", "0").toString()
+                            ),
+                            ratioY = Integer.parseInt(
+                                it.data?.getOrDefault("ratioY", "0").toString()
+                            ),
                             customHeight = it.data?.getOrDefault("customHeight", "0").toString(),
-                            backgroundColor = it.data?.getOrDefault("backgroundColor", "${Color.Transparent.toArgb()}").toString().toInt(),
+                            backgroundColor = it.data?.getOrDefault(
+                                "backgroundColor",
+                                "${Color.Transparent.toArgb()}"
+                            ).toString().toInt(),
                             rowId = it.data?.getOrDefault("rowId", "0").toString(),
                             weight = it.data?.getOrDefault("weight", "0").toString(),
-                            imageType = converter.fromJson(it.data?.getOrDefault("imageType", ImageTypeEnum.NONE.toString()).toString(), ImageTypeEnum::class.java)
+                            imageType = converter.fromJson(
+                                it.data?.getOrDefault(
+                                    "imageType",
+                                    ImageTypeEnum.NONE.toString()
+                                ).toString(), ImageTypeEnum::class.java
+                            )
                         )
                     )
 
@@ -234,6 +248,7 @@ class RepositoryImpl @Inject constructor(
         awaitClose()
 
     }
+
     private fun getUser(): Flow<Unit> = callbackFlow {
         val resultList = arrayListOf<UserData>()
         firestore.collection("Users")
@@ -258,6 +273,7 @@ class RepositoryImpl @Inject constructor(
 
         awaitClose()
     }
+
     override fun getComponentsByUserId(userID: String): Flow<Result<List<ComponentData>>> = flow {
         getComponents()
             .onEach { result ->
@@ -285,21 +301,24 @@ class RepositoryImpl @Inject constructor(
         }.collect()
     }.flowOn(Dispatchers.IO)
 
-    override fun uploadPhoto(componentData: ComponentData, id: Int): Flow<Result<Unit>> = callbackFlow{
-        storageReference.child(componentData.imgUri)
-            .putFile(Uri.parse(componentData.imgUri))
-            .addOnSuccessListener {
-                it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                    coroutineScope.launch{ addComponent(componentData.copy(imgUri = it.toString()), id)
-                        .onEach {
-                            trySend(Result.success(Unit))
+    override fun uploadPhoto(componentData: ComponentData, id: Int): Flow<Result<Unit>> =
+        callbackFlow {
+            storageReference.child(componentData.imgUri)
+                .putFile(Uri.parse(componentData.imgUri))
+                .addOnSuccessListener {
+                    it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                        coroutineScope.launch {
+                            addComponent(componentData.copy(imgUri = it.toString()), id)
+                                .onEach {
+                                    trySend(Result.success(Unit))
+                                }
+                                .collect()
                         }
-                        .collect() }
+                    }
                 }
-            }
-            .addOnFailureListener {
-                trySend(Result.failure(it))
-            }
-        awaitClose()
-    }
+                .addOnFailureListener {
+                    trySend(Result.failure(it))
+                }
+            awaitClose()
+        }
 }
