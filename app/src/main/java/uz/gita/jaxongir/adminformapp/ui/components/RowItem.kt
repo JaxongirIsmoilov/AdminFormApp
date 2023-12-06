@@ -110,6 +110,8 @@ fun RowItem(
                         deleteComp = {
                             onDeleteComponent(data)
                         }
+                        ,
+                        isEnabled = true
                     ) 
                     Spacer(modifier = Modifier.height(10.dp))
                 }

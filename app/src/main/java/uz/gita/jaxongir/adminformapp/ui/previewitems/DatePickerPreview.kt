@@ -47,6 +47,7 @@ fun DatePickerPreview(
     componentData: ComponentData,
     content: String,
     deleteComp: (ComponentData) -> Unit = {},
+    isEnabled:Boolean
 ) {
     var pickedDate by remember {
         mutableStateOf(LocalDate.now())
@@ -82,7 +83,10 @@ fun DatePickerPreview(
                     tint = Color(0xFFFF7686),
                     modifier = Modifier
                         .clickable {
-                            dateDialogState.show()
+                            if (isEnabled) {
+                                dateDialogState.show()
+                            }
+
                         }
                         .width(36.dp))
             }

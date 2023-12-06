@@ -254,7 +254,8 @@ fun PreviewScreenContent(
                                                             data
                                                         )
                                                     )
-                                                }
+                                                },
+                                                isEnabled = true
                                             )
                                             Spacer(modifier = Modifier.height(10.dp))
                                         }
@@ -453,7 +454,8 @@ fun PreviewScreenContent(
                                                                                 data
                                                                             )
                                                                         )
-                                                                    }
+                                                                    },
+                                                                    isEnabled = true
                                                                 )
                                                             }
                                                     }
